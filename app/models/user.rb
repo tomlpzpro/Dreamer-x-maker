@@ -6,4 +6,14 @@ class User < ApplicationRecord
   has_many :projects, foreign_key: "dreamer_id"
   has_many :maker_projects, foreign_key: "maker_id"
   has_many :match_messages
+
+  validates :role, inclusion: { in: %w[dreamer maker] }
+
+  def dreamer?
+    role == "dreamer"
+  end
+
+  def maker?
+    role == "maker"
+  end
 end
