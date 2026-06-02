@@ -10,9 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_02_094930) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_02_110906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "llm_chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "project_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_llm_chats_on_project_id"
+  end
+
+  create_table "llm_messages", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.bigint "llm_chat_id", null: false
+    t.string "role"
+    t.datetime "updated_at", null: false
+    t.index ["llm_chat_id"], name: "index_llm_messages_on_llm_chat_id"
+  end
+
+  create_table "maker_projects", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "maker_id"
+    t.bigint "project_id", null: false
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_maker_projects_on_project_id"
+  end
+
+  create_table "match_chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "maker_project_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["maker_project_id"], name: "index_match_chats_on_maker_project_id"
+  end
+
+  create_table "match_messages", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.bigint "match_chat_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["match_chat_id"], name: "index_match_messages_on_match_chat_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.integer "dreamer_id"
+    t.string "title"
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -25,4 +74,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_02_094930) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "llm_chats", "projects"
+  add_foreign_key "llm_messages", "llm_chats"
+  add_foreign_key "maker_projects", "projects"
+  add_foreign_key "maker_projects", "users", column: "maker_id"
+  add_foreign_key "match_chats", "maker_projects"
+  add_foreign_key "match_messages", "match_chats"
+  add_foreign_key "match_messages", "users"
+  add_foreign_key "projects", "users", column: "dreamer_id"
 end
