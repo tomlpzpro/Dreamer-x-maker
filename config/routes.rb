@@ -14,4 +14,9 @@ devise_for :users, controllers: {
     post :messages, on: :member, action: :create_message
   end
 
+  # Match chat pages: a dreamer and a maker talk together about a project
+  resources :match_chats, only: [:show] do
+    post :messages, on: :member, action: :create_message
+  end
+
 end
