@@ -1,38 +1,56 @@
-<nav class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+<%# Main navbar container %>
+<nav class="navbar navbar-light navbar-lewagon">
+  <%# Full-width wrapper that holds the 3 navbar parts %>
   <div class="container-fluid">
-    <%= link_to "#", class: "navbar-brand" do %>
-      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+
+    <%# === Left part: hamburger dropdown menu === %>
+    <%# Wrapper that turns the button + menu into a dropdown %>
+    <div class="dropdown">
+      <%# The hamburger button that opens the dropdown when clicked %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <%# The three-bars icon (☰) drawn by Bootstrap %>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <%# The list of links shown when the menu is open %>
+      <ul class="dropdown-menu">
+        <%# Link to the home page %>
+        <li><%= link_to "Home", root_path, class: "dropdown-item" %></li>
+        <%# Link to the projects list %>
+        <li><%= link_to "Projects", projects_path, class: "dropdown-item" %></li>
+      </ul>
+    </div>
+
+    <%# === Center part: logo === %>
+    <%# Logo wrapped in a link that goes back to the home page %>
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%# The logo image (placeholder for now) %>
+      <%= image_tag "logo.png", alt: "Logo" %>
     <% end %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
+    <%# === Right part: profile photo dropdown menu === %>
+    <%# Wrapper that turns the photo + menu into a dropdown %>
+    <div class="dropdown">
+      <%# The round profile photo that opens the dropdown when clicked %>
+      <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+        <%# The profile picture, made round by the "avatar" class %>
+        <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "profile menu" %>
+      </a>
+      <%# The list of links, aligned to the right edge %>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <%# Show these links only when the user is logged in %>
         <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to "Home", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Messages", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item dropdown">
-          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
-          </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Action", "#", class: "dropdown-item" %>
-              <%= link_to "Another action", "#", class: "dropdown-item" %>
-              <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
-            </div>
-          </li>
+          <%# Link to the user's profile page %>
+          <li><%= link_to "Profile", profile_path, class: "dropdown-item" %></li>
+          <%# Button to log out (uses DELETE method) %>
+          <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
         <% else %>
-          <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-          </li>
+          <%# Link to the login page %>
+          <li><%= link_to "Login", new_user_session_path, class: "dropdown-item" %></li>
+          <%# Link to the sign up page %>
+          <li><%= link_to "Sign up", new_user_registration_path, class: "dropdown-item" %></li>
         <% end %>
       </ul>
     </div>
+
   </div>
 </nav>
