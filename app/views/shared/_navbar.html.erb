@@ -33,7 +33,12 @@
       <%# The round profile photo that opens the dropdown when clicked %>
       <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
         <%# The profile picture, made round by the "avatar" class %>
-        <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "profile menu" %>
+        <%# Use the logged-in user's photo, or a placeholder if there is none %>
+        <% if user_signed_in? && current_user.profile_picture_url.present? %>
+          <%= image_tag current_user.profile_picture_url, class: "avatar", alt: "profile menu" %>
+        <% else %>
+          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "profile menu" %>
+        <% end %>
       </a>
       <%# The list of links, aligned to the right edge %>
       <ul class="dropdown-menu dropdown-menu-end">
