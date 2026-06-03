@@ -8,8 +8,11 @@
         Vous êtes maker ? Découvrez des projets inspirants et proposez votre savoir-faire
         pour les concrétiser.</p>
 
-    <%= link_to "Dreamer", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-5" %>
-    <%= link_to "Maker", new_user_registration_path(role: "maker"), class: "btn btn-primary mx-5" %>
+    <%# Show the sign up buttons only when the visitor is NOT logged in %>
+    <% unless user_signed_in? %>
+      <%= link_to "Dreamer", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-5" %>
+      <%= link_to "Maker", new_user_registration_path(role: "maker"), class: "btn btn-primary mx-5" %>
+    <% end %>
   </div>
 
 

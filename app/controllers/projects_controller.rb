@@ -1,4 +1,9 @@
 class ProjectsController < ApplicationController
+  def index
+    # Only the projects created by the logged-in dreamer
+    @projects = current_user.projects.order(created_at: :desc)
+  end
+
   def show
     @project = Project.find(params[:id])
   end
