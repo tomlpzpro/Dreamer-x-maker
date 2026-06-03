@@ -9,4 +9,7 @@ devise_for :users, controllers: {
   resources :projects
   resource :profile, only: [:show, :edit, :update]
 
+  # a vérifier si pas nécessaire ressources
+  get "dashboard" => "dashboards#show", as: :dashboard
+
 end
