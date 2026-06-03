@@ -1,2 +1,14 @@
-<h1>Projects#new</h1>
-<p>Find me in app/views/projects/new.html.erb</p>
+<h1>Créer un nouveau projet</h1>
+<%= simple_form_for(@project, html: { multipart: true }) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <%= f.input :title, required: true, label: "Nom du projet" %>
+    <%= f.input :description, required: true, label: "Description du projet" %>
+    <%= f.input :deadline, required: false, label: "Delais", placeholder: "En jours" %>
+    <%= f.input :budget, required: false, label: "Budget", placeholder: "En euros" %>
+    <%= f.input :image, as: :file, label: "Charger votre image" %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Enregistrer le projet" %>
+  </div>
+<% end %>
