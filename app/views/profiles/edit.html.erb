@@ -1,2 +1,58 @@
-<h1>Profiles#edit</h1>
-<p>Find me in app/views/profiles/edit.html.erb</p>
+<div class="container my-5">
+
+  <%# Page title %>
+  <h1 class="mb-4">Edit my profile</h1>
+
+  <div class="profile-card text-start">
+
+    <%# Form sends to the update action (PATCH /profile) %>
+    <%= form_with model: @user, url: profile_path, method: :patch do |form| %>
+
+      <%# Show error messages if the update failed %>
+      <% if @user.errors.any? %>
+        <div class="alert alert-danger">
+          <%= @user.errors.full_messages.to_sentence %>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= form.label :username, "Username", class: "form-label" %>
+        <%= form.text_field :username, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :email, "Email", class: "form-label" %>
+        <%= form.email_field :email, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :phone_number, "Phone", class: "form-label" %>
+        <%= form.text_field :phone_number, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :adresse, "Address", class: "form-label" %>
+        <%= form.text_field :adresse, class: "form-control" %>
+      </div>
+
+      <%# Skills field only for makers, not for dreamers %>
+      <% if @user.maker? %>
+        <div class="mb-3">
+          <%= form.label :skills, "Skills", class: "form-label" %>
+          <%= form.text_field :skills, class: "form-control" %>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= form.label :profile_picture_url, "Profile picture URL", class: "form-label" %>
+        <%= form.text_field :profile_picture_url, class: "form-control" %>
+      </div>
+
+      <%= form.submit "Save", class: "btn btn-primary" %>
+      <%= link_to "Cancel", profile_path, class: "btn btn-outline-secondary" %>
+
+    <% end %>
+
+  </div>
+
+</div>
