@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.dreamer = current_user
     if @project.save
-      redirect_to root_path, notice: "Project was successfully created."
+      redirect_to @project, notice: "Project was successfully created."
       # le redirect_to root_path sera à modifier lorsque la route du dreamer_dashboard sera créée
     else
       render :new, status: :unprocessable_entity

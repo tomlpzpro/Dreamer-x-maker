@@ -5,7 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    @role = params[:role]
+    @role = params[:user][:role]
     super
   end
 end

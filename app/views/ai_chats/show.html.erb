@@ -23,6 +23,7 @@
 
   </div>
 
+  <%= button_to "Générer mon visuel", generer_visuel_ai_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
   <%# Form to write and send a new message %>
   <%= form_with model: @llm_message, url: messages_ai_chat_path(@llm_chat) do |form| %>
     <div class="d-flex gap-2">
