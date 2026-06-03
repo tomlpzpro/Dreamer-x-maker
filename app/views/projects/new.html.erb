@@ -4,8 +4,8 @@
   <div class="form-inputs">
     <%= f.input :title, required: true, label: "Nom du projet" %>
     <%= f.input :description, required: true, label: "Description du projet" %>
-    <%= f.input :deadline, required: false, label: "Delais", placeholder: "En jours" %>
-    <%= f.input :budget, required: false, label: "Budget", placeholder: "En euros" %>
+    <%= f.input :deadline, label: "Delais", placeholder: "En jours" %>
+    <%= f.input :budget, label: "Budget", placeholder: "En euros" %>
     <%= f.input :image, as: :file, label: "Charger votre image" %>
   </div>
   <div class="form-actions">
