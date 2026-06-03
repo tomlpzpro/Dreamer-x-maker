@@ -1,1 +1,7 @@
 <h1>Votre projet</h1>
+
+<%= @project.title %>
+<%= @project.description %>
+<%= @project.deadline %>
+<%= @project.budget %>
+<%= image_tag @project.image if @project.image.attached? %>
