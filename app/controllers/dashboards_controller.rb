@@ -3,49 +3,57 @@ class DashboardsController < ApplicationController
 
   def show
     # 1/ Conditions avec le role du user pour app bonnes methodes en private
-    # if current_user.role == "maker"
-    #   get_maker_data()
-    # else
-    #   get_dreamer_data()
-    # end
+    if current_user.role == "dreamer"
+      get_dreamer_data
+    else
+      get_maker_data
+    end
 
     #2/ Conditions d'affichage du dashboard en fonction du role du user
-    # if current_user.role == "maker"
-    #   render: "dashboards/maker.html.erb"
-    # else
-    #   render: "dashboards/dreamer.html.erb"
-    # end
-
+    if current_user.role == "dreamer"
+      render: "dashboards/dreamer.html.erb"
+    else
+      render: "dashboards/maker.html.erb"
+    end
   end
+end
 
   private
 
-    # DASHBOARD DREAMER
+  # DASHBOARD DREAMER
+  def get_dreamer_data
     # --- Mes Matchs ---
-    # Projets du dreamer qui ont au moins un maker_project
-
     @maker_projects = MakerProject
                         .joins(:project)
                         .where(projects: { dreamer_id: current_user.id })
                         .includes(:project, :maker)
                         .order(updated_at: :desc)
 
-    # On sépare "matchés" et "en attente" dans la vue
-    # selon maker_project.status ("accepted" vs "pending")
-
-    # --- Mes Projets (2 max pour l'aperçu) ---
+    # --- Mes Projets (2 max pour l'aperçu du dashboard) ---
     @projects = current_user.projects
                              .order(created_at: :desc)
                              .limit(2)
 
     # --- Mes Discussions ---
-    # Les chats liés aux projets du dreamer
     @match_chats = MatchChat
                      .joins(maker_project: :project)
                      .where(projects: { dreamer_id: current_user.id })
-                     .includes(:maker_project => [:maker, :project])
+                     .includes(maker_project: [:maker, :project])
                      .order(updated_at: :desc)
-                     
-    # DASHBOARD MAKER
+  end
 
+  # DASHBOARD MAKER
+  def get_maker_data
+    # --- Mes Matchs envoyés ---
+    @maker_projects = current_user.maker_projects
+                                   .includes(:project, :match_chat)
+                                   .order(updated_at: :desc)
+
+    # --- Mes Discussions ---
+    @match_chats = MatchChat
+                     .joins(:maker_project)
+                     .where(maker_projects: { maker_id: current_user.id })
+                     .includes(maker_project: :project)
+                     .order(updated_at: :desc)
+  end
 end
