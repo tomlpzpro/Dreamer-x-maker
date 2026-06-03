@@ -1,0 +1,36 @@
+<div class="container my-5">
+
+  <%# Page title with the project name %>
+  <h1 class="mb-4">Chat — <%= @match_chat.maker_project.project.title %></h1>
+
+  <%# The box that holds all the messages %>
+  <div class="chat-box mb-4">
+
+    <%# Show a small text when there is no message yet %>
+    <% if @match_messages.empty? %>
+      <p class="text-center text-muted my-5">No message yet. Start the conversation below!</p>
+    <% end %>
+
+    <%# Loop over every message of this chat %>
+    <% @match_messages.each do |message| %>
+      <%# My own messages go on the right, the other person's go on the left %>
+      <div class="chat-message <%= message.user == current_user ? "from-user" : "from-ai" %>">
+        <div class="chat-bubble">
+          <%# Name of the person who wrote the message %>
+          <div class="chat-author"><%= message.user.username %></div>
+          <%= message.content %>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+
+  <%# Form to write and send a new message %>
+  <%= form_with model: @match_message, url: messages_match_chat_path(@match_chat) do |form| %>
+    <div class="d-flex gap-2">
+      <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." %>
+      <%= form.submit "Send", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+</div>
