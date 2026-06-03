@@ -1,0 +1,52 @@
+// Specific CSS for the AI chat page
+
+// The box that holds all the messages
+.chat-box {
+  background: $light-gray;
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 300px;
+}
+
+// One message line (used to place the bubble left or right)
+.chat-message {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+// User messages are pushed to the right
+.chat-message.from-user {
+  justify-content: flex-end;
+}
+
+// AI messages stay on the left
+.chat-message.from-ai {
+  justify-content: flex-start;
+}
+
+// The colored bubble around the text
+.chat-bubble {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 16px;
+}
+
+// Blue bubble for the user
+.from-user .chat-bubble {
+  background: $blue;
+  color: white;
+}
+
+// White bubble for the AI
+.from-ai .chat-bubble {
+  background: white;
+  color: $gray;
+}
+
+// Small name of the person who wrote the message
+.chat-author {
+  font-size: 11px;
+  font-weight: bold;
+  opacity: .7;
+  margin-bottom: 2px;
+}
