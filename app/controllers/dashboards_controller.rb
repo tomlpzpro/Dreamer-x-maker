@@ -2,8 +2,28 @@ class DashboardsController < ApplicationController
   before_action :authenticate_user!
 
   def show
+    # 1/ Conditions avec le role du user pour app bonnes methodes en private
+    # if current_user.role == "maker"
+    #   get_maker_data()
+    # else
+    #   get_dreamer_data()
+    # end
+
+    #2/ Conditions d'affichage du dashboard en fonction du role du user
+    # if current_user.role == "maker"
+    #   render: "dashboards/maker.html.erb"
+    # else
+    #   render: "dashboards/dreamer.html.erb"
+    # end
+
+  end
+
+  private
+
+    # DASHBOARD DREAMER
     # --- Mes Matchs ---
     # Projets du dreamer qui ont au moins un maker_project
+
     @maker_projects = MakerProject
                         .joins(:project)
                         .where(projects: { dreamer_id: current_user.id })
@@ -25,5 +45,7 @@ class DashboardsController < ApplicationController
                      .where(projects: { dreamer_id: current_user.id })
                      .includes(:maker_project => [:maker, :project])
                      .order(updated_at: :desc)
-  end
+                     
+    # DASHBOARD MAKER
+
 end
