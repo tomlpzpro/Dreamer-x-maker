@@ -1,15 +1,37 @@
-<div class="footer mt-5">
-  <div class="footer-pages">
-    <a href="#">About us</a>
-    <a href="#">Mentions légales</a>
-    <a href="#">Contact</a>
+<footer class="footer">
+
+  <%# Top part: brand + tagline (left), links (middle), social icons (right) %>
+  <div class="container footer-inner">
+
+    <%# Brand name and tagline %>
+    <div class="footer-brand">
+      <p class="footer-logo">
+        <span class="word-dreamer">Dreamer</span>
+        <span class="word-x">x</span>
+        <span class="word-maker">Maker</span>
+      </p>
+      <p class="footer-tagline">Là où l'idée rencontre la main.</p>
+    </div>
+
+    <%# Site links %>
+    <div class="footer-nav">
+      <a href="#">À propos</a>
+      <a href="#">Mentions légales</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <%# Social media icons %>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    </div>
   </div>
-  <div class="footer-copyright">
-    Dreamer <i class="fas fa-heart"></i> Maker
+
+  <%# Bottom part: copyright line %>
+  <div class="footer-bottom">
+    <div class="container">
+      © <%= Date.current.year %> Dreamer x Maker — Tous droits réservés.
+    </div>
   </div>
-    <div class="footer-links">
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-facebook"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-  </div>
-</div>
+</footer>

@@ -1,37 +1,71 @@
+// Footer styling, following the charter: a dark "ink" background with cream
+// text, the brand name in the script font, links and social icons.
+
 .footer {
-  background: #c1c7cd;
+  background: $ink;          // dark ink background (the charter's "on dark" use)
+  color: $cream;             // cream text on the dark background
+  margin-top: 64px;          // space above the footer
+}
+
+// Top part: brand (left), links (middle), social icons (right)
+.footer-inner {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  padding: 0px 50px;
-  color: rgba(0,0,0,0.3);
+  flex-wrap: wrap;           // wrap on small screens
+  gap: 24px;
+  padding: 40px 0;
 }
-.footer-links {
+
+// --- Brand + tagline ---
+.footer-logo {
+  font-family: $script-font;
+  font-size: 28px;
+  margin: 0;
+}
+.footer-logo .word-dreamer { color: $dreamer; }    // "Dreamer" in orange
+.footer-logo .word-x       { color: $cream; }       // the "x" in cream
+.footer-logo .word-maker   { color: $maker; }       // "Maker" in turquoise
+
+.footer-tagline {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: rgba($cream, .7);   // slightly faded cream
+}
+
+// --- Site links (stacked vertically) ---
+.footer-nav {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
 }
-.footer-links a {
-  color: black;
-  opacity: 0.15;
-  text-decoration: none;
-  font-size: 24px;
-  padding: 0px 10px;
-}
-.footer-links a:hover {
-  opacity: 1;
-}
-.footer .fa-heart {
-  color: #D23333;
-}
-
-.footer-pages a {
-  display: block;
-  margin: 5px 0;
-  color: rgba(0,0,0,0.6);
+.footer-nav a {
+  color: rgba($cream, .8);
   text-decoration: none;
 }
+.footer-nav a:hover {
+  color: $dreamer;           // turn orange on hover
+}
 
-.footer-pages {
-  padding-top: 30px;
-  padding-bottom: 30px;
+// --- Social icons (in a row) ---
+.footer-social a {
+  color: rgba($cream, .8);
+  font-size: 20px;
+  margin-left: 16px;         // space between the icons
+  text-decoration: none;
+}
+.footer-social a:first-child {
+  margin-left: 0;
+}
+.footer-social a:hover {
+  color: $dreamer;           // turn orange on hover
+}
+
+// --- Bottom copyright bar ---
+.footer-bottom {
+  border-top: 1px solid rgba($cream, .15); // thin separator line
+  padding: 16px 0;
+  font-size: 13px;
+  color: rgba($cream, .6);
+  text-align: center;
 }

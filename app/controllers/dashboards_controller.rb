@@ -29,10 +29,10 @@ end
                         .includes(:project, :maker)
                         .order(updated_at: :desc)
 
-    # --- Mes Projets (2 max pour l'aperçu du dashboard) ---
+    # --- Mes Projets (4 max pour l'aperçu du dashboard) ---
     @projects = current_user.projects
                              .order(created_at: :desc)
-                             .limit(2)
+                             .limit(4)
 
     # --- Mes Discussions ---
     @match_chats = MatchChat
@@ -53,6 +53,6 @@ end
     @match_chats = MatchChat
                      .joins(:maker_project)
                      .where(maker_projects: { maker_id: current_user.id })
-                     .includes(maker_project: :project)
+                     .includes(maker_project: { project: :dreamer })
                      .order(updated_at: :desc)
   end

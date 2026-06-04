@@ -1,0 +1,77 @@
+// Styling for the public maker profile page (a portfolio of creations).
+
+// --- Hero header: turquoise banner with the photo and the skills ---
+.maker-hero {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: $maker-light;        // soft turquoise (the maker side)
+  border-radius: .75rem;          // 12px rounded corners
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+// The round photo on the left, with a cream ring around it
+.maker-hero-photo img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;             // perfect circle
+  object-fit: cover;              // crop the photo nicely
+  border: 4px solid $cream;       // cream ring to lift it off the turquoise
+}
+
+// Small label above the name
+.maker-hero-label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: $maker-dark;             // dark turquoise
+}
+
+// The maker name
+.maker-hero h1 {
+  margin: 6px 0 14px;
+}
+
+// --- Skills shown as small chips ---
+.maker-skills {
+  display: flex;
+  flex-wrap: wrap;                // wrap to a new line if there are many
+  gap: 8px;
+}
+.maker-skill {
+  background: $cream;             // white-ish chip on the turquoise banner
+  color: $maker-dark;
+  border-radius: 999px;          // fully rounded pill
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+// --- Creations section ---
+.maker-creations-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between; // title left, count right
+  margin-bottom: 24px;
+}
+.maker-creations-head h2 {
+  margin: 0;
+}
+.maker-creations-count {
+  color: $gray-text;
+  font-size: 14px;
+}
+
+// --- Responsive: stack the hero on small screens ---
+@media (max-width: 576px) {
+  .maker-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+  .maker-skills {
+    justify-content: center;
+  }
+}

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
   get :dashboard, to: "dashboards#show", as: :dashboard
 
+  # Public maker profile page (portfolio of delivered creations)
+  resources :makers, only: [:show]
+
   # AI chat pages: show a conversation and let the user post a message
   resources :ai_chats, only: [:show] do
     post :messages, on: :member, action: :create_message
@@ -18,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   # Match chat pages: a dreamer and a maker talk together about a project
-  resources :match_chats, only: [:show] do
+  resources :match_chats, only: [:index, :show] do
     post :messages, on: :member, action: :create_message
   end
 

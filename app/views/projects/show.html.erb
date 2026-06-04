@@ -1,7 +1,165 @@
-<h1>Votre projet</h1>
+<div class="container project-show my-5">
 
-<%= @project.title %>
-<%= @project.description %>
-<%= @project.deadline %>
-<%= @project.budget %>
-<%= image_tag @project.image if @project.image.attached? %>
+  <%# Link to go back to the projects list %>
+  <%= link_to "← Retour aux projets", projects_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
+
+  <%# === Header: title + current status badge === %>
+  <div class="project-header">
+    <h1><%= @project.title %></h1>
+    <span class="status-badge <%= @project.matched? ? 'status-accepted' : 'status-pending' %>">
+      <%= @project.status_label %>
+    </span>
+  </div>
+
+  <div class="row">
+
+    <%# === Left column: the visual + all the project info === %>
+    <div class="col-md-7">
+
+      <%# The project visual (image), or a placeholder if there is none %>
+      <div class="project-image">
+        <% if @project.image.attached? %>
+          <%= image_tag @project.image %>
+        <% else %>
+          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Pas encore de visuel" />
+        <% end %>
+      </div>
+
+      <%# Description in its own card %>
+      <div class="project-description">
+        <h2>Description</h2>
+        <p><%= @project.description %></p>
+      </div>
+
+      <%# Key facts shown as small boxes with an icon each %>
+      <div class="info-grid">
+        <div class="info-box">
+          <i class="fas fa-coins"></i>
+          <div>
+            <div class="info-label">Budget</div>
+            <div class="info-value"><%= @project.budget %> €</div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <i class="fas fa-calendar-day"></i>
+          <div>
+            <div class="info-label">Échéance</div>
+            <div class="info-value"><%= @project.deadline %></div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <i class="fas fa-user"></i>
+          <div>
+            <div class="info-label">Créé par</div>
+            <div class="info-value"><%= @project.dreamer.username %></div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <i class="fas fa-clock"></i>
+          <div>
+            <div class="info-label">Créé le</div>
+            <div class="info-value"><%= @project.created_at.strftime("%d/%m/%Y") %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# === Right column: the timeline + the applications === %>
+    <div class="col-md-5">
+
+      <%# Timeline of the project steps.
+          Past steps are validated (orange dot with a check),
+          future steps are shown but not validated (empty dot). %>
+      <div class="timeline-card">
+        <h2>Étapes du projet</h2>
+
+        <ul class="timeline">
+
+          <%# Step 1: the project was created (always done) %>
+          <li class="timeline-step is-done">
+            <div class="timeline-title">Projet créé</div>
+            <div class="timeline-date"><%= @project.created_at.strftime("%d/%m/%Y") %></div>
+          </li>
+
+          <%# Step 2: a visual was made (done only if an image is attached) %>
+          <li class="timeline-step <%= @project.image.attached? ? 'is-done' : 'is-todo' %>">
+            <div class="timeline-title">Visuel réalisé</div>
+            <div class="timeline-date">
+              <%= @project.image.attached? ? "Une image est associée au projet" : "À venir : générez ou ajoutez un visuel" %>
+            </div>
+          </li>
+
+          <%# Step 3: the project is published (always done here) %>
+          <li class="timeline-step is-done">
+            <div class="timeline-title">Projet publié</div>
+            <div class="timeline-date">Visible par les makers</div>
+          </li>
+
+          <%# Step 4: a maker was matched (done only if matched) %>
+          <li class="timeline-step <%= @project.matched? ? 'is-done' : 'is-todo' %>">
+            <div class="timeline-title">Match trouvé</div>
+            <div class="timeline-date">
+              <%= @project.matched? ? "Un maker a été accepté" : "À venir : en attente d'un maker" %>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <%# The makers who applied to this project %>
+      <div class="candidatures-card">
+        <h2>Candidatures</h2>
+
+        <% if @maker_projects.empty? %>
+          <p class="text-muted">Aucun maker n'a encore postulé.</p>
+        <% else %>
+          <% @maker_projects.each do |mp| %>
+            <div class="candidature-row">
+
+              <%# Top line: maker photo + name (left) and status badge (right) %>
+              <div class="candidature-head">
+                <div class="candidature-person">
+                  <%# Profile picture of the maker (or a placeholder) %>
+                  <% if mp.maker.profile_picture_url.present? %>
+                    <%= image_tag mp.maker.profile_picture_url, class: "candidature-avatar", alt: mp.maker.username %>
+                  <% else %>
+                    <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "candidature-avatar", alt: mp.maker.username %>
+                  <% end %>
+                  <%# Maker name links to their public profile (their creations) %>
+                  <%= link_to mp.maker.username, maker_path(mp.maker), class: "match-title maker-link" %>
+                </div>
+
+                <% if mp.status == "accepted" %>
+                  <span class="status-badge status-accepted">Accepté</span>
+                <% elsif mp.status == "rejected" %>
+                  <span class="status-badge status-rejected">Refusé</span>
+                <% else %>
+                  <span class="status-badge status-pending">En attente</span>
+                <% end %>
+              </div>
+
+              <%# Button to go to the discussion with this maker (if a chat exists) %>
+              <% if mp.match_chat.present? %>
+                <%= link_to "Aller à la discussion", match_chat_path(mp.match_chat), class: "btn btn-outline-secondary btn-sm" %>
+              <% else %>
+                <span class="candidature-nochat">Pas encore de discussion</span>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+
+  <%# Delete the project. Asks for confirmation before deleting. %>
+  <div class="project-actions">
+    <%= link_to "Supprimer le projet", project_path(@project),
+          data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
+          class: "btn btn-outline-danger btn-sm" %>
+  </div>
+
+</div>

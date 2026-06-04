@@ -1,0 +1,27 @@
+// Sticky footer layout: keep the footer at the very bottom of the page,
+// even when the page content is too short to fill the screen.
+
+// The page background (behind everything) matches the dark footer, so no thin
+// light line shows under the footer at the very bottom of the page.
+html {
+  background-color: $ink;
+}
+
+// The body becomes a vertical column at least as tall as the screen.
+// Its cream background covers everything except the footer at the bottom.
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $cream;
+}
+
+// The main content grows to fill the leftover space, pushing the footer down.
+.page-main {
+  flex: 1 0 auto;
+}
+
+// The footer never shrinks; it stays its natural size at the bottom.
+.footer {
+  flex-shrink: 0;
+}
