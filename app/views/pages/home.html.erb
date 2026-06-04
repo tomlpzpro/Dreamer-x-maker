@@ -26,41 +26,21 @@
   </div>
 
   <div class="row">
-    <div class="col-md-4">
-      <div class="card-trip">
-        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-        <div class="card-trip-infos">
-          <div>
-            <h2>Title here</h2>
-            <p>Short description here!</p>
+    <% @projects.each do |project| %>
+      <div class="col-md-4">
+        <div class="card-trip">
+          <% if project.image.attached? %>
+            <%= cl_image_tag(project.image.key) %>
+          <% else %>
+            <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+          <% end %>
+          <div class="card-trip-infos">
+            <div>
+              <h2><%= project.title %> </h2>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card-trip">
-        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-        <div class="card-trip-infos">
-          <div>
-            <h2>Title here</h2>
-            <p>Short description here!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card-trip">
-        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-        <div class="card-trip-infos">
-          <div>
-            <h2>Title here</h2>
-            <p>Short description here!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <% end %>
   </div>
 </div>
