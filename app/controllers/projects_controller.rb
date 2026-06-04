@@ -19,8 +19,8 @@ class ProjectsController < ApplicationController
     @project.dreamer = current_user
 
     if @project.save
-      chat = @project.llm_chat.create
-      redirect_to ai_chat_path(chat), notice: "Projet créé ! Générez maintenant son visuel."
+      @chat = LlmChat.create(project: @project)
+      redirect_to @project, notice: "Projet créé ! Générez maintenant son visuel."
     else
       render :new, status: :unprocessable_entity
     end
