@@ -1,12 +1,94 @@
+// Top navigation bar styling, following the charter (cream background,
+// thin bottom border, brand name in the script font).
+// Three parts: hamburger menu (left), brand (center), account (right).
+
 .navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+  background: $cream;                    // cream background instead of white
+  border-bottom: 1px solid $gray-light;  // thin separator under the navbar
+  padding: 10px 24px;                    // comfortable height and side spacing
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+// Keep the navbar visible at the top of the screen while scrolling.
+.navbar-lewagon.sticky-top {
+  box-shadow: 0 1px 6px rgba(28, 43, 46, .05); // very soft shadow under the bar
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 120px;
+// A 3-column grid so the brand stays perfectly centered, whatever the size
+// of the hamburger (left) and the account area (right).
+.navbar-grid {
+  display: grid;
+  // "minmax(0, 1fr)" forces the left and right columns to the exact same width,
+  // so the middle column (the brand) stays perfectly centered on the page,
+  // even if the account area on the right is wider than the hamburger.
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+}
+.navbar-grid > .dropdown      { justify-self: start; }  // hamburger on the left
+.navbar-grid > .navbar-brand  { justify-self: center; } // brand in the middle
+.navbar-grid > .navbar-account{ justify-self: end; }    // account on the right
+
+// --- Hamburger button (left) ---
+.navbar-toggler {
+  border: 1px solid $gray-light;   // thin border around the button
+  border-radius: .375rem;          // 6px rounded corners
+  padding: 6px 10px;
+}
+.navbar-toggler:hover {
+  background: $dreamer-light;       // soft orange background on hover
+}
+
+// --- Brand name "Dreamer x Maker" (center) ---
+.navbar-brand-text {
+  font-family: $script-font;
+  font-size: 30px;
+  padding: 0;                       // remove Bootstrap's default brand padding
+  margin: 0;
+}
+.navbar-brand-text .word-dreamer { color: $dreamer; }    // "Dreamer" in orange
+.navbar-brand-text .word-x       { color: $ink; }        // the "x" in ink
+.navbar-brand-text .word-maker   { color: $maker-dark; } // "Maker" in turquoise
+
+// --- Dropdown menu items (used by both the hamburger and the account menu) ---
+.navbar-lewagon .dropdown-item:hover {
+  background: $dreamer-light;        // soft orange highlight on hover
+  color: $dreamer-dark;
+}
+
+// --- Account area (right) ---
+.navbar-account {
+  display: flex;
+  align-items: center;
+}
+
+// The clickable avatar + name that open the account dropdown
+.navbar-avatar-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;                          // space between the photo and the name
+  cursor: pointer;                   // show it is clickable
+  color: $ink;
+  text-decoration: none;
+}
+.navbar-avatar-link .avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;                // perfect circle
+  object-fit: cover;                 // crop the photo nicely
+  border: 2px solid $gray-light;     // thin ring around the photo
+}
+.navbar-avatar-link:hover .avatar {
+  border-color: $dreamer;            // orange ring on hover
+}
+.navbar-avatar-link .navbar-username {
+  font-weight: 500;
+}
+
+// --- Small screens: hide the username next to the avatar to save space ---
+@media (max-width: 576px) {
+  .navbar-avatar-link .navbar-username {
+    display: none;
+  }
+  .navbar-brand-text {
+    font-size: 24px;                 // smaller brand name on phones
+  }
 }

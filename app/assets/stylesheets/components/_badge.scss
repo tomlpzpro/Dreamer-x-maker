@@ -1,0 +1,23 @@
+// Small colored labels (badges) for the two universes.
+// Orange (light) for the Dreamer side, turquoise (light) for the Maker side.
+
+// Shared shape for both badges
+.badge-universe {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;      // fully rounded "pill" shape
+  font-size: 12px;
+  font-weight: 600;          // semibold, like the charter surtitle
+}
+
+// Dreamer badge: light orange background, dark orange text
+.badge-dreamer {
+  background: $dreamer-light;
+  color: $dreamer-dark;
+}
+
+// Maker badge: light turquoise background, dark turquoise text
+.badge-maker {
+  background: $maker-light;
+  color: $maker-dark;
+}

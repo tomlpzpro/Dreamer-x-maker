@@ -1,0 +1,47 @@
+// Styling for the discussions list page (all the user's chats).
+
+// One discussion line: a clickable card linking to the chat.
+// Layout: avatar (left) | name + project (middle, grows) | status badge (right)
+.discussion-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: $cream;              // cream background
+  border: 1px solid $gray-light;  // thin light-gray border
+  border-radius: .5rem;           // 8px rounded corners
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  text-decoration: none;          // remove the link underline
+  color: $ink;
+}
+// Highlight the line on hover with an orange border
+.discussion-row:hover {
+  border-color: $dreamer;
+  background: $dreamer-light;
+}
+
+// Round profile picture of the other person
+.discussion-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;             // perfect circle
+  object-fit: cover;              // crop the photo nicely
+  border: 2px solid $gray-light;
+}
+
+// The middle block (name + project) grows to push the badge to the right
+.discussion-info {
+  flex-grow: 1;
+}
+
+// The name of the other person (bigger, main text)
+.discussion-name {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+// The project title under the name (smaller, secondary color)
+.discussion-project {
+  font-size: 14px;
+  color: $gray-text;
+}

@@ -16,8 +16,20 @@
       <%# My own messages go on the right, the other person's go on the left %>
       <div class="chat-message <%= message.user == current_user ? "from-user" : "from-ai" %>">
         <div class="chat-bubble">
-          <%# Name of the person who wrote the message %>
-          <div class="chat-author"><%= message.user.username %></div>
+          <%# Photo + name of the person who wrote the message %>
+          <div class="chat-author">
+            <% if message.user.profile_picture_url.present? %>
+              <%= image_tag message.user.profile_picture_url, class: "chat-author-avatar", alt: message.user.username %>
+            <% else %>
+              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "chat-author-avatar", alt: message.user.username %>
+            <% end %>
+            <%# Maker names link to their public profile; others show plain text %>
+            <% if message.user.maker? %>
+              <%= link_to message.user.username, maker_path(message.user), class: "maker-link" %>
+            <% else %>
+              <%= message.user.username %>
+            <% end %>
+          </div>
           <%= message.content %>
         </div>
       </div>
