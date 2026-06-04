@@ -179,9 +179,9 @@
 
     </div>
 
-    <%= button_to "Générer mon visuel", generer_visuel_ai_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+    <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
     <%# Form to write and send a new message %>
-    <%= form_with model: @llm_message, url: messages_ai_chat_path(@llm_chat) do |form| %>
+    <%= form_with model: @llm_message, url: llm_chat_llm_messages_path(@llm_chat) do |form| %>
       <div class="d-flex gap-2">
         <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." %>
         <%= form.submit "Send", class: "btn btn-primary" %>
