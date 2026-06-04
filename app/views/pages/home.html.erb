@@ -31,6 +31,27 @@
         <%= link_to "Découvrir les makers", new_user_registration_path(role: "maker"), class: "btn btn-outline-secondary mx-2" %>
       <% end %>
 
+  <div class="my-5">
+    <h2>Découvrez les projets déjà publiés</h2>
+  </div>
+
+  <div class="row">
+    <% @projects.each do |project| %>
+      <div class="col-md-4">
+        <div class="card-trip">
+          <% if project.image.attached? %>
+            <%= cl_image_tag(project.image.key) %>
+          <% else %>
+            <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+          <% end %>
+          <div class="card-trip-infos">
+            <div>
+              <h2><%= project.title %> </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
       <%# Dashboard button, only when the user IS logged in %>
       <% if user_signed_in? %>
         <%= link_to "Aller à mon dashboard", dashboard_path, class: "btn btn-primary mx-2" %>
