@@ -6,11 +6,14 @@ class ProjectsController < ApplicationController
       @projects = current_user.matched_projects.order(created_at: :desc)
     end
   end
-  
+
   def show
     @project = Project.find(params[:id])
     # The makers who applied to this project (with their status and their chat)
     @maker_projects = @project.maker_projects.includes(:maker, :match_chat)
+    @llm_chat = @project.llm_chat
+    @llm_messages = @llm_chat.llm_messages.order(:created_at)
+    @llm_message = LlmMessage.new
   end
 
   def new

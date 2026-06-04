@@ -10,10 +10,10 @@ class AiChatsController < ApplicationController
     @llm_message = @llm_chat.llm_messages.new(llm_message_params)
     @llm_message.role = "user"
     if @llm_message.save
-      redirect_to ai_chat_path(@llm_chat)
+      redirect_to @llm_chat.project
     else
       @llm_messages = @llm_chat.llm_messages.order(:created_at)
-      render :show, status: :unprocessable_entity
+      render "projects/show", status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class AiChatsController < ApplicationController
       filename: "generated_#{@llm_chat.project.id}.png",
       content_type: "image/png"
     )
-    redirect_to ai_chat_path(@llm_chat), notice: "Visuel généré !"
+    redirect_to @llm_chat.project, notice: "Visuel généré !"
   end
 
   private
