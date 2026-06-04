@@ -10,6 +10,8 @@ class AiChatsController < ApplicationController
     @llm_message = @llm_chat.llm_messages.new(llm_message_params)
     @llm_message.role = "user"
     if @llm_message.save
+      response = RubyLLM.chat.ask(@llm_message.content)
+      @llm_chat.llm_messages.create(role: "assistant", content: response.content)
       redirect_to @llm_chat.project
     else
       @llm_messages = @llm_chat.llm_messages.order(:created_at)
@@ -19,7 +21,7 @@ class AiChatsController < ApplicationController
 
   def generer_visuel
     @llm_chat = LlmChat.find(params[:id])
-    image = RubyLLM.paint(@llm_chat.project.description)
+    image = RubyLLM.paint(@llm_chat.llm_messages.where(role: "assistant").last.content)
     @llm_chat.project.image.attach(
       io: StringIO.new(Base64.decode64(image.data)),
       filename: "generated_#{@llm_chat.project.id}.png",

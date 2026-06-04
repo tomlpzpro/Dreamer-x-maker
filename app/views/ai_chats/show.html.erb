@@ -1,19 +1,14 @@
 <div class="container my-5">
 
-  <%# Page title %>
-  <h1 class="mb-4">AI chat</h1>
+  <h1 class="mb-4">Discute avec le ChatBot pour générer un visuel</h1>
 
-  <%# The box that holds all the messages %>
   <div class="chat-box mb-4">
 
-    <%# Show a small text when there is no message yet %>
     <% if @llm_messages.empty? %>
-      <p class="text-center text-muted my-5">No message yet. Start the conversation below!</p>
+      <p class="text-center text-muted my-5">Démarre la discussion</p>
     <% end %>
 
-    <%# Loop over every message of this chat %>
     <% @llm_messages.each do |message| %>
-      <%# "user" messages go on the right, the others (AI) go on the left %>
       <div class="chat-message <%= message.role == "user" ? "from-user" : "from-ai" %>">
         <div class="chat-bubble">
           <%= message.content %>
@@ -21,14 +16,24 @@
       </div>
     <% end %>
 
+    <% if @llm_chat.project.image.attached? %>
+      <div class="chat-message from-ai">
+        <div class="chat-bubble">
+          <%= image_tag @llm_chat.project.image, class: "img-fluid rounded" %>
+        </div>
+      </div>
+    <% end %>
+
   </div>
 
-  <%= button_to "Générer mon visuel", generer_visuel_ai_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
-  <%# Form to write and send a new message %>
+  <% if @llm_messages.last&.role == "assistant" && !@llm_chat.project.image.attached? %>
+    <%= button_to "Générer mon visuel ✨", generer_visuel_ai_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+  <% end %>
+
   <%= form_with model: @llm_message, url: messages_ai_chat_path(@llm_chat) do |form| %>
     <div class="d-flex gap-2">
-      <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." %>
-      <%= form.submit "Send", class: "btn btn-primary" %>
+      <%= form.text_field :content, class: "form-control", placeholder: "Écris ton message..." %>
+      <%= form.submit "Envoyer", class: "btn btn-primary" %>
     </div>
   <% end %>
 
