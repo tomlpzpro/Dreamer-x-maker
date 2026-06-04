@@ -1,9 +1,12 @@
 class ProjectsController < ApplicationController
   def index
-    # Only the projects created by the logged-in dreamer
-    @projects = current_user.projects.order(created_at: :desc)
+    if current_user.role == "dreamer"
+      @projects = current_user.projects.order(created_at: :desc)
+    else
+      @projects = current_user.matched_projects.order(created_at: :desc)
+    end
   end
-
+  
   def show
     @project = Project.find(params[:id])
   end
@@ -47,4 +50,10 @@ class ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(:title, :description, :deadline, :budget, :image)
   end
+
+  # def validated_matched_projects
+  #   current_user.matched_projects
+  #               .where(maker_projects: { status: "validated" })
+  #               .order(created_at: :desc)
+  # end
 end

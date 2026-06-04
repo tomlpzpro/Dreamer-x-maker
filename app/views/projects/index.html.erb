@@ -9,32 +9,32 @@
   <%# Show a small text when the dreamer has no project yet %>
   <% if @projects.empty? %>
     <p class="text-muted">You have no project yet. Click "New project" to create your first one!</p>
-  <% end %>
-
-  <%# One card per project %>
-  <div class="row">
-    <% @projects.each do |project| %>
-      <div class="col-md-4 mb-4">
-        <div class="card-trip">
-          <%# Project image, or a placeholder if there is none %>
-          <% if project.image.attached? %>
-            <%= image_tag project.image %>
-          <% else %>
-            <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-          <% end %>
-          <div class="card-trip-infos">
-            <div>
-              <h2><%= project.title %></h2>
-              <p><%= project.description %></p>
+  <% else %>
+    <%# One card per project %>
+    <div class="row">
+      <% @projects.each do |project| %>
+        <div class="col-md-4 mb-4">
+          <div class="card-trip">
+            <%# Project image, or a placeholder if there is none %>
+            <% if project.image.attached? %>
+              <%= image_tag project.image %>
+            <% else %>
+              <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+            <% end %>
+            <div class="card-trip-infos">
+              <div>
+                <h2><%= project.title %></h2>
+                <p><%= project.description %></p>
+              </div>
+            </div>
+            <%# Link to the project page %>
+            <div class="p-3">
+              <%= link_to "See project", project_path(project), class: "btn btn-outline-primary btn-sm" %>
             </div>
           </div>
-          <%# Link to the project page %>
-          <div class="p-3">
-            <%= link_to "See project", project_path(project), class: "btn btn-outline-primary btn-sm" %>
-          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 
 </div>
