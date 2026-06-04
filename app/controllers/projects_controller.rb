@@ -18,25 +18,11 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.dreamer = current_user
 
-    if params[:commit_action] == "generate"
-      # "Générer mon visuel" button: save the project, then go to its AI chat
-      # page so the user can generate a visual there.
-      if @project.save
-        chat = @project.llm_chats.create
-        redirect_to ai_chat_path(chat), notice: "Projet créé ! Générez maintenant son visuel."
-      else
-        render :new, status: :unprocessable_entity
-      end
+    if @project.save
+      chat = @project.llm_chat.create
+      redirect_to ai_chat_path(chat), notice: "Projet créé ! Générez maintenant son visuel."
     else
-      # "Enregistrer le projet" button: only allowed if an image was uploaded.
-      if @project.image.attached?
-        @project.save
-        redirect_to @project, notice: "Projet créé avec succès."
-      else
-        # No image and no generation: the form cannot be validated.
-        @project.errors.add(:image, "Chargez une image ou cliquez sur « Générer mon visuel »")
-        render :new, status: :unprocessable_entity
-      end
+      render :new, status: :unprocessable_entity
     end
   end
 
