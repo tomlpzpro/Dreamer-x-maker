@@ -1,10 +1,23 @@
-// Define variables for your color scheme
+// Color palette from the "Dreamer x Maker" brand charter.
+// Two meaningful colors: orange = the Dreamer (the idea, warm),
+// turquoise = the Maker (the hand, cold). Everything else is neutral.
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// --- Dreamer side (orange, warm) ---
+$dreamer: #FD8E49;        // main Dreamer color: primary buttons, warm accents
+$dreamer-light: #FFE4D0;  // soft Dreamer backgrounds, badges
+$dreamer-dark: #D26A26;   // text on light orange, hovers, "Dreamer" in the logo
+
+// --- Maker side (turquoise, cold) ---
+$maker: #71BDCB;          // main Maker color: structure, cold illustrations
+$maker-light: #E3F2F4;    // soft Maker backgrounds, cards
+$maker-dark: #2E6B77;     // text on light turquoise, "Maker" in the logo
+
+// --- Neutrals (we never use pure black or pure white) ---
+$cream: #FBFAF7;          // general background, replaces pure white
+$gray-light: #EDEBE5;     // separators, borders
+$gray-text: #6B7470;      // secondary text, captions
+$ink: #1C2B2E;            // main text color, replaces black
+
+// --- Utility colors, only used for alert messages ---
+$red: #FD1015;            // error / danger alerts
+$green: #1EDD88;          // success alerts

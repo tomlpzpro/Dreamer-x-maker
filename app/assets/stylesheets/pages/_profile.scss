@@ -1,0 +1,101 @@
+// Styling for the profile page (show and edit), following the charter.
+
+// The centered card that holds all the profile info
+.profile-card {
+  max-width: 500px;
+  margin: 0 auto;                 // center the card horizontally
+  text-align: center;
+  background: $cream;             // cream background (never white)
+  border: 1px solid $gray-light;  // thin light-gray border
+  border-radius: .5rem;           // 8px rounded corners
+  padding: 32px;
+}
+
+// The round profile picture at the top of the card
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;             // perfect circle
+  object-fit: cover;              // crop the image nicely
+  border: 3px solid $dreamer-light; // soft orange ring around the photo
+}
+
+// The user name under the photo
+.profile-card h2 {
+  margin-top: 16px;
+}
+
+// The user role under the name (small, secondary color)
+.profile-card .profile-role {
+  color: $gray-text;
+  text-transform: capitalize;     // show "Dreamer" instead of "dreamer"
+}
+
+// ===========================================================================
+// MY PROFILE PAGE (the logged-in user's own profile)
+// ===========================================================================
+
+// Hero header: a colored banner with the photo, the role and the name.
+.profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  border-radius: .75rem;          // 12px rounded corners
+  padding: 32px;
+  margin-bottom: 40px;
+}
+// Orange banner for a dreamer, turquoise banner for a maker
+.profile-hero.is-dreamer { background: $dreamer-light; }
+.profile-hero.is-maker   { background: $maker-light; }
+
+// The round photo on the left, with a cream ring around it
+.profile-hero-photo img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;             // perfect circle
+  object-fit: cover;              // crop the photo nicely
+  border: 4px solid $cream;       // cream ring to lift it off the banner
+}
+
+// The middle block (label + name) grows to push the button to the right
+.profile-hero-info {
+  flex-grow: 1;
+}
+
+// Small label above the name
+.profile-hero-label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.profile-hero.is-dreamer .profile-hero-label { color: $dreamer-dark; }
+.profile-hero.is-maker   .profile-hero-label { color: $maker-dark; }
+
+// The user name
+.profile-hero h1 {
+  margin: 6px 0 0;
+}
+
+// --- Responsive: stack the hero on small screens ---
+@media (max-width: 576px) {
+  .profile-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+// A clickable maker name (links to the maker's public profile)
+.maker-link {
+  color: $dreamer-dark;           // orange link
+  text-decoration: none;
+}
+.maker-link:hover {
+  text-decoration: underline;
+}
+
+// The "delivered creations" section on the maker's public profile
+.maker-creations {
+  margin-top: 40px;
+}

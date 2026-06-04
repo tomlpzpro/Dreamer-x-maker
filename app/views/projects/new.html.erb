@@ -1,14 +1,43 @@
-<h1>Créer un nouveau projet</h1>
-<%= simple_form_for(@project, html: { multipart: true }) do |f| %>
-  <%= f.error_notification %>
-  <div class="form-inputs">
-    <%= f.input :title, required: true, label: "Nom du projet" %>
-    <%= f.input :description, required: true, label: "Description du projet" %>
-    <%= f.input :deadline, label: "Delais", placeholder: "En jours" %>
-    <%= f.input :budget, label: "Budget", placeholder: "En euros" %>
-    <%= f.input :image, as: :file, label: "Charger votre image" %>
+<div class="container my-5">
+
+  <%# Link to go back to the projects list %>
+  <%= link_to "← Retour aux projets", projects_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
+
+  <%# The form inside a centered card %>
+  <div class="form-card">
+    <h1>Créer un nouveau projet</h1>
+    <p class="form-subtitle">Décrivez l'objet dont vous rêvez : un maker pourra le réaliser.</p>
+
+    <%= simple_form_for(@project, html: { multipart: true }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :title, required: true, label: "Nom du projet", placeholder: "Ex : Table basse en chêne" %>
+        <%= f.input :description, as: :text, required: true, label: "Description du projet", placeholder: "Matière, dimensions, finition..." %>
+        <%# A native calendar date picker (input type="date") to choose the wanted delivery date %>
+        <%= f.input :deadline, as: :string, input_html: { type: "date" }, label: "Date de livraison voulue" %>
+        <%= f.input :budget, label: "Budget", placeholder: "En euros" %>
+      </div>
+
+      <%# Visual: the user must EITHER upload an image OR generate one with the AI.
+          The two options are shown on the same line, separated by "ou". %>
+      <label class="visual-title">Visuel du projet</label>
+      <div class="visual-choice">
+        <%# Option 1: upload an image %>
+        <div class="visual-upload">
+          <%= f.input :image, as: :file, label: false %>
+        </div>
+        <span class="visual-or">ou</span>
+        <%# Option 2: generate the visual (saves the project, then goes to the chat).
+            button_tag keeps the visible text separate from the submitted value. %>
+        <%= button_tag "Générer mon visuel", type: "submit", name: "commit_action", value: "generate", class: "btn btn-secondary" %>
+      </div>
+
+      <%# Validate the project. Only works if an image was uploaded. %>
+      <div class="form-actions">
+        <%= button_tag "Enregistrer le projet", type: "submit", name: "commit_action", value: "save", class: "btn btn-primary" %>
+      </div>
+    <% end %>
   </div>
-  <div class="form-actions">
-    <%= f.button :submit, "Enregistrer le projet" %>
-  </div>
-<% end %>
+
+</div>
