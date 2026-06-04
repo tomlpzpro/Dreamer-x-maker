@@ -21,7 +21,7 @@ class AiChatsController < ApplicationController
 
   def generer_visuel
     @llm_chat = LlmChat.find(params[:id])
-    image = RubyLLM.paint(@llm_chat.project.description)
+    image = RubyLLM.paint(@llm_chat.llm_messages.where(role: "assistant").last.content)
     @llm_chat.project.image.attach(
       io: StringIO.new(Base64.decode64(image.data)),
       filename: "generated_#{@llm_chat.project.id}.png",
