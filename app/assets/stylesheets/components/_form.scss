@@ -1,0 +1,150 @@
+// Styling for forms shown inside a centered card (e.g. the new project form).
+// It targets the basic fields directly so it works whatever the form helper.
+
+// The centered card that holds the form
+.form-card {
+  max-width: 560px;
+  margin: 0 auto;                 // center the card horizontally
+  background: $cream;             // cream background (never white)
+  border: 1px solid $gray-light;  // thin light-gray border
+  border-radius: .75rem;          // 12px rounded corners
+  padding: 40px;
+}
+
+// Title and subtitle at the top of the form
+.form-card h1 {
+  font-size: 30px;
+  margin-bottom: 4px;
+}
+.form-card .form-subtitle {
+  color: $gray-text;
+  margin-bottom: 28px;
+}
+
+// Space between each field (simple_form wraps each field in ".input")
+.form-card .input {
+  margin-bottom: 18px;
+}
+
+// Field labels
+.form-card label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: $ink;
+}
+
+// Text fields, number fields, textarea and selects
+.form-card input[type="text"],
+.form-card input[type="number"],
+.form-card input[type="email"],
+.form-card input[type="password"],
+.form-card input[type="date"],
+.form-card textarea,
+.form-card select {
+  width: 100%;                    // take the full card width
+  padding: 10px 14px;
+  background: white;
+  border: 1px solid $gray-light;
+  border-radius: .375rem;         // 6px rounded corners
+  font-size: 15px;
+  color: $ink;
+}
+// Make the description box a bit taller
+.form-card textarea {
+  min-height: 120px;
+  resize: vertical;               // let the user resize it up/down only
+}
+
+// Orange highlight when a field is focused (being typed in)
+.form-card input:focus,
+.form-card textarea:focus,
+.form-card select:focus {
+  outline: none;
+  border-color: $dreamer;
+  box-shadow: 0 0 0 3px $dreamer-light; // soft orange glow around the field
+}
+
+// --- "Visuel du projet" choice: upload an image OR generate one ---
+.form-card .visual-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: $ink;
+}
+// The row holding the upload field, the "ou" word and the generate button.
+// "align-items: stretch" makes the upload box and the button grow to the SAME
+// height automatically, so we don't have to guess a fixed height.
+.form-card .visual-choice {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+// The upload field takes the remaining space on the left.
+// The border/box is on this DIV (not the native file input, whose height is
+// not reliable across browsers). Its height comes from the padding below.
+.form-card .visual-upload {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;        // center the file control inside the box
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid $gray-light;
+  border-radius: .375rem;     // 6px rounded corners
+}
+.form-card .visual-upload .input {
+  margin-bottom: 0;           // no extra spacing inside the row
+  width: 100%;
+}
+// The native file input sits inside the box without its own border/background
+.form-card .visual-upload input[type="file"] {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: $ink;
+}
+// The generate button just centers its text; its height matches the upload
+// box thanks to "align-items: stretch" on the row.
+.form-card .visual-choice .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+// Keep the "ou" word centered on the row (not stretched)
+.form-card .visual-or {
+  align-self: center;
+}
+// The little "ou" word between the two options
+.form-card .visual-or {
+  color: $gray-text;
+  font-size: 14px;
+}
+// Keep the generate button text on a single line
+.form-card .visual-choice .btn {
+  white-space: nowrap;
+}
+// Stack the two options on small screens
+@media (max-width: 576px) {
+  .form-card .visual-choice {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+// --- Validate button: full width below the visual choice ---
+.form-card .form-actions {
+  margin-top: 8px;
+}
+.form-card .form-actions .btn {
+  width: 100%;
+  padding: 12px;
+}
+
+// Error messages shown by simple_form
+.form-card .error {
+  color: $dreamer-dark;
+  font-size: 13px;
+  margin-top: 4px;
+}

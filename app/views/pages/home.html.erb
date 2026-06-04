@@ -1,66 +1,154 @@
+<%# ======================================================================= %>
+<%# HERO: full-width two-tone background (orange = Dreamer, turquoise =     %>
+<%# Maker) with a cream card floating in the middle. This is outside the    %>
+<%# container so the colored background spans the whole page width.         %>
+<%# ======================================================================= %>
+<div class="home-hero">
+  <div class="container">
+    <div class="home-hero-card">
+
+      <%# Small label above the brand name %>
+      <p class="home-surtitle">Sur-mesure</p>
+
+      <%# Brand name: "Dreamer" orange, "x" ink, "Maker" turquoise %>
+      <p class="home-brand">
+        <span class="word-dreamer">Dreamer</span>
+        <span class="word-x">x</span>
+        <span class="word-maker">Maker</span>
+      </p>
+
+      <%# Tagline in the serif font %>
+      <h1>Là où l'idée rencontre la main.</h1>
+
+      <%# Short description of the platform %>
+      <p class="home-lead">Décrivez l'objet dont vous rêvez. On le met en image,
+         puis on vous met en relation avec l'artisan capable de le fabriquer.</p>
+
+      <%# Sign up buttons, only when the visitor is NOT logged in.
+          Dreamer = orange (primary), Maker = turquoise outline (secondary). %>
+      <% unless user_signed_in? %>
+        <%= link_to "Décrire mon objet", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-2" %>
+        <%= link_to "Découvrir les makers", new_user_registration_path(role: "maker"), class: "btn btn-outline-secondary mx-2" %>
+      <% end %>
+
+      <%# Dashboard button, only when the user IS logged in %>
+      <% if user_signed_in? %>
+        <%= link_to "Aller à mon dashboard", dashboard_path, class: "btn btn-primary mx-2" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <div class="container">
-  <div class="text-center my-5">
 
-    <h1 class="my-5">Imaginez. Partagez. Faites créer.</h1>
+  <%# ===================================================================== %>
+  <%# HOW IT WORKS: 3 simple steps                                          %>
+  <%# ===================================================================== %>
+  <div class="home-section">
+    <div class="home-section-head">
+      <h2>Comment ça marche</h2>
+      <p>Du rêve à l'objet, en trois étapes simples.</p>
+    </div>
 
-    <p class="m-5">Vous avez une idée d'objet, de meuble ou de création unique ?
-        Publiez votre projet et entrez en contact avec des makers passionnés.
-        Vous êtes maker ? Découvrez des projets inspirants et proposez votre savoir-faire
-        pour les concrétiser.</p>
+    <div class="home-steps">
 
-    <%# Show the sign up buttons only when the visitor is NOT logged in %>
-    <% unless user_signed_in? %>
-      <%= link_to "Dreamer", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-5" %>
-      <%= link_to "Maker", new_user_registration_path(role: "maker"), class: "btn btn-primary mx-5" %>
-    <% end %>
+      <%# Step 1 %>
+      <div class="home-step">
+        <div class="step-icon"><i class="fas fa-lightbulb"></i></div>
+        <h3>Décrivez votre idée</h3>
+        <p>Expliquez en quelques mots l'objet sur mesure dont vous rêvez.</p>
+      </div>
 
-    <%# Show the dashboard button only when the user IS logged in %>
+      <%# Step 2 %>
+      <div class="home-step">
+        <div class="step-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+        <h3>Visualisez-le</h3>
+        <p>Notre IA met votre idée en image pour la rendre concrète.</p>
+      </div>
+
+      <%# Step 3 %>
+      <div class="home-step">
+        <div class="step-icon"><i class="fas fa-handshake"></i></div>
+        <h3>Rencontrez la main</h3>
+        <p>On vous met en relation avec l'artisan capable de le fabriquer.</p>
+      </div>
+    </div>
+  </div>
+
+  <%# ===================================================================== %>
+  <%# TWO UNIVERSES: the Dreamer and the Maker meeting at the "x"           %>
+  <%# ===================================================================== %>
+  <div class="home-section">
+    <div class="home-universes">
+
+      <%# Dreamer side (orange, warm) %>
+      <div class="home-universe is-dreamer">
+        <p class="universe-label">L'idée · chaud</p>
+        <p class="universe-name">Dreamer</p>
+        <p>Celui ou celle qui imagine un objet sur mesure et cherche la bonne personne pour le créer.</p>
+      </div>
+
+      <%# The "x" where the two universes meet %>
+      <div class="universe-cross">x</div>
+
+      <%# Maker side (turquoise, cold) %>
+      <div class="home-universe is-maker">
+        <p class="universe-label">La main · froid</p>
+        <p class="universe-name">Maker</p>
+        <p>L'artisan, l'atelier ou le studio qui possède le savoir-faire pour donner vie au projet.</p>
+      </div>
+    </div>
+  </div>
+
+  <%# ===================================================================== %>
+  <%# FEATURED PROJECTS: real projects from the database                    %>
+  <%# ===================================================================== %>
+  <div class="home-section">
+    <div class="home-section-head">
+      <h2>Les projets déjà publiés</h2>
+      <p>Des idées sur mesure qui cherchent leur artisan.</p>
+    </div>
+
+    <div class="row">
+      <%# Show the first 3 projects, one card each %>
+      <% @projects.first(3).each do |project| %>
+        <div class="col-md-4 mb-4">
+          <%= link_to project_path(project), class: "home-project-link" do %>
+            <div class="card-trip">
+              <%# Status badge shown over the image %>
+              <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
+              <%# Project image, or a placeholder if there is none %>
+              <% if project.image.attached? %>
+                <%= image_tag project.image %>
+              <% else %>
+                <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+              <% end %>
+              <div class="card-trip-infos">
+                <div>
+                  <h2><%= project.title %></h2>
+                  <p><%= project.description %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# ===================================================================== %>
+  <%# FINAL CALL TO ACTION                                                  %>
+  <%# ===================================================================== %>
+  <div class="home-cta">
+    <h2>Votre idée mérite la bonne main.</h2>
+    <p>Publiez votre projet et entrez en contact avec des makers passionnés.</p>
+
+    <%# Different button depending on whether the visitor is logged in %>
     <% if user_signed_in? %>
-      <%= link_to "Dashboard", dashboard_path, class: "btn btn-primary mx-5" %>
+      <%= link_to "Créer un projet", new_project_path, class: "btn btn-primary" %>
+    <% else %>
+      <%= link_to "Commencer maintenant", new_user_registration_path(role: "dreamer"), class: "btn btn-primary" %>
     <% end %>
   </div>
 
-
-  <div class="my-5">
-    <h2>Découvrez les projets déjà publiés</h2>
-  </div>
-
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card-trip">
-        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-        <div class="card-trip-infos">
-          <div>
-            <h2>Title here</h2>
-            <p>Short description here!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card-trip">
-        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-        <div class="card-trip-infos">
-          <div>
-            <h2>Title here</h2>
-            <p>Short description here!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card-trip">
-        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-        <div class="card-trip-infos">
-          <div>
-            <h2>Title here</h2>
-            <p>Short description here!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </div>

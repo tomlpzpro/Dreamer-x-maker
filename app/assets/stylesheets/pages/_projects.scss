@@ -1,0 +1,208 @@
+// Styling for the project show page (all the info + a steps timeline).
+
+// Bottom actions area (the delete button)
+.project-actions {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid $gray-light;  // a thin line above the delete button
+}
+
+// --- Header: title on the left, status badge on the right ---
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.project-header h1 {
+  margin: 0;
+}
+
+// --- The project visual (image) ---
+.project-image img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;          // crop the image nicely
+  border-radius: .5rem;       // 8px rounded corners
+  border: 1px solid $gray-light;
+}
+
+// --- Description block ---
+.project-description {
+  margin-top: 24px;
+}
+.project-description h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.project-description p {
+  color: $gray-text;
+}
+
+// --- Info grid: small boxes with an icon, a label and a value ---
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   // two boxes per row
+  gap: 12px;
+  margin-top: 24px;
+}
+
+// One info box
+.info-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: $cream;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;
+  padding: 14px 16px;
+}
+// The icon inside the box (orange, in a soft orange circle)
+.info-box i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: $dreamer-light;
+  color: $dreamer-dark;
+  font-size: 16px;
+}
+// The small label above the value
+.info-box .info-label {
+  font-size: 12px;
+  color: $gray-text;
+}
+// The value itself
+.info-box .info-value {
+  font-weight: 600;
+  color: $ink;
+}
+
+// --- Cards on the right (timeline + applications) ---
+.timeline-card,
+.candidatures-card {
+  background: $cream;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.timeline-card h2,
+.candidatures-card h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+// ===========================================================================
+// TIMELINE (vertical list of steps with dots and a connecting line)
+// ===========================================================================
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// One step in the timeline
+.timeline-step {
+  position: relative;         // so the dot and line can be placed inside
+  padding-left: 30px;         // room on the left for the dot
+  padding-bottom: 22px;
+}
+
+// The vertical line that connects one dot to the next
+.timeline-step::before {
+  content: "";
+  position: absolute;
+  left: 9px;                  // centered under the dot
+  top: 20px;
+  bottom: 0;
+  width: 2px;
+  background: $gray-light;
+}
+// No line after the last step
+.timeline-step:last-child::before {
+  display: none;
+}
+
+// The dot on the left of each step (also holds the check mark when done)
+.timeline-step::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;         // round dot
+  border: 2px solid $gray-light;
+  background: $cream;
+  // Center the check mark inside the dot
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: $cream;
+}
+// Done (past) step: orange dot with a white check mark
+.timeline-step.is-done::after {
+  content: "✓";
+  background: $dreamer;
+  border-color: $dreamer;
+}
+// To-do (future) step: empty gray dot, no check mark (content stays "")
+
+// The title of a step
+.timeline-step .timeline-title {
+  font-weight: 600;
+}
+// Future steps are shown in a muted color so they look "not done yet"
+.timeline-step.is-todo .timeline-title {
+  color: $gray-text;
+}
+// The small date/detail under a step title
+.timeline-step .timeline-date {
+  font-size: 13px;
+  color: $gray-text;
+}
+
+// ===========================================================================
+// CANDIDATURES (one box per maker, with a button to the discussion)
+// ===========================================================================
+.candidature-row {
+  border: 1px solid $gray-light;
+  border-radius: .5rem;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+// Top line: maker photo + name on the left, status badge on the right
+.candidature-row .candidature-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+// The left group: photo + name side by side
+.candidature-row .candidature-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+// Round profile picture of the maker
+.candidature-row .candidature-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;             // perfect circle
+  object-fit: cover;              // crop the photo nicely
+  border: 2px solid $gray-light;
+}
+.candidature-row .match-title {
+  font-weight: 500;
+}
+// Small text shown when there is no discussion yet
+.candidature-row .candidature-nochat {
+  font-size: 13px;
+  color: $gray-text;
+}

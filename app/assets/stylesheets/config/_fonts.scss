@@ -1,16 +1,18 @@
-// Import Google fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
+// Fonts from the "Dreamer x Maker" brand charter.
+// Three roles:
+//   - Fraunces (serif): titles and headlines
+//   - Hanken Grotesk (sans-serif): body text and UI
+//   - Playlist Script: the brand name only (needs a paid license, so here we
+//     just keep a "cursive" fallback; the real logo is an image anyway)
 
-// Define fonts for body and headers
-$body-font: "Work Sans", "Helvetica", "sans-serif";
-$headers-font: "Nunito", "Helvetica", "sans-serif";
+// Load Fraunces and Hanken Grotesk from Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400&family=Hanken+Grotesk:wght@400;500;600&display=swap');
 
-// To use a font file (.woff) uncomment following lines
-// @font-face {
-//   font-family: "Font Name";
-//   src: font-url('FontFile.eot');
-//   src: font-url('FontFile.eot?#iefix') format('embedded-opentype'),
-//        font-url('FontFile.woff') format('woff'),
-//        font-url('FontFile.ttf') format('truetype')
-// }
-// $my-font: "Font Name";
+// Font used for normal text and interface (body, buttons, forms)
+$body-font: "Hanken Grotesk", "Helvetica", sans-serif;
+
+// Font used for all the titles (h1, h2, h3...)
+$headers-font: "Fraunces", "Georgia", serif;
+
+// Font reserved for the brand name "Dreamer x Maker"
+$script-font: "Playlist Script", cursive;

@@ -1,33 +1,170 @@
-#dreamer-dashboard {
-  .card-trip {
-    overflow: hidden;
-    background: white;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  }
+// Styling for the dashboard pages (dreamer and maker).
+// Both pages share the same building blocks: a welcome header, a row of stat
+// cards, and several sections (projects, matches, discussions).
 
-  .card-trip > img {
-    height: 200px;
-    width: 100%;
-    object-fit: cover;
-  }
+// Wrapper around the whole dashboard
+.dashboard {
+  padding: 40px 0;
+}
 
-  .card-trip h2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
-  }
+// ===========================================================================
+// WELCOME HEADER (a soft colored banner at the top)
+// ===========================================================================
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  // text on the left, button on the right
+  flex-wrap: wrap;                 // wrap on small screens
+  gap: 16px;
+  padding: 28px 32px;
+  border-radius: .75rem;           // 12px rounded corners
+  margin-bottom: 32px;
+}
+// Orange banner for the dreamer, turquoise banner for the maker
+.dashboard-header.is-dreamer { background: $dreamer-light; }
+.dashboard-header.is-maker   { background: $maker-light; }
 
-  .card-trip p {
-    font-size: 12px;
-    opacity: .7;
-    margin: 0;
-  }
+// The "Bonjour ..." title inside the header
+.dashboard-header h1 {
+  margin: 0 0 4px;
+  font-size: 32px;
+}
+// The small subtitle under the title
+.dashboard-header .dashboard-subtitle {
+  margin: 0;
+  color: $gray-text;
+}
 
-  .card-trip .card-trip-infos {
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    position: relative;
+// ===========================================================================
+// STAT CARDS (small boxes showing a number + a label)
+// ===========================================================================
+.dashboard-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+// One stat card
+.stat-card {
+  flex: 1;                         // all stat cards share the width equally
+  background: $cream;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;            // 8px rounded corners
+  padding: 20px 24px;
+  text-align: center;
+}
+// The big number
+.stat-card .stat-number {
+  font-family: $headers-font;      // serif font for the number
+  font-size: 36px;
+  color: $ink;
+  line-height: 1;
+}
+// The label under the number
+.stat-card .stat-label {
+  font-size: 13px;
+  color: $gray-text;
+  margin-top: 4px;
+}
+
+// ===========================================================================
+// SECTIONS (each block of the dashboard)
+// ===========================================================================
+.dashboard-section {
+  margin-bottom: 40px;
+}
+
+// The title row of a section: title on the left, optional link on the right
+.dashboard-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.dashboard-section-head h2 {
+  margin: 0;
+}
+.dashboard-section-head a {
+  font-size: 14px;
+  color: $dreamer-dark;            // orange link
+  text-decoration: none;
+}
+.dashboard-section-head a:hover {
+  text-decoration: underline;
+}
+
+// Small text shown when a section is empty
+.dashboard-empty {
+  color: $gray-text;
+}
+
+// ===========================================================================
+// MATCH / APPLICATION ROW (a project title + a status badge)
+// ===========================================================================
+.match-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  // project title left, status badge right
+  background: $cream;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;
+  padding: 14px 20px;
+  margin-bottom: 10px;
+  text-decoration: none;           // it is a link: remove the underline
+  color: $ink;                     // keep the text in the normal ink color
+}
+// Highlight the row on hover with an orange border (it is clickable)
+.match-row:hover {
+  border-color: $dreamer;
+  background: $dreamer-light;
+}
+.match-row .match-title {
+  font-weight: 500;
+}
+// Left group of a match row: maker photo + text
+.match-row .match-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+// Round profile picture of the maker in a match row
+.match-row .match-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;             // perfect circle
+  object-fit: cover;              // crop the photo nicely
+  border: 2px solid $gray-light;
+}
+
+// Status badge (a small colored pill)
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;            // fully rounded pill
+  font-size: 12px;
+  font-weight: 600;
+}
+// Accepted = turquoise (a confirmed match)
+.status-badge.status-accepted {
+  background: $maker-light;
+  color: $maker-dark;
+}
+// Pending = orange (still waiting)
+.status-badge.status-pending {
+  background: $dreamer-light;
+  color: $dreamer-dark;
+}
+// Rejected = neutral gray
+.status-badge.status-rejected {
+  background: $gray-light;
+  color: $gray-text;
+}
+
+// ===========================================================================
+// RESPONSIVE: stack the stat cards on small screens
+// ===========================================================================
+@media (max-width: 768px) {
+  .dashboard-stats {
+    flex-direction: column;
   }
 }

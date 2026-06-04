@@ -1,37 +1,249 @@
-// Specific CSS for your home-page
-.card-trip {
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+// Styling for the home page, following the "Dreamer x Maker" charter.
+// The page is split in clear sections: hero, how it works, the two universes,
+// featured projects, and a final call to action.
+
+// ===========================================================================
+// HERO (top section with the big title)
+// This is the brand "signature" look from the charter cover: a full-width
+// two-tone background (orange = Dreamer on the left, turquoise = Maker on the
+// right) with a cream card floating in the middle.
+// ===========================================================================
+.home-hero {
+  // Split background: left half soft orange, right half soft turquoise.
+  // The "to right" gradient with hard stops at 50% makes a clean vertical line.
+  background: linear-gradient(to right, $dreamer-light 0 50%, $maker-light 50% 100%);
+  padding: 80px 0;           // vertical space above and below the floating card
+  margin-bottom: 24px;       // space before the next section
 }
 
-.card-trip > img {
-  height: 200px;
-  width: 100%;
-  object-fit: cover;
+// The cream card that floats in the middle of the colored background
+.home-hero-card {
+  background: $cream;        // cream card, never pure white
+  border-radius: .75rem;     // 12px rounded corners
+  box-shadow: 0 10px 40px rgba(28, 43, 46, .12); // soft shadow (ink color)
+  max-width: 720px;
+  margin: 0 auto;            // center the card horizontally
+  padding: 64px 48px;
+  text-align: center;
 }
 
-.card-trip h2 {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.card-trip p {
+// Small label above the big title (the charter "surtitle")
+.home-hero-card .home-surtitle {
+  font-family: $body-font;
+  font-weight: 600;          // semibold
   font-size: 12px;
-  opacity: .7;
+  letter-spacing: 2px;       // spaced-out capital letters
+  text-transform: uppercase;
+  color: $dreamer-dark;      // dark orange
+  margin-bottom: 12px;
+}
+
+// The brand name in the script font: "Dreamer" orange, "x" ink, "Maker" turquoise
+.home-hero-card .home-brand {
+  font-family: $script-font;
+  font-size: 56px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.home-hero-card .home-brand .word-dreamer { color: $dreamer; }
+.home-hero-card .home-brand .word-x       { color: $ink; }
+.home-hero-card .home-brand .word-maker   { color: $maker-dark; }
+
+// The tagline under the brand name (Fraunces serif, light weight)
+.home-hero-card h1 {
+  font-weight: 300;          // Fraunces Light
+  font-size: 30px;
+  margin: 0 auto 16px;
+}
+
+// The paragraph under the tagline
+.home-hero-card .home-lead {
+  font-size: 18px;
+  color: $gray-text;         // secondary text color
+  max-width: 520px;
+  margin: 0 auto 32px;       // centered, space below before the buttons
+}
+
+// Make the hero buttons a bit bigger and comfortable to click
+.home-hero-card .btn {
+  padding: 12px 24px;
+  font-weight: 500;
+}
+
+// ===========================================================================
+// SHARED SECTION TITLE (used by several sections below)
+// ===========================================================================
+.home-section {
+  padding: 56px 0;           // even vertical space around each section
+}
+
+// Centered title + intro line at the top of a section
+.home-section-head {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 40px;       // center it and leave space before the content
+}
+.home-section-head h2 {
+  margin-bottom: 8px;
+}
+.home-section-head p {
+  color: $gray-text;
   margin: 0;
 }
 
-
-.card-trip .card-trip-infos {
-  padding: 16px;
+// ===========================================================================
+// HOW IT WORKS (3 steps)
+// ===========================================================================
+.home-steps {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  position: relative;
+  gap: 24px;
 }
 
-// .homepage {
-//   min-height: 100vh;
-// }
+// One step card
+.home-step {
+  flex: 1;                   // the 3 steps share the width equally
+  text-align: center;
+  background: $cream;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;      // 8px rounded corners
+  padding: 32px 24px;
+}
+
+// The round number/icon circle at the top of a step
+.home-step .step-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;       // centered, space below before the title
+  border-radius: 50%;        // perfect circle
+  background: $dreamer-light; // soft orange circle
+  color: $dreamer-dark;
+  font-size: 22px;
+}
+
+// Step title
+.home-step h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+// Step description
+.home-step p {
+  color: $gray-text;
+  font-size: 15px;
+  margin: 0;
+}
+
+// ===========================================================================
+// "TWO UNIVERSES" BAND (Dreamer | x | Maker)
+// ===========================================================================
+.home-universes {
+  display: flex;
+  align-items: stretch;      // both cards keep the same height
+  gap: 16px;
+}
+
+// One universe card (Dreamer or Maker)
+.home-universe {
+  flex: 1;                   // both cards share the width equally
+  padding: 32px;
+  border-radius: .5rem;      // 8px rounded corners
+}
+.home-universe.is-dreamer { background: $dreamer-light; }  // soft orange
+.home-universe.is-maker   { background: $maker-light; }    // soft turquoise
+
+// Small label at the top of each universe card
+.home-universe .universe-label {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.home-universe.is-dreamer .universe-label { color: $dreamer-dark; }
+.home-universe.is-maker   .universe-label { color: $maker-dark; }
+
+// The universe name ("Dreamer" / "Maker") in the script font
+.home-universe .universe-name {
+  font-family: $script-font;
+  font-size: 36px;
+  margin: 4px 0 12px;
+}
+.home-universe.is-dreamer .universe-name { color: $dreamer; }
+.home-universe.is-maker   .universe-name { color: $maker-dark; }
+
+// Universe description text
+.home-universe p:last-child {
+  color: $gray-text;
+  margin: 0;
+}
+
+// The "x" in the middle, where the two universes meet
+.home-universes .universe-cross {
+  display: flex;
+  align-items: center;       // vertically centered between the two cards
+  font-family: $script-font;
+  font-size: 40px;
+  color: $ink;
+}
+
+// ===========================================================================
+// FEATURED PROJECTS
+// ===========================================================================
+// A project card on the home page becomes clickable.
+// On hover we add a soft shadow and an orange border to the inner card.
+// We do NOT use "transform" here: a transform would put the card on its own
+// rendering layer, which breaks the rounded-corner clipping (the white card
+// then bleeds past the rounded border).
+.home-project-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.home-project-link .card-trip {
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+.home-project-link:hover .card-trip {
+  box-shadow: 0 8px 20px rgba(28, 43, 46, .12); // soft shadow (ink color)
+  border-color: $dreamer;                        // orange border on hover
+}
+
+// ===========================================================================
+// FINAL CALL TO ACTION
+// ===========================================================================
+.home-cta {
+  text-align: center;
+  background: $dreamer-light;   // soft orange band
+  border-radius: .75rem;        // 12px rounded corners
+  padding: 56px 24px;
+  margin: 56px 0;
+}
+.home-cta h2 {
+  margin-bottom: 8px;
+}
+.home-cta p {
+  color: $gray-text;
+  margin: 0 auto 24px;
+  max-width: 480px;
+}
+
+// ===========================================================================
+// RESPONSIVE: stack the rows on small screens so nothing gets squashed
+// ===========================================================================
+@media (max-width: 768px) {
+  .home-steps,
+  .home-universes {
+    flex-direction: column;    // stack steps and universes one under another
+  }
+  .home-universes .universe-cross {
+    justify-content: center;   // center the "x" when stacked
+    padding: 8px 0;
+  }
+  .home-hero-card {
+    padding: 40px 24px;        // less padding inside the card on phones
+  }
+  .home-hero-card .home-brand {
+    font-size: 42px;           // smaller brand name on phones
+  }
+}

@@ -1,0 +1,65 @@
+// Styling for the chat pages (AI chat and dreamer <-> maker chat).
+// Same look for both: my messages on the right (orange), the other person's
+// messages on the left (turquoise), following the charter colors.
+
+// The box that holds all the messages
+.chat-box {
+  background: $cream;              // cream background
+  border: 1px solid $gray-light;  // thin light-gray border
+  border-radius: .5rem;           // 8px rounded corners
+  padding: 16px;
+  min-height: 300px;
+}
+
+// One message line (used to place the bubble on the left or the right)
+.chat-message {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+// My own messages are pushed to the right
+.chat-message.from-user {
+  justify-content: flex-end;
+}
+
+// The other person's (or the AI's) messages stay on the left
+.chat-message.from-ai {
+  justify-content: flex-start;
+}
+
+// The colored bubble around the text
+.chat-bubble {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 16px;
+}
+
+// Orange bubble for my messages (the Dreamer action color)
+.from-user .chat-bubble {
+  background: $dreamer;
+  color: $cream;       // light text on orange
+}
+
+// Soft turquoise bubble for the other person / the AI
+.from-ai .chat-bubble {
+  background: $maker-light;
+  color: $ink;
+}
+
+// Small photo + name of the person who wrote the message (used in the match chat)
+.chat-author {
+  display: flex;
+  align-items: center;
+  gap: 6px;                       // space between the photo and the name
+  font-size: 11px;
+  font-weight: 600;
+  color: $gray-text;
+  margin-bottom: 4px;
+}
+// The little round profile picture next to the author name
+.chat-author-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;             // perfect circle
+  object-fit: cover;              // crop the photo nicely
+}

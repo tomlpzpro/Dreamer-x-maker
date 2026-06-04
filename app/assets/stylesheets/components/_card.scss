@@ -1,0 +1,70 @@
+// Project card ("card-trip") used on the home page, the projects list and
+// the dashboard. One shared style so every project looks the same everywhere.
+
+.card-trip {
+  position: relative;               // so the status badge can sit over the image
+  display: flex;                    // lay the card out as a vertical column...
+  flex-direction: column;           // ...image on top, text below, button at bottom
+  overflow: hidden;                 // keep the image inside the rounded corners
+  background: $cream;               // cream card background (never pure white)
+  background-clip: padding-box;     // keep the background inside the border edge
+  border: 1px solid $gray-light;    // thin light-gray border, as in the charter
+  border-radius: .5rem;             // 8px rounded corners
+  height: 100%;                     // all cards in a row keep the same height
+}
+
+// The status badge shown over the top-right corner of the card image
+.card-trip .card-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;                       // keep it above the image
+}
+
+// The project image at the top of the card
+.card-trip > img {
+  display: block;         // remove the small gap under the image (inline images)
+  height: 200px;          // fixed height so every card looks the same
+  width: 100%;            // image takes the full card width
+  object-fit: cover;      // crop the image nicely instead of stretching it
+  // Round the top corners of the image so they match the card corners.
+  // We round the image itself (not just rely on the card's overflow) because
+  // the hover effect on the card link can stop overflow from clipping cleanly.
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+
+// The project title inside the card.
+// Kept on a single line so every card has the exact same title height.
+.card-trip h2 {
+  font-size: 18px;
+  color: $ink;            // main text color
+  margin: 0 0 4px;
+  white-space: nowrap;    // never wrap the title to a second line
+  overflow: hidden;       // hide the part that does not fit
+  text-overflow: ellipsis;// show "..." when the title is too long
+}
+
+// The short project description inside the card.
+// It always takes exactly 3 lines of space: short descriptions leave some
+// empty room, long ones are cut with "..." — so every card is the same height.
+.card-trip p {
+  font-size: 14px;
+  color: $gray-text;      // secondary text color
+  margin: 0;
+  line-height: 1.4;              // height of one line of text
+  height: 4.2em;                 // 3 lines (3 × 1.4) reserved no matter what
+  display: -webkit-box;          // needed for the line clamp below
+  -webkit-line-clamp: 3;         // show at most 3 lines (older browsers)...
+  line-clamp: 3;                 // ...and the standard property
+  -webkit-box-orient: vertical;  // stacked vertically
+  overflow: hidden;              // hide the text beyond 3 lines
+}
+
+// The text area in the middle of the card.
+// "flex-grow: 1" makes it fill the leftover space, so all cards line up
+// and any button placed after it sits at the very bottom.
+.card-trip .card-trip-infos {
+  flex-grow: 1;
+  padding: 16px;
+}
