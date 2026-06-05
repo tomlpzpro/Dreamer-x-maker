@@ -93,8 +93,17 @@
   text-decoration: underline;
 }
 
-// Small text shown when a section is empty
+// Empty section placeholder: a box that keeps the same size as a filled
+// section, with the message centered inside it.
 .dashboard-empty {
+  display: flex;
+  align-items: center;             // center the message vertically
+  justify-content: center;         // and horizontally
+  text-align: center;
+  min-height: 200px;               // keep the section from collapsing when empty
+  background: $cream;
+  border: 1px dashed $gray-light;  // dashed border to signal an empty placeholder
+  border-radius: .5rem;            // 8px rounded corners, like the cards
   color: $gray-text;
 }
 

@@ -20,7 +20,7 @@
           <%# Wrapper kept relative so the action buttons can sit over the card %>
           <div class="project-card-wrapper">
             <%# The whole card is a link to the project page %>
-            <%= link_to project_path(project), class: "home-project-link" do %>
+            <%= link_to project_path(project, from: "projects"), class: "home-project-link" do %>
               <div class="card-trip">
                 <%# Status badge shown over the image %>
                 <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>

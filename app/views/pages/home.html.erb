@@ -41,63 +41,76 @@
 <div class="container">
 
   <%# ===================================================================== %>
-  <%# HOW IT WORKS: 3 simple steps                                          %>
+  <%# HOW IT WORKS: 3 simple steps. Captured here so we can show it at the    %>
+  <%# top for visitors, or move it to the very bottom for logged-in users.    %>
   <%# ===================================================================== %>
-  <div class="home-section">
-    <div class="home-section-head">
-      <h2>Comment ça marche</h2>
-      <p>Du rêve à l'objet, en trois étapes simples.</p>
-    </div>
-
-    <div class="home-steps">
-
-      <%# Step 1 %>
-      <div class="home-step">
-        <div class="step-icon"><i class="fas fa-lightbulb"></i></div>
-        <h3>Décrivez votre idée</h3>
-        <p>Expliquez en quelques mots l'objet sur mesure dont vous rêvez.</p>
+  <% how_it_works = capture do %>
+    <div class="home-section">
+      <div class="home-section-head">
+        <h2>Comment ça marche</h2>
+        <p>Du rêve à l'objet, en trois étapes simples.</p>
       </div>
 
-      <%# Step 2 %>
-      <div class="home-step">
-        <div class="step-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
-        <h3>Visualisez-le</h3>
-        <p>Notre IA met votre idée en image pour la rendre concrète.</p>
-      </div>
+      <div class="home-steps">
 
-      <%# Step 3 %>
-      <div class="home-step">
-        <div class="step-icon"><i class="fas fa-handshake"></i></div>
-        <h3>Rencontrez la main</h3>
-        <p>On vous met en relation avec l'artisan capable de le fabriquer.</p>
-      </div>
-    </div>
-  </div>
+        <%# Step 1 %>
+        <div class="home-step">
+          <div class="step-icon"><i class="fas fa-lightbulb"></i></div>
+          <h3>Décrivez votre idée</h3>
+          <p>Expliquez en quelques mots l'objet sur mesure dont vous rêvez.</p>
+        </div>
 
-  <%# ===================================================================== %>
-  <%# TWO UNIVERSES: the Dreamer and the Maker meeting at the "x"           %>
-  <%# ===================================================================== %>
-  <div class="home-section">
-    <div class="home-universes">
+        <%# Step 2 %>
+        <div class="home-step">
+          <div class="step-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+          <h3>Visualisez-le</h3>
+          <p>Notre IA met votre idée en image pour la rendre concrète.</p>
+        </div>
 
-      <%# Dreamer side (orange, warm) %>
-      <div class="home-universe is-dreamer">
-        <p class="universe-label">L'idée</p>
-        <p class="universe-name">Dreamer</p>
-        <p>Celui ou celle qui imagine un objet sur mesure et cherche la bonne personne pour le créer.</p>
-      </div>
-
-      <%# The "x" where the two universes meet %>
-      <div class="universe-cross">x</div>
-
-      <%# Maker side (turquoise, cold) %>
-      <div class="home-universe is-maker">
-        <p class="universe-label">La main</p>
-        <p class="universe-name">Maker</p>
-        <p>L'artisan, l'atelier ou le studio qui possède le savoir-faire pour donner vie au projet.</p>
+        <%# Step 3 %>
+        <div class="home-step">
+          <div class="step-icon"><i class="fas fa-handshake"></i></div>
+          <h3>Rencontrez la main</h3>
+          <p>On vous met en relation avec l'artisan capable de le fabriquer.</p>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
+
+  <%# Visitors see "how it works" right away; logged-in users see it at the bottom %>
+  <%= how_it_works unless user_signed_in? %>
+
+  <%# ===================================================================== %>
+  <%# TWO UNIVERSES: the Dreamer and the Maker meeting at the "x". Captured   %>
+  <%# here so we can show it at the top for visitors, or move it to the very  %>
+  <%# bottom for logged-in users (same as "how it works").                    %>
+  <%# ===================================================================== %>
+  <% two_universes = capture do %>
+    <div class="home-section">
+      <div class="home-universes">
+
+        <%# Dreamer side (orange, warm) %>
+        <div class="home-universe is-dreamer">
+          <p class="universe-label">L'idée</p>
+          <p class="universe-name">Dreamer</p>
+          <p>Celui ou celle qui imagine un objet sur mesure et cherche la bonne personne pour le créer.</p>
+        </div>
+
+        <%# The "x" where the two universes meet %>
+        <div class="universe-cross">x</div>
+
+        <%# Maker side (turquoise, cold) %>
+        <div class="home-universe is-maker">
+          <p class="universe-label">La main</p>
+          <p class="universe-name">Maker</p>
+          <p>L'artisan, l'atelier ou le studio qui possède le savoir-faire pour donner vie au projet.</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Visitors see the two universes here; logged-in users see them at the bottom %>
+  <%= two_universes unless user_signed_in? %>
 
   <%# ===================================================================== %>
   <%# FEATURED PROJECTS: real projects from the database                    %>
@@ -145,6 +158,11 @@
           </div>
         </div>
       <% end %>
+    </div>
+
+    <%# Button to see the full page with every published project %>
+    <div class="home-section-foot">
+      <%= link_to "Voir tous les projets publiés", published_projects_path, class: "btn btn-primary" %>
     </div>
   </div>
 
@@ -200,5 +218,11 @@
       <%= link_to "Commencer maintenant", new_user_registration_path(role: "dreamer"), class: "btn btn-primary" %>
     <% end %>
   </div>
+
+  <%# For logged-in users, these sections are moved down here, at the very bottom %>
+  <% if user_signed_in? %>
+    <%= two_universes %>
+    <%= how_it_works %>
+  <% end %>
 
 </div>

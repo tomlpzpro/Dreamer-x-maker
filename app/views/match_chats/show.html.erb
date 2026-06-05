@@ -1,28 +1,34 @@
 <div class="container my-5">
 
-  <%# Subscribe this page to the chat stream, so new messages appear live %>
-  <%= turbo_stream_from @match_chat %>
+  <%# The conversation lives in a Turbo Frame so it can be loaded into the
+      discussions list page (right column) just by clicking a discussion. %>
+  <%= turbo_frame_tag "conversation" do %>
 
-  <%# Page title with the project name %>
-  <h1 class="mb-4">Chat — <%= @match_chat.maker_project.project.title %></h1>
+    <%# Subscribe this frame to the chat stream, so new messages appear live %>
+    <%= turbo_stream_from @match_chat %>
 
-  <%# The box that holds all the messages %>
-  <div class="chat-box mb-4">
+    <%# Title with the project name %>
+    <h1 class="mb-4">Chat — <%= @match_chat.maker_project.project.title %></h1>
 
-    <%# Container that receives the live messages (id used by the broadcast) %>
-    <div id="<%= dom_id(@match_chat) %>_messages">
-      <%# Show every message of this chat, oldest first %>
-      <%= render partial: "match_messages/match_message", collection: @match_messages, as: :message %>
+    <%# The box that holds all the messages (fixed height, scrolls inside) %>
+    <div class="chat-box mb-4">
+
+      <%# Container that receives the live messages (id used by the broadcast) %>
+      <div id="<%= dom_id(@match_chat) %>_messages">
+        <%# Show every message of this chat, oldest first %>
+        <%= render partial: "match_messages/match_message", collection: @match_messages, as: :message %>
+      </div>
+
+      <%# Small text shown when there is no message yet %>
+      <% if @match_messages.empty? %>
+        <p class="text-center text-muted my-5">Aucun message pour l'instant. Lancez la conversation ci-dessous !</p>
+      <% end %>
+
     </div>
 
-    <%# Small text shown when there is no message yet %>
-    <% if @match_messages.empty? %>
-      <p class="text-center text-muted my-5">Aucun message pour l'instant. Lancez la conversation ci-dessous !</p>
-    <% end %>
+    <%# Form to write and send a new message %>
+    <%= render "form", match_chat: @match_chat, match_message: @match_message %>
 
-  </div>
-
-  <%# Form to write and send a new message %>
-  <%= render "form", match_chat: @match_chat, match_message: @match_message %>
+  <% end %>
 
 </div>
