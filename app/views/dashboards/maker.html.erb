@@ -31,6 +31,40 @@
   <%= link_to "Voir plus ...", projects_path %>
 </div>
 
+  <%# -----PROJETS DISPONIBLES (postés par les dreamers, pas encore acceptés)------ %>
+  <div>
+    <h2>Projets disponibles</h2>
+
+    <div class="row">
+      <%# Loop over every open project not yet accepted by a maker %>
+      <% @open_projects.each do |project| %>
+        <div class="col-md-3 mb-4">
+          <%# Link to the project details page %>
+          <%= link_to project_path(project), class: "home-project-link" do %>
+            <div class="card-trip">
+              <%# Status badge shown over the image %>
+              <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
+              <%# Project image, or a placeholder if there is none %>
+              <% if project.image.attached? %>
+                <%= image_tag project.image %>
+              <% else %>
+                <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+              <% end %>
+              <div class="card-trip-infos">
+                <div>
+                  <%# Project title %>
+                  <h2><%= project.title %></h2>
+                  <%# Project short description %>
+                  <p><%= project.description %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <%# -----Mes DISCUSSIONS------ %>
   <div>
     <h2>Mes Discussions</h2>
