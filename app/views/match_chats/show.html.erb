@@ -1,48 +1,28 @@
 <div class="container my-5">
 
+  <%# Subscribe this page to the chat stream, so new messages appear live %>
+  <%= turbo_stream_from @match_chat %>
+
   <%# Page title with the project name %>
   <h1 class="mb-4">Chat — <%= @match_chat.maker_project.project.title %></h1>
 
   <%# The box that holds all the messages %>
   <div class="chat-box mb-4">
 
-    <%# Show a small text when there is no message yet %>
-    <% if @match_messages.empty? %>
-      <p class="text-center text-muted my-5">No message yet. Start the conversation below!</p>
-    <% end %>
+    <%# Container that receives the live messages (id used by the broadcast) %>
+    <div id="<%= dom_id(@match_chat) %>_messages">
+      <%# Show every message of this chat, oldest first %>
+      <%= render partial: "match_messages/match_message", collection: @match_messages, as: :message %>
+    </div>
 
-    <%# Loop over every message of this chat %>
-    <% @match_messages.each do |message| %>
-      <%# My own messages go on the right, the other person's go on the left %>
-      <div class="chat-message <%= message.user == current_user ? "from-user" : "from-ai" %>">
-        <div class="chat-bubble">
-          <%# Photo + name of the person who wrote the message %>
-          <div class="chat-author">
-            <% if message.user.profile_picture_url.present? %>
-              <%= image_tag message.user.profile_picture_url, class: "chat-author-avatar", alt: message.user.username %>
-            <% else %>
-              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "chat-author-avatar", alt: message.user.username %>
-            <% end %>
-            <%# Maker names link to their public profile; others show plain text %>
-            <% if message.user.maker? %>
-              <%= link_to message.user.username, maker_path(message.user), class: "maker-link" %>
-            <% else %>
-              <%= message.user.username %>
-            <% end %>
-          </div>
-          <%= message.content %>
-        </div>
-      </div>
+    <%# Small text shown when there is no message yet %>
+    <% if @match_messages.empty? %>
+      <p class="text-center text-muted my-5">Aucun message pour l'instant. Lancez la conversation ci-dessous !</p>
     <% end %>
 
   </div>
 
   <%# Form to write and send a new message %>
-  <%= form_with model: @match_message, url: messages_match_chat_path(@match_chat) do |form| %>
-    <div class="d-flex gap-2">
-      <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." %>
-      <%= form.submit "Send", class: "btn btn-primary" %>
-    </div>
-  <% end %>
+  <%= render "form", match_chat: @match_chat, match_message: @match_message %>
 
 </div>

@@ -3,6 +3,32 @@
   <%# Link to go back to the projects list %>
   <%= link_to "← Retour aux projets", projects_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
 
+  <%# Maker actions at the top of the page: match this project or pass on it %>
+  <% if current_user.maker? && @project.open_for?(current_user) %>
+    <div class="project-match">
+      <%# Small question to make the choice clear %>
+      <p class="project-match-question">Ce projet vous inspire&nbsp;?</p>
+      <div class="project-match-bar">
+        <%# Matcher: blue full-screen flash, then open the chat with the dreamer %>
+        <%= button_to match_project_path(@project),
+              class: "match-big-btn match-big-blue",
+              form: { data: { controller: "flash-navigate", flash_navigate_color_value: "blue" } },
+              data: { action: "click->flash-navigate#go" } do %>
+          <span class="match-big-icon">🤝</span>
+          <span>Matcher</span>
+        <% end %>
+        <%# Pas pour moi: orange full-screen flash, then go back to the previous page %>
+        <%= button_to dismiss_project_path(@project, back: request.referer),
+              class: "match-big-btn match-big-orange",
+              form: { data: { controller: "flash-navigate", flash_navigate_color_value: "orange" } },
+              data: { action: "click->flash-navigate#go" } do %>
+          <span class="match-big-icon">✕</span>
+          <span>Pas pour moi</span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <%# === Header: title + current status badge === %>
   <div class="project-header">
     <h1><%= @project.title %></h1>
@@ -154,51 +180,57 @@
 
     </div>
   </div>
-  <div class="container my-5">
 
-    <%# Page title %>
-    <h1 class="mb-4">AI chat</h1>
+  <%# AI chat to generate the visual: only for the owner (dreamer) and if it exists %>
+  <% if @llm_chat.present? && current_user == @project.dreamer %>
+    <div class="container my-5">
 
-    <%# The box that holds all the messages %>
-    <div class="chat-box mb-4">
+      <%# Page title %>
+      <h1 class="mb-4">AI chat</h1>
 
-      <%# Show a small text when there is no message yet %>
-      <% if @llm_messages.empty? %>
-        <p class="text-center text-muted my-5">No message yet. Start the conversation below!</p>
-      <% end %>
+      <%# The box that holds all the messages %>
+      <div class="chat-box mb-4">
 
-      <%# Loop over every message of this chat %>
-      <% @llm_messages.each do |message| %>
-        <%# "user" messages go on the right, the others (AI) go on the left %>
-        <div class="chat-message <%= message.role == "user" ? "from-user" : "from-ai" %>">
-          <div class="chat-bubble">
-            <%= message.content %>
+        <%# Show a small text when there is no message yet %>
+        <% if @llm_messages.empty? %>
+          <p class="text-center text-muted my-5">No message yet. Start the conversation below!</p>
+        <% end %>
+
+        <%# Loop over every message of this chat %>
+        <% @llm_messages.each do |message| %>
+          <%# "user" messages go on the right, the others (AI) go on the left %>
+          <div class="chat-message <%= message.role == "user" ? "from-user" : "from-ai" %>">
+            <div class="chat-bubble">
+              <%= message.content %>
+            </div>
           </div>
+        <% end %>
+
+      </div>
+
+      <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+      <%# Form to write and send a new message %>
+      <%= form_with model: @llm_message, url: llm_chat_llm_messages_path(@llm_chat) do |form| %>
+        <div class="d-flex gap-2">
+          <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." %>
+          <%= form.submit "Send", class: "btn btn-primary" %>
         </div>
       <% end %>
 
     </div>
-
-    <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
-    <%# Form to write and send a new message %>
-    <%= form_with model: @llm_message, url: llm_chat_llm_messages_path(@llm_chat) do |form| %>
-      <div class="d-flex gap-2">
-        <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." %>
-        <%= form.submit "Send", class: "btn btn-primary" %>
-      </div>
-    <% end %>
-
-  </div>
+  <% end %>
 
 
-  <%# Buttons to edit or delete the project. Delete asks for confirmation. %>
-  <div class="project-actions">
-    <%# Go to the edit form of this project %>
-    <%= link_to "✏️ Modifier le projet", edit_project_path(@project), class: "btn btn-primary btn-sm" %>
-    <%# Delete the project after a confirmation popup %>
-    <%= link_to "Supprimer le projet", project_path(@project),
-          data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
-          class: "btn btn-outline-danger btn-sm" %>
-  </div>
+  <%# Only the owner (dreamer) can edit or delete his project, at the bottom %>
+  <% if current_user == @project.dreamer %>
+    <div class="project-actions">
+      <%# Go to the edit form of this project %>
+      <%= link_to "✏️ Modifier le projet", edit_project_path(@project), class: "btn btn-primary btn-sm" %>
+      <%# Delete the project after a confirmation popup %>
+      <%= link_to "Supprimer le projet", project_path(@project),
+            data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
+            class: "btn btn-outline-danger btn-sm" %>
+    </div>
+  <% end %>
 
 </div>

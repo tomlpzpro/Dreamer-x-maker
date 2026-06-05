@@ -57,8 +57,12 @@ end
     # --- Projets disponibles (postés par les dreamers, pas encore acceptés) ---
     # Get the ids of all projects that a maker has already accepted
     accepted_project_ids = MakerProject.where(status: "accepted").pluck(:project_id)
-    # Keep only the projects that are NOT in that accepted list, newest first
-    @open_projects = Project.where.not(id: accepted_project_ids).order(created_at: :desc)
+    # Get the ids of the projects this maker already matched or dismissed
+    my_project_ids = current_user.maker_projects.pluck(:project_id)
+    # Hide both the accepted projects and the ones this maker already acted on
+    hidden_project_ids = (accepted_project_ids + my_project_ids).uniq
+    # Keep only the projects that are NOT hidden, newest first
+    @open_projects = Project.where.not(id: hidden_project_ids).order(created_at: :desc)
 
     # --- Mes Discussions ---
     @match_chats = MatchChat

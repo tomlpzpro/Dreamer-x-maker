@@ -1,0 +1,21 @@
+<%# One chat message. Left/right placement is decided in JavaScript by comparing
+    the author id with the logged-in user id (see chat_message_controller). %>
+<div class="chat-message" data-controller="chat-message" data-chat-message-user-id-value="<%= message.user_id %>">
+  <div class="chat-bubble">
+    <%# Photo + name of the person who wrote the message %>
+    <div class="chat-author">
+      <% if message.user.profile_picture_url.present? %>
+        <%= image_tag message.user.profile_picture_url, class: "chat-author-avatar", alt: message.user.username %>
+      <% else %>
+        <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "chat-author-avatar", alt: message.user.username %>
+      <% end %>
+      <%# Maker names link to their public profile; others show plain text %>
+      <% if message.user.maker? %>
+        <%= link_to message.user.username, maker_path(message.user), class: "maker-link" %>
+      <% else %>
+        <%= message.user.username %>
+      <% end %>
+    </div>
+    <%= message.content %>
+  </div>
+</div>

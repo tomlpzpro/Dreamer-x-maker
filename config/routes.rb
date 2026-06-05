@@ -6,7 +6,13 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :projects
+  resources :projects do
+    # A maker matches a project (creates the match) or says it is not for him
+    member do
+      post :match, to: "maker_projects#create"
+      post :dismiss, to: "maker_projects#dismiss"
+    end
+  end
   resource :profile, only: [:show, :edit, :update]
 
   get :dashboard, to: "dashboards#show", as: :dashboard
