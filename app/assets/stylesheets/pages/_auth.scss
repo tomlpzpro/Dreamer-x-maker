@@ -1,0 +1,134 @@
+// Styling for the authentication pages (log in and sign up).
+// Both pages share the same look: a cream card centered on the page,
+// with Dreamer-orange buttons, following the brand charter.
+
+// Page wrapper: center the card horizontally with some vertical space
+.auth {
+  display: flex;
+  justify-content: center;
+  padding: 60px 16px;
+}
+
+// The card that holds the form
+.auth-card {
+  background: $cream;                              // cream card, never pure white
+  border: 1px solid $gray-light;
+  border-radius: .75rem;                           // 12px rounded corners
+  box-shadow: 0 10px 40px rgba(28, 43, 46, .08);   // soft shadow (ink color)
+  width: 100%;
+  max-width: 460px;                                // keep the form narrow and readable
+  padding: 40px 36px;
+}
+
+// Main title of the card
+.auth-title {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+// Small subtitle under the title
+.auth-subtitle {
+  text-align: center;
+  color: $gray-text;
+  margin-bottom: 28px;
+}
+
+// Secondary heading inside the sign up form ("en tant que Maker/Dreamer")
+.auth-card .form-inputs h2 {
+  font-size: 18px;
+  color: $maker-dark;
+  text-align: center;
+  margin: 0 0 20px;
+}
+
+// Each field block (simple_form wraps fields in .form-group)
+.auth-card .form-group {
+  margin-bottom: 16px;
+}
+
+// Field labels
+.auth-card label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: $ink;
+  margin-bottom: 6px;
+}
+
+// Text inputs and selects fill the whole width of the card
+.auth-card input,
+.auth-card select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;                            // 8px rounded corners
+  background: #fff;
+  font-size: 15px;
+}
+
+// Highlight the focused field with an orange ring
+.auth-card input:focus,
+.auth-card select:focus {
+  outline: none;
+  border-color: $dreamer;
+  box-shadow: 0 0 0 3px $dreamer-light;
+}
+
+// The "remember me" checkbox keeps its label on the same line
+.auth-card .boolean {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.auth-card .boolean label {
+  margin: 0;
+  font-weight: 400;
+}
+// The checkbox itself should not stretch to full width
+.auth-card input[type="checkbox"] {
+  width: auto;
+}
+
+// Hint text under a field (ex: minimum password length)
+.auth-card .hint,
+.auth-card .form-text {
+  font-size: 12px;
+  color: $gray-text;
+  margin-top: 4px;
+}
+
+// Submit button: full width, Dreamer orange
+.auth-card .form-actions {
+  margin-top: 24px;
+}
+.auth-card .form-actions button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: .5rem;
+  background: $dreamer;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+.auth-card .form-actions button:hover {
+  background: $dreamer-dark;                        // darker orange on hover
+}
+
+// Links under the form (sign up, forgot password ...)
+.auth-links {
+  margin-top: 20px;
+  text-align: center;
+}
+.auth-links p {
+  margin: 6px 0;
+}
+.auth-links a {
+  color: $dreamer-dark;
+  text-decoration: none;
+  font-size: 14px;
+}
+.auth-links a:hover {
+  text-decoration: underline;
+}

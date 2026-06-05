@@ -49,6 +49,12 @@ end
                                    .includes(:project, :match_chat)
                                    .order(updated_at: :desc)
 
+    # --- Mes projets en cours (les projets où ce maker a été accepté) ---
+    @current_projects = Project
+                          .joins(:maker_projects)
+                          .where(maker_projects: { maker_id: current_user.id, status: "accepted" })
+                          .order(created_at: :desc)
+
     # --- Mes Discussions ---
     @match_chats = MatchChat
                      .joins(:maker_project)
