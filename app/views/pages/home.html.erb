@@ -18,7 +18,7 @@
       </p>
 
       <%# Tagline in the serif font %>
-      <h1>Là où l'idée rencontre la main.</h1>
+      <h1>Là où l'idée rencontre le savoir faire.</h1>
 
       <%# Short description of the platform %>
       <p class="home-lead">Décrivez l'objet dont vous rêvez. On le met en image,
@@ -30,8 +30,8 @@
       <% if user_signed_in? %>
         <%= link_to "Aller à mon dashboard", dashboard_path, class: "btn btn-primary mx-2" %>
       <% else %>
-        <%= link_to "Décrire mon objet", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-2" %>
-        <%= link_to "Découvrir les makers", new_user_registration_path(role: "maker"), class: "btn btn-outline-secondary mx-2" %>
+        <%= link_to "Créer mon objet", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-2" %>
+        <%= link_to "Devenir maker", new_user_registration_path(role: "maker"), class: "btn btn-outline-secondary mx-2" %>
       <% end %>
 
     </div>
@@ -82,7 +82,7 @@
 
       <%# Dreamer side (orange, warm) %>
       <div class="home-universe is-dreamer">
-        <p class="universe-label">L'idée · chaud</p>
+        <p class="universe-label">L'idée</p>
         <p class="universe-name">Dreamer</p>
         <p>Celui ou celle qui imagine un objet sur mesure et cherche la bonne personne pour le créer.</p>
       </div>
@@ -92,7 +92,7 @@
 
       <%# Maker side (turquoise, cold) %>
       <div class="home-universe is-maker">
-        <p class="universe-label">La main · froid</p>
+        <p class="universe-label">La main</p>
         <p class="universe-name">Maker</p>
         <p>L'artisan, l'atelier ou le studio qui possède le savoir-faire pour donner vie au projet.</p>
       </div>
@@ -125,7 +125,6 @@
               <div class="card-trip-infos">
                 <div>
                   <h2><%= project.title %></h2>
-                  <p><%= project.description %></p>
                 </div>
               </div>
             </div>
@@ -163,8 +162,6 @@
                   <div>
                     <%# Project title %>
                     <h2><%= project.title %></h2>
-                    <%# Project short description %>
-                    <p><%= project.description %></p>
                   </div>
                 </div>
               </div>
@@ -179,7 +176,7 @@
   <%# FINAL CALL TO ACTION                                                  %>
   <%# ===================================================================== %>
   <div class="home-cta">
-    <h2>Votre idée mérite la bonne main.</h2>
+    <h2>Votre idée mérite le bon savoir faire.</h2>
     <p>Publiez votre projet et entrez en contact avec des makers passionnés.</p>
 
     <%# Different button depending on whether the visitor is logged in %>

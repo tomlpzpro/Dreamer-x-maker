@@ -191,8 +191,11 @@
   </div>
 
 
-  <%# Delete the project. Asks for confirmation before deleting. %>
+  <%# Buttons to edit or delete the project. Delete asks for confirmation. %>
   <div class="project-actions">
+    <%# Go to the edit form of this project %>
+    <%= link_to "✏️ Modifier le projet", edit_project_path(@project), class: "btn btn-primary btn-sm" %>
+    <%# Delete the project after a confirmation popup %>
     <%= link_to "Supprimer le projet", project_path(@project),
           data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
           class: "btn btn-outline-danger btn-sm" %>

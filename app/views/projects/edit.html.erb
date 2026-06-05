@@ -1,2 +1,50 @@
-<h1>Projects#edit</h1>
-<p>Find me in app/views/projects/edit.html.erb</p>
+<div class="container my-5">
+
+  <%# Link to go back to this project's page %>
+  <%= link_to "← Retour au projet", project_path(@project), class: "btn btn-outline-secondary btn-sm mb-3" %>
+
+  <%# The form inside a centered card %>
+  <div class="form-card">
+    <h1>Modifier le projet</h1>
+    <p class="form-subtitle">Mettez à jour les informations de votre projet.</p>
+
+    <%= simple_form_for(@project, html: { multipart: true }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%# Project title %>
+        <%= f.input :title, required: true, label: "Nom du projet", placeholder: "Ex : Table basse en chêne" %>
+        <%# Project description %>
+        <%= f.input :description, as: :text, required: true, label: "Description du projet", placeholder: "Matière, dimensions, finition..." %>
+        <%# A native calendar date picker (input type="date") to choose the wanted delivery date %>
+        <%= f.input :deadline, as: :string, input_html: { type: "date" }, label: "Date de livraison voulue" %>
+        <%# Project budget %>
+        <%= f.input :budget, label: "Budget", placeholder: "En euros" %>
+      </div>
+
+      <%# Visual of the project %>
+      <label class="visual-title">Visuel du projet</label>
+
+      <%# Show the current image so the user knows what is already saved %>
+      <% if @project.image.attached? %>
+        <div class="current-image">
+          <%# The image currently saved on the project %>
+          <%= image_tag @project.image, alt: @project.title %>
+        </div>
+      <% end %>
+
+      <div class="visual-choice">
+        <%# Upload a new image to replace the current one (optional) %>
+        <div class="visual-upload">
+          <%= f.input :image, as: :file, label: "Changer le visuel" %>
+        </div>
+      </div>
+
+      <%# Save the changes made to the project %>
+      <div class="form-actions">
+        <%= f.button :submit, "Enregistrer les modifications", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+
+</div>

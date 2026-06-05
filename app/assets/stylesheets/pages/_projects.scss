@@ -1,10 +1,12 @@
 // Styling for the project show page (all the info + a steps timeline).
 
-// Bottom actions area (the delete button)
+// Bottom actions area (the edit and delete buttons)
 .project-actions {
+  display: flex;                      // lay the buttons in a row
+  gap: 12px;                          // space between the edit and delete buttons
   margin-top: 24px;
   padding-top: 24px;
-  border-top: 1px solid $gray-light;  // a thin line above the delete button
+  border-top: 1px solid $gray-light;  // a thin line above the buttons
 }
 
 // --- Header: title on the left, status badge on the right ---

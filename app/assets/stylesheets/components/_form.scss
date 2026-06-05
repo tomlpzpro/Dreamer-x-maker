@@ -72,6 +72,17 @@
   margin-bottom: 6px;
   color: $ink;
 }
+// Preview of the image already saved on the project (shown on the edit form)
+.form-card .current-image {
+  margin-bottom: 12px;        // gap before the upload field
+}
+.form-card .current-image img {
+  width: 100%;                // image fills the card width
+  height: 200px;              // fixed height, like the project cards
+  object-fit: cover;          // crop nicely instead of stretching
+  border-radius: .375rem;     // rounded corners to match the form style
+  border: 1px solid $gray-light; // thin light-gray border
+}
 // The row holding the upload field, the "ou" word and the generate button.
 // "align-items: stretch" makes the upload box and the button grow to the SAME
 // height automatically, so we don't have to guess a fixed height.

@@ -3,36 +3,63 @@
   <%# Link to go back to the dashboard %>
   <%= link_to "← Retour au dashboard", dashboard_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
 
-  <%# Page title %>
-  <h1 class="mb-4">My projects</h1>
-
-  <%# Button to create a new project %>
-  <%= link_to "New project", new_project_path, class: "btn btn-primary mb-4" %>
+  <%# Page header: title on the left, create button on the right %>
+  <div class="dashboard-section-head">
+    <h1>Mes projets</h1>
+    <%= link_to "＋ Créer un projet", new_project_path, class: "btn btn-primary" %>
+  </div>
 
   <%# Show a small text when the dreamer has no project yet %>
   <% if @projects.empty? %>
-    <p class="text-muted">You have no project yet. Click "New project" to create your first one!</p>
+    <p class="dashboard-empty">Vous n'avez pas encore de projet. Cliquez sur "Créer un projet" pour commencer !</p>
   <% else %>
     <%# One card per project %>
     <div class="row">
       <% @projects.each do |project| %>
         <div class="col-md-4 mb-4">
-          <div class="card-trip">
-            <%# Project image, or a placeholder if there is none %>
-            <% if project.image.attached? %>
-              <%= image_tag project.image %>
-            <% else %>
-              <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-            <% end %>
-            <div class="card-trip-infos">
-              <div>
-                <h2><%= project.title %></h2>
-                <p><%= project.description %></p>
+          <%# Wrapper kept relative so the action buttons can sit over the card %>
+          <div class="project-card-wrapper">
+            <%# The whole card is a link to the project page %>
+            <%= link_to project_path(project), class: "home-project-link" do %>
+              <div class="card-trip">
+                <%# Status badge shown over the image %>
+                <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
+                <%# Project image, or a placeholder if there is none %>
+                <% if project.image.attached? %>
+                  <%= image_tag project.image %>
+                <% else %>
+                  <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+                <% end %>
+                <div class="card-trip-infos">
+                  <div>
+                    <h2><%= project.title %></h2>
+                  </div>
+                </div>
               </div>
-            </div>
-            <%# Link to the project page %>
-            <div class="p-3">
-              <%= link_to "See project", project_path(project), class: "btn btn-outline-primary btn-sm" %>
+            <% end %>
+
+            <%# Action buttons placed over the card, outside the link to avoid nested links %>
+            <div class="project-card-actions">
+              <%# Find the accepted maker_project (and its chat) if the project is matched %>
+              <% accepted_maker_project = project.maker_projects.find_by(status: "accepted") %>
+
+              <% if current_user.role == "maker" %>
+                <%# The maker can only inform the dreamer through the chat %>
+                <%= link_to "💬 Informer mon dreamer d'un changement", match_chat_path(accepted_maker_project.match_chat), class: "card-action-btn card-action-inform" %>
+
+              <% elsif project.matched? %>
+                <%# The dreamer's project is matched: inform the maker through the chat %>
+                <%= link_to "💬 Informer mon maker d'un changement", match_chat_path(accepted_maker_project.match_chat), class: "card-action-btn card-action-inform" %>
+
+              <% else %>
+                <%# The dreamer's project is not matched yet: he can edit or delete it %>
+                <%# Go to the edit form of this project %>
+                <%= link_to "✏️ Modifier", edit_project_path(project), class: "card-action-btn card-action-edit" %>
+                <%# Delete this project after a confirmation popup %>
+                <%= link_to "🗑️ Supprimer", project_path(project),
+                      data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
+                      class: "card-action-btn card-action-delete" %>
+              <% end %>
             </div>
           </div>
         </div>
