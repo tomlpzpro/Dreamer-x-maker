@@ -2,6 +2,18 @@
 // Same look for both: my messages on the right (orange), the other person's
 // messages on the left (turquoise), following the charter colors.
 
+// Chat header: project title on the left, "see the project" button on the
+// far right, both on the same line.
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.chat-header h1 {
+  margin: 0;
+}
+
 // The box that holds all the messages.
 // Fixed height so the box never grows: extra messages scroll inside it.
 .chat-box {
