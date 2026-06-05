@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   resources :makers, only: [:show]
 
   # AI chat pages: show a conversation and let the user post a message
-  resources :ai_chats, only: [:show] do
-    post :messages, on: :member, action: :create_message
-    post :generer_visuel, on: :member
+  resources :llm_chats, only: [] do
+    resources :llm_messages, only: [:create]
+    post :generate_visual, on: :member
   end
 
   # Match chat pages: a dreamer and a maker talk together about a project

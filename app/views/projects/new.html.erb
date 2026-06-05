@@ -27,10 +27,12 @@
         <div class="visual-upload">
           <%= f.input :image, as: :file, label: false %>
         </div>
+        <% if false %>
         <span class="visual-or">ou</span>
-        <%# Option 2: generate the visual (saves the project, then goes to the chat).
-            button_tag keeps the visible text separate from the submitted value. %>
-        <%= button_tag "Générer mon visuel", type: "submit", name: "commit_action", value: "generate", class: "btn btn-secondary" %>
+          <%# Option 2: generate the visual (saves the project, then goes to the chat).
+              button_tag keeps the visible text separate from the submitted value. %>
+          <%= button_tag "Générer mon visuel", type: "submit", name: "commit_action", value: "generate", class: "btn btn-secondary" %>
+        <% end %>
       </div>
 
       <%# Validate the project. Only works if an image was uploaded. %>

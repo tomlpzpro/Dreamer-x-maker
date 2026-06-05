@@ -54,6 +54,11 @@ end
                           .joins(:maker_projects)
                           .where(maker_projects: { maker_id: current_user.id, status: "accepted" })
                           .order(created_at: :desc)
+    # --- Projets disponibles (postés par les dreamers, pas encore acceptés) ---
+    # Get the ids of all projects that a maker has already accepted
+    accepted_project_ids = MakerProject.where(status: "accepted").pluck(:project_id)
+    # Keep only the projects that are NOT in that accepted list, newest first
+    @open_projects = Project.where.not(id: accepted_project_ids).order(created_at: :desc)
 
     # --- Mes Discussions ---
     @match_chats = MatchChat
