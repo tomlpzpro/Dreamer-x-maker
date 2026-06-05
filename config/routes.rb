@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Page listing every published project (those still looking for a maker)
+  get "published_projects", to: "pages#published_projects", as: :published_projects
+
   resources :projects do
     # A maker matches a project (creates the match) or says it is not for him
     member do

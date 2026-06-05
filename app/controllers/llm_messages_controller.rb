@@ -16,9 +16,13 @@ class LlmMessagesController < ApplicationController
     @llm_message.role = "user"
     if @llm_message.save
       CreateLlmMessageJob.perform_later(@llm_chat, @llm_message)
-      # response = RubyLLM.chat.with_instructions(SYSTEM_PROMPT).ask(@llm_message.content)
-      # @llm_chat.llm_messages.create(role: "assistant", content: response.content)
-      redirect_to @llm_chat.project
+      respond_to do |format|
+        # Turbo: the message is appended live by the model broadcast, so here
+        # we only reset the form. No page reload, the scroll stays in place.
+        format.turbo_stream
+        # Fallback for non-Turbo clients: reload the project page as before.
+        format.html { redirect_to @llm_chat.project }
+      end
     else
       @llm_messages = @llm_chat.llm_messages.order(:created_at)
       render "projects/show", status: :unprocessable_entity

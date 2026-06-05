@@ -39,14 +39,14 @@
     </div>
 
     <% if @projects.empty? %>
-      <p class="dashboard-empty">Vous n'avez pas encore de projet.</p>
+      <p class="dashboard-empty">Vous n'avez pas de projet pour le moment.</p>
     <% else %>
       <div class="row">
         <% @projects.each do |project| %>
           <div class="col-md-3 mb-4">
             <%# Wrapper kept relative so the edit button can sit over the card %>
             <div class="project-card-wrapper">
-              <%= link_to project_path(project), class: "home-project-link" do %>
+              <%= link_to project_path(project, from: "dashboard"), class: "home-project-link" do %>
                 <div class="card-trip">
                   <%# Status badge shown over the image %>
                   <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
@@ -97,11 +97,11 @@
     </div>
 
     <% if @maker_projects.empty? %>
-      <p class="dashboard-empty">Aucun maker n'a encore postulé à vos projets.</p>
+      <p class="dashboard-empty">Vous n'avez pas de match pour le moment.</p>
     <% else %>
       <% @maker_projects.each do |mp| %>
         <%# The whole row is a link to the related project page %>
-        <%= link_to project_path(mp.project), class: "match-row" do %>
+        <%= link_to project_path(mp.project, from: "dashboard"), class: "match-row" do %>
 
           <%# Maker photo + project title and maker name (left side) %>
           <div class="match-person">
@@ -136,24 +136,39 @@
     </div>
 
     <% if @match_chats.empty? %>
-      <p class="dashboard-empty">Vous n'avez pas encore de discussion.</p>
+      <p class="dashboard-empty">Vous n'avez pas de discussion pour le moment.</p>
     <% else %>
-      <% @match_chats.each do |chat| %>
-        <%# For a dreamer, the other person is the maker %>
-        <% other = chat.maker_project.maker %>
-        <%= link_to match_chat_path(chat), class: "discussion-row" do %>
-          <%# Profile picture of the other person (or a placeholder) %>
-          <% if other.profile_picture_url.present? %>
-            <%= image_tag other.profile_picture_url, class: "discussion-avatar", alt: other.username %>
-          <% else %>
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "discussion-avatar", alt: other.username %>
+      <%# Two columns: the list of discussions on the left, the open one on the right %>
+      <div class="discussions-layout">
+
+        <%# Left column: one clickable line per discussion %>
+        <div class="discussions-list">
+          <% @match_chats.each do |chat| %>
+            <%# For a dreamer, the other person is the maker %>
+            <% other = chat.maker_project.maker %>
+            <%# Clicking a line loads its conversation in the right frame (no reload) %>
+            <%= link_to match_chat_path(chat), class: "discussion-row",
+                        data: { turbo_frame: "conversation" } do %>
+              <%# Profile picture of the other person (or a placeholder) %>
+              <% if other.profile_picture_url.present? %>
+                <%= image_tag other.profile_picture_url, class: "discussion-avatar", alt: other.username %>
+              <% else %>
+                <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "discussion-avatar", alt: other.username %>
+              <% end %>
+              <div class="discussion-info">
+                <div class="discussion-name"><%= other.username %></div>
+                <div class="discussion-project"><%= chat.maker_project.project.title %></div>
+              </div>
+            <% end %>
           <% end %>
-          <div class="discussion-info">
-            <div class="discussion-name"><%= other.username %></div>
-            <div class="discussion-project"><%= chat.maker_project.project.title %></div>
-          </div>
+        </div>
+
+        <%# Right column: the selected conversation loads inside this frame %>
+        <%= turbo_frame_tag "conversation", class: "discussions-conversation" do %>
+          <p class="discussions-empty text-muted">Sélectionnez une discussion pour l'afficher.</p>
         <% end %>
-      <% end %>
+
+      </div>
     <% end %>
   </div>
 

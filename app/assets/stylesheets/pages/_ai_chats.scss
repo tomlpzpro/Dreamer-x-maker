@@ -2,13 +2,21 @@
 // Same look for both: my messages on the right (orange), the other person's
 // messages on the left (turquoise), following the charter colors.
 
-// The box that holds all the messages
+// The box that holds all the messages.
+// Fixed height so the box never grows: extra messages scroll inside it.
 .chat-box {
   background: $cream;              // cream background
   border: 1px solid $gray-light;  // thin light-gray border
   border-radius: .5rem;           // 8px rounded corners
   padding: 16px;
-  min-height: 300px;
+  height: 400px;                  // stays the same size whatever the message count
+  overflow-y: auto;               // scroll the messages inside the box
+}
+
+// "No message yet" placeholder: hide it as soon as a real message is added
+// (it is then no longer the only child of the messages container)
+.chat-empty:not(:only-child) {
+  display: none;
 }
 
 // One message line (used to place the bubble on the left or the right)

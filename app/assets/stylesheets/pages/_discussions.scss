@@ -1,5 +1,42 @@
 // Styling for the discussions list page (all the user's chats).
 
+// Two columns: the list of discussions (left) and the open conversation (right).
+.discussions-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+// Left column: fixed width, scrolls on its own when the list is long
+.discussions-list {
+  flex: 0 0 320px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+// Right column: the open conversation takes the rest of the width
+.discussions-conversation {
+  flex: 1 1 auto;
+  min-width: 0;                   // allow the column to shrink, keeps the chat tidy
+}
+
+// Hint shown in the right column before a discussion is selected
+.discussions-empty {
+  padding: 24px;
+  text-align: center;
+}
+
+// On small screens, stack the two columns
+@media (max-width: 768px) {
+  .discussions-layout {
+    flex-direction: column;
+  }
+  .discussions-list {
+    flex-basis: auto;
+    width: 100%;
+  }
+}
+
 // One discussion line: a clickable card linking to the chat.
 // Layout: avatar (left) | name + project (middle, grows) | status badge (right)
 .discussion-row {

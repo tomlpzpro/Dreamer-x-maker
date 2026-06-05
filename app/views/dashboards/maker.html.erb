@@ -33,7 +33,7 @@
     </div>
 
     <% if @current_projects.empty? %>
-      <p class="dashboard-empty">Vous n'avez pas encore de projet en cours.</p>
+      <p class="dashboard-empty">Vous n'avez pas de projet en cours pour le moment.</p>
     <% else %>
       <div class="row">
         <% @current_projects.each do |project| %>
@@ -41,7 +41,7 @@
             <%# Wrapper kept relative so the action button can sit over the card %>
             <div class="project-card-wrapper">
               <%# Link to the project details page %>
-              <%= link_to project_path(project), class: "home-project-link" do %>
+              <%= link_to project_path(project, from: "dashboard"), class: "home-project-link" do %>
                 <div class="card-trip">
                   <%# Status badge shown over the image %>
                   <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
@@ -85,11 +85,11 @@
     </div>
 
     <% if @maker_projects.empty? %>
-      <p class="dashboard-empty">Vous n'avez pas encore postulé à un projet.</p>
+      <p class="dashboard-empty">Vous n'avez pas de candidature pour le moment.</p>
     <% else %>
       <% @maker_projects.each do |mp| %>
         <%# The whole row is a link to the related project page %>
-        <%= link_to project_path(mp.project), class: "match-row" do %>
+        <%= link_to project_path(mp.project, from: "dashboard"), class: "match-row" do %>
 
           <%# For a maker, the other person is the dreamer who posted the project %>
           <% dreamer = mp.project.dreamer %>
@@ -120,11 +120,6 @@
   <%# ===================================================================== %>
   <%# MY DISCUSSIONS                                                        %>
   <%# ===================================================================== %>
-  <div class="dashboard-section">
-    <div class="dashboard-section-head">
-      <h2>Mes discussions</h2>
-      <%= link_to "Voir toutes mes discussions", match_chats_path %>
-    </div>
   <%# -----PROJETS DISPONIBLES (postés par les dreamers, pas encore acceptés)------ %>
   <div>
     <h2>Projets disponibles</h2>
@@ -136,7 +131,7 @@
           <%# Wrapper kept relative so the action buttons can sit over the card %>
           <div class="project-card-wrapper">
             <%# Link to the project details page %>
-            <%= link_to project_path(project), class: "home-project-link" do %>
+            <%= link_to project_path(project, from: "dashboard"), class: "home-project-link" do %>
               <div class="card-trip">
                 <%# Status badge shown over the image %>
                 <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
@@ -172,24 +167,39 @@
     <h2>Mes Discussions</h2>
 
     <% if @match_chats.empty? %>
-      <p class="dashboard-empty">Vous n'avez pas encore de discussion.</p>
+      <p class="dashboard-empty">Vous n'avez pas de discussion pour le moment.</p>
     <% else %>
-      <% @match_chats.each do |chat| %>
-        <%# For a maker, the other person is the dreamer %>
-        <% other = chat.maker_project.project.dreamer %>
-        <%= link_to match_chat_path(chat), class: "discussion-row" do %>
-          <%# Profile picture of the other person (or a placeholder) %>
-          <% if other.profile_picture_url.present? %>
-            <%= image_tag other.profile_picture_url, class: "discussion-avatar", alt: other.username %>
-          <% else %>
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "discussion-avatar", alt: other.username %>
+      <%# Two columns: the list of discussions on the left, the open one on the right %>
+      <div class="discussions-layout">
+
+        <%# Left column: one clickable line per discussion %>
+        <div class="discussions-list">
+          <% @match_chats.each do |chat| %>
+            <%# For a maker, the other person is the dreamer %>
+            <% other = chat.maker_project.project.dreamer %>
+            <%# Clicking a line loads its conversation in the right frame (no reload) %>
+            <%= link_to match_chat_path(chat), class: "discussion-row",
+                        data: { turbo_frame: "conversation" } do %>
+              <%# Profile picture of the other person (or a placeholder) %>
+              <% if other.profile_picture_url.present? %>
+                <%= image_tag other.profile_picture_url, class: "discussion-avatar", alt: other.username %>
+              <% else %>
+                <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "discussion-avatar", alt: other.username %>
+              <% end %>
+              <div class="discussion-info">
+                <div class="discussion-name"><%= other.username %></div>
+                <div class="discussion-project"><%= chat.maker_project.project.title %></div>
+              </div>
+            <% end %>
           <% end %>
-          <div class="discussion-info">
-            <div class="discussion-name"><%= other.username %></div>
-            <div class="discussion-project"><%= chat.maker_project.project.title %></div>
-          </div>
+        </div>
+
+        <%# Right column: the selected conversation loads inside this frame %>
+        <%= turbo_frame_tag "conversation", class: "discussions-conversation" do %>
+          <p class="discussions-empty text-muted">Sélectionnez une discussion pour l'afficher.</p>
         <% end %>
-      <% end %>
+
+      </div>
     <% end %>
   </div>
 

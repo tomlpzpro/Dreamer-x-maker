@@ -74,19 +74,28 @@
   box-shadow: 0 0 0 3px $dreamer-light;
 }
 
-// The "remember me" checkbox keeps its label on the same line
-.auth-card .boolean {
+// The "remember me" checkbox keeps its label on the same line.
+// simple_form (Bootstrap) renders the box and its label as siblings inside
+// a ".form-check", so we make that the flex row: the box and text are then
+// vertically centered and clearly spaced.
+.auth-card .form-check {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;                 // clear space between the box and the text
+  padding-left: 0;           // drop Bootstrap's default left indent
 }
-.auth-card .boolean label {
+// The checkbox keeps its natural size and adds no margin of its own
+.auth-card .form-check-input {
+  width: auto;
+  margin: 0;
+  float: none;
+  flex: none;
+}
+// The label sits on the same line, no extra margin, normal weight
+.auth-card .form-check-label {
   margin: 0;
   font-weight: 400;
-}
-// The checkbox itself should not stretch to full width
-.auth-card input[type="checkbox"] {
-  width: auto;
+  cursor: pointer;
 }
 
 // Hint text under a field (ex: minimum password length)
@@ -95,6 +104,47 @@
   font-size: 12px;
   color: $gray-text;
   margin-top: 4px;
+}
+
+// ===========================================================================
+// ROLE TOGGLE: two buttons at the top of the sign up form to pick a profile.
+// Dreamer = orange, Maker = blue (turquoise). The chosen one gets ".is-active".
+// ===========================================================================
+.role-toggle {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+// Both buttons share the same shape: outlined by default, filled when active
+.role-btn {
+  flex: 1;                                   // the two buttons share the width
+  padding: 10px 14px;
+  border-radius: .5rem;                      // 8px rounded corners
+  background: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+// Dreamer button: orange outline, fully orange when active
+.role-btn-dreamer {
+  color: $dreamer-dark;
+  border: 2px solid $dreamer;
+}
+.role-btn-dreamer.is-active {
+  background: $dreamer;
+  color: #fff;
+}
+
+// Maker button: blue (turquoise) outline, fully blue when active
+.role-btn-maker {
+  color: $maker-dark;
+  border: 2px solid $maker;
+}
+.role-btn-maker.is-active {
+  background: $maker;
+  color: #fff;
 }
 
 // Submit button: full width, Dreamer orange
