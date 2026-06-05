@@ -1,3 +1,5 @@
+<%= turbo_stream_from @llm_chat %>
+
 <div class="container project-show my-5">
 
   <%# Link to go back to the projects list %>
@@ -21,7 +23,7 @@
         <% if @project.image.attached? %>
           <%= image_tag @project.image %>
         <% else %>
-          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Pas encore de visuel" />
+          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Pas encore de visuel">
         <% end %>
       </div>
 
@@ -160,7 +162,7 @@
     <h1 class="mb-4">AI chat</h1>
 
     <%# The box that holds all the messages %>
-    <div class="chat-box mb-4">
+    <div class="chat-box mb-4" id="<%= dom_id(@llm_chat) %>">
 
       <%# Show a small text when there is no message yet %>
       <% if @llm_messages.empty? %>

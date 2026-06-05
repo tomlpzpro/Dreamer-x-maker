@@ -15,10 +15,12 @@ class LlmMessagesController < ApplicationController
     @llm_message = @llm_chat.llm_messages.new(llm_message_params)
     @llm_message.role = "user"
     if @llm_message.save
-      CreateLlmMessageJob.perform_later(@llm_chat, @llm_message)
+      CreateLlmMessageJob.perform_later(@llm_message)
       # response = RubyLLM.chat.with_instructions(SYSTEM_PROMPT).ask(@llm_message.content)
       # @llm_chat.llm_messages.create(role: "assistant", content: response.content)
-      redirect_to @llm_chat.project
+      respond_to do |format|
+        format.turbo_stream
+      end
     else
       @llm_messages = @llm_chat.llm_messages.order(:created_at)
       render "projects/show", status: :unprocessable_entity

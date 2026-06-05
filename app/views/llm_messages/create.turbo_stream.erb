@@ -1,0 +1,3 @@
+<%= turbo_stream.append(dom_id(@llm_chat)) do %>
+  <%= render partial: "llm_messages/llm_message", locals: { message: @llm_message } %>
+<% end %>

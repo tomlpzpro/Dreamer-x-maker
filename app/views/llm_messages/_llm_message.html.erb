@@ -1,0 +1,5 @@
+<div class="chat-message <%= message.role == "user" ? "from-user" : "from-ai" %>">
+  <div class="chat-bubble">
+    <%= message.content %>
+  </div>
+</div>
