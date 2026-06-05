@@ -24,38 +24,16 @@
       <p class="home-lead">Décrivez l'objet dont vous rêvez. On le met en image,
          puis on vous met en relation avec l'artisan capable de le fabriquer.</p>
 
-      <%# Sign up buttons, only when the visitor is NOT logged in.
-          Dreamer = orange (primary), Maker = turquoise outline (secondary). %>
-      <% unless user_signed_in? %>
+      <%# Buttons depend on whether the visitor is logged in.
+          Logged in: one button to the dashboard.
+          Not logged in: two sign up buttons (Dreamer orange, Maker turquoise outline). %>
+      <% if user_signed_in? %>
+        <%= link_to "Aller à mon dashboard", dashboard_path, class: "btn btn-primary mx-2" %>
+      <% else %>
         <%= link_to "Décrire mon objet", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-2" %>
         <%= link_to "Découvrir les makers", new_user_registration_path(role: "maker"), class: "btn btn-outline-secondary mx-2" %>
       <% end %>
 
-  <div class="my-5">
-    <h2>Découvrez les projets déjà publiés</h2>
-  </div>
-
-  <div class="row">
-    <% @projects.each do |project| %>
-      <div class="col-md-4">
-        <div class="card-trip">
-          <% if project.image.attached? %>
-            <%= cl_image_tag(project.image.key) %>
-          <% else %>
-            <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-          <% end %>
-          <div class="card-trip-infos">
-            <div>
-              <h2><%= project.title %> </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-      <%# Dashboard button, only when the user IS logged in %>
-      <% if user_signed_in? %>
-        <%= link_to "Aller à mon dashboard", dashboard_path, class: "btn btn-primary mx-2" %>
-      <% end %>
     </div>
   </div>
 </div>
@@ -156,6 +134,46 @@
       <% end %>
     </div>
   </div>
+
+  <%# ===================================================================== %>
+  <%# COMPLETED PROJECTS: only shown to visitors who are NOT logged in      %>
+  <%# ===================================================================== %>
+  <% unless user_signed_in? %>
+    <div class="home-section">
+      <div class="home-section-head">
+        <h2>Des projets déjà réalisés</h2>
+        <p>Des idées devenues réalité grâce à nos makers.</p>
+      </div>
+
+      <div class="row">
+        <%# Loop over every project that a maker has already completed %>
+        <% @completed_projects.each do |project| %>
+          <div class="col-md-4 mb-4">
+            <%= link_to project_path(project), class: "home-project-link" do %>
+              <div class="card-trip">
+                <%# Status badge shown over the image %>
+                <span class="card-status status-badge status-accepted"><%= project.status_label %></span>
+                <%# Project image, or a placeholder if there is none %>
+                <% if project.image.attached? %>
+                  <%= image_tag project.image %>
+                <% else %>
+                  <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+                <% end %>
+                <div class="card-trip-infos">
+                  <div>
+                    <%# Project title %>
+                    <h2><%= project.title %></h2>
+                    <%# Project short description %>
+                    <p><%= project.description %></p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 
   <%# ===================================================================== %>
   <%# FINAL CALL TO ACTION                                                  %>
