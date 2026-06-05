@@ -117,7 +117,10 @@ projects = [
   }
 ].map do |attrs|
   dreamer = attrs.delete(:dreamer)
-  Project.create!(attrs.merge(dreamer_id: dreamer.id))
+  project = Project.create!(attrs.merge(dreamer_id: dreamer.id))
+  LlmChat.create!(project: project)
+
+  project
 end
 
 # ----------------------------------------------------------------------------
@@ -147,6 +150,7 @@ maker_projects << MakerProject.create!(
 MakerProject.create!(
   project_id: projects[3].id, maker_id: makers[0].id, status: "pending"
 )
+
 
 # ----------------------------------------------------------------------------
 # MATCH_CHATS + MATCH_MESSAGES (discussion dreamer <-> maker sur un match)

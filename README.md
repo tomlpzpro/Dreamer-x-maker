@@ -21,3 +21,9 @@ DreamWear est une marketplace créative qui connecte des personnes ayant des id�
 - Active Storage + Cloudinary
 - Hotwire (Turbo + Stimulus)
 - Bootstrap
+
+
+
+- generer un maker_projects controller
+- dans lequel il y aura l'action create
+- créer une instance de maker_project (équivalent à une candidature du maker sur un project), qui aura un status "approved"
