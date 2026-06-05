@@ -7,8 +7,18 @@
     <%# Subscribe this frame to the chat stream, so new messages appear live %>
     <%= turbo_stream_from @match_chat %>
 
-    <%# Title with the project name %>
-    <h1 class="mb-4">Chat — <%= @match_chat.maker_project.project.title %></h1>
+    <%# Title on the left, "see the project" button on the far right, same line %>
+    <div class="chat-header mb-4">
+      <%# Title with the project name %>
+      <h1>Chat — <%= @match_chat.maker_project.project.title %></h1>
+
+      <%# Button to open the project this chat is about.
+          turbo_frame: "_top" navigates the whole page (the project page has no
+          "conversation" frame), instead of loading it inside the chat frame. %>
+      <%= link_to "Voir le projet", project_path(@match_chat.maker_project.project),
+                  data: { turbo_frame: "_top" },
+                  class: "btn btn-outline-secondary btn-sm" %>
+    </div>
 
     <%# The box that holds all the messages (fixed height, scrolls inside) %>
     <div class="chat-box mb-4">

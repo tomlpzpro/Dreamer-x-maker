@@ -34,12 +34,12 @@ end
                              .order(created_at: :desc)
                              .limit(4)
 
-    # --- Mes Discussions ---
+    # --- Mes Discussions (non lues en premier, puis les plus récentes) ---
     @match_chats = MatchChat
                      .joins(maker_project: :project)
                      .where(projects: { dreamer_id: current_user.id })
                      .includes(maker_project: [:maker, :project])
-                     .order(updated_at: :desc)
+                     .ordered_for(current_user)
   end
 
   # DASHBOARD MAKER
@@ -64,10 +64,10 @@ end
     # Keep only the projects that are NOT hidden, newest first
     @open_projects = Project.where.not(id: hidden_project_ids).order(created_at: :desc)
 
-    # --- Mes Discussions ---
+    # --- Mes Discussions (non lues en premier, puis les plus récentes) ---
     @match_chats = MatchChat
                      .joins(:maker_project)
                      .where(maker_projects: { maker_id: current_user.id })
                      .includes(maker_project: { project: :dreamer })
-                     .order(updated_at: :desc)
+                     .ordered_for(current_user)
   end

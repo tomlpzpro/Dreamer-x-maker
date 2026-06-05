@@ -37,6 +37,12 @@
             <div class="discussion-project"><%= chat.maker_project.project.title %></div>
           </div>
 
+          <%# Red badge with the number of unread messages in this discussion %>
+          <% unread = chat.unread_count_for(current_user) %>
+          <% if unread.positive? %>
+            <span class="discussion-unread"><%= unread %></span>
+          <% end %>
+
           <%# Status of the application linked to this discussion %>
           <% if chat.maker_project.status == "accepted" %>
             <span class="status-badge status-accepted">Match</span>

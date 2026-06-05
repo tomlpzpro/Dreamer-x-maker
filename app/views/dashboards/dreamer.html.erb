@@ -159,6 +159,12 @@
                 <div class="discussion-name"><%= other.username %></div>
                 <div class="discussion-project"><%= chat.maker_project.project.title %></div>
               </div>
+
+              <%# Red badge with the number of unread messages in this discussion %>
+              <% unread = chat.unread_count_for(current_user) %>
+              <% if unread.positive? %>
+                <span class="discussion-unread"><%= unread %></span>
+              <% end %>
             <% end %>
           <% end %>
         </div>
