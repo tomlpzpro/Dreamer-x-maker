@@ -165,6 +165,26 @@
   color: $maker-dark;                   // keep the same text color
 }
 
+// Match button: the maker's main action, in the solid Maker turquoise
+.card-action-match {
+  background: $maker;   // solid turquoise to stand out as the main action
+  color: $cream;        // light text on the turquoise background
+}
+.card-action-match:hover {
+  background: $maker-dark; // deeper turquoise on hover
+  color: $cream;           // keep the light text
+}
+
+// Dismiss button: neutral and calm ("not for me"), nothing alarming
+.card-action-dismiss {
+  background: white;     // plain light background
+  color: $gray-text;     // muted gray text
+}
+.card-action-dismiss:hover {
+  background: $gray-light; // light gray wash on hover
+  color: $ink;             // a bit darker text on hover
+}
+
 // ===========================================================================
 // MATCH / APPLICATION ROW (a project title + a status badge)
 // ===========================================================================

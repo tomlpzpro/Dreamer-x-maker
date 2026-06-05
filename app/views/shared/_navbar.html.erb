@@ -36,6 +36,16 @@
     <div class="navbar-account">
       <% if user_signed_in? %>
 
+        <%# Subscribe to this user's stream so the notif badge updates live %>
+        <%= turbo_stream_from current_user %>
+
+        <%# Discussions shortcut with the unread-messages badge over it %>
+        <%= link_to match_chats_path, class: "navbar-notif", title: "Mes discussions" do %>
+          <%# Envelope colored by role: orange for a dreamer, blue for a maker %>
+          <i class="fas fa-envelope navbar-notif-icon <%= current_user.dreamer? ? 'is-dreamer' : 'is-maker' %>"></i>
+          <%= render "shared/notif_badge", user: current_user %>
+        <% end %>
+
         <%# Logged in: avatar + first name that open a dropdown menu %>
         <div class="dropdown">
           <a href="#" class="navbar-avatar-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

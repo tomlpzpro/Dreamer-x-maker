@@ -3,7 +3,11 @@ class ProjectsController < ApplicationController
     if current_user.role == "dreamer"
       @projects = current_user.projects.order(created_at: :desc)
     else
-      @projects = current_user.matched_projects.order(created_at: :desc)
+      # A maker only sees the projects he was accepted on (his real matches),
+      # not the ones he dismissed with "Pas pour moi"
+      @projects = current_user.matched_projects
+                              .where(maker_projects: { status: "accepted" })
+                              .order(created_at: :desc)
     end
   end
 
@@ -11,8 +15,10 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     # The makers who applied to this project (with their status and their chat)
     @maker_projects = @project.maker_projects.includes(:maker, :match_chat)
+    # The AI chat only exists on projects created through the app (not seed ones)
     @llm_chat = @project.llm_chat
-    @llm_messages = @llm_chat.llm_messages.order(:created_at)
+    # Load its messages only if the chat exists, otherwise keep an empty list
+    @llm_messages = @llm_chat ? @llm_chat.llm_messages.order(:created_at) : []
     @llm_message = LlmMessage.new
   end
 

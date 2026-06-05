@@ -1,0 +1,8 @@
+<%# Red badge with the number of unread messages for this user.
+    The id lets a broadcast replace it in real time. Hidden when there is nothing. %>
+<span id="notif_badge">
+  <% count = user ? user.unread_messages_count : 0 %>
+  <% if count.positive? %>
+    <span class="notif-badge"><%= count %></span>
+  <% end %>
+</span>

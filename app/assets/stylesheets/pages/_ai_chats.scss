@@ -23,7 +23,8 @@
 }
 
 // The other person's (or the AI's) messages stay on the left
-.chat-message.from-ai {
+.chat-message.from-ai,
+.chat-message.from-other {
   justify-content: flex-start;
 }
 
@@ -41,7 +42,8 @@
 }
 
 // Soft turquoise bubble for the other person / the AI
-.from-ai .chat-bubble {
+.from-ai .chat-bubble,
+.from-other .chat-bubble {
   background: $maker-light;
   color: $ink;
 }

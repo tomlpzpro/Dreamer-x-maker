@@ -17,4 +17,22 @@ class User < ApplicationRecord
   def maker?
     role == "maker"
   end
+
+  # Ids of the chats this user takes part in (as a maker or as a dreamer)
+  def participating_chat_ids
+    if dreamer?
+      MatchChat.joins(maker_project: :project)
+               .where(projects: { dreamer_id: id }).pluck(:id)
+    else
+      MatchChat.joins(:maker_project)
+               .where(maker_projects: { maker_id: id }).pluck(:id)
+    end
+  end
+
+  # Number of messages this user received and has not read yet
+  def unread_messages_count
+    MatchMessage.where(match_chat_id: participating_chat_ids, read: false)
+                .where.not(user_id: id)
+                .count
+  end
 end

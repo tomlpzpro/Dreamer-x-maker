@@ -60,6 +60,50 @@
   align-items: center;
 }
 
+// Discussions shortcut (envelope) with the unread-messages badge over it
+.navbar-notif {
+  position: relative;     // anchor for the red badge
+  display: inline-flex;
+  align-items: center;
+  margin-right: 16px;     // space before the avatar
+  text-decoration: none;
+  line-height: 1;
+}
+// The envelope icon: big so it stands out in the navbar
+.navbar-notif-icon {
+  font-size: 24px;        // clearly visible size
+}
+// Orange envelope for a dreamer
+.navbar-notif-icon.is-dreamer {
+  color: $dreamer;
+}
+.navbar-notif:hover .navbar-notif-icon.is-dreamer {
+  color: $dreamer-dark;   // deeper orange on hover
+}
+// Blue (turquoise) envelope for a maker
+.navbar-notif-icon.is-maker {
+  color: $maker;
+}
+.navbar-notif:hover .navbar-notif-icon.is-maker {
+  color: $maker-dark;     // deeper turquoise on hover
+}
+// The little red badge showing the number of unread messages
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;   // round badge
+  background: $red;       // red alert color
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;      // vertically center the number
+  text-align: center;
+}
+
 // The clickable avatar + name that open the account dropdown
 .navbar-avatar-link {
   display: flex;

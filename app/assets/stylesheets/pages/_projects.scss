@@ -9,6 +9,83 @@
   border-top: 1px solid $gray-light;  // a thin line above the buttons
 }
 
+// --- Maker action bar at the top of the project page (Matcher / Pas pour moi) ---
+.project-match {
+  margin-bottom: 24px;   // space before the project header
+}
+// Small question shown above the buttons
+.project-match-question {
+  margin: 0 0 10px;      // space below the question
+  font-size: 15px;
+  font-weight: 600;
+  color: $ink;
+}
+.project-match-bar {
+  display: flex;          // lay the two buttons in a row
+  gap: 12px;              // space between them
+  flex-wrap: wrap;        // stack the buttons on small screens
+}
+// Each button_to wraps its button in a form: keep them tight together
+.project-match-bar form {
+  margin: 0;              // remove default form spacing
+}
+
+// The action buttons: soft and compact (not too big, not too flashy)
+.match-big-btn {
+  display: inline-flex;               // line up the icon and the label...
+  align-items: center;                // ...centered vertically...
+  justify-content: center;            // ...and centered horizontally
+  gap: 8px;                           // space between the icon and the label
+  border: none;                       // no hard border
+  border-radius: 999px;               // soft rounded "pill" shape
+  padding: 10px 20px;                 // compact size
+  font-size: 15px;                    // normal label size
+  font-weight: 600;                   // a bit bold, not heavy
+  cursor: pointer;                    // show it is clickable
+  transition: background-color .15s ease; // smooth color change on hover
+}
+// The emoji icon inside the button
+.match-big-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+// Matcher button: soft blue (pastel Maker turquoise)
+.match-big-blue {
+  background: $maker-light;
+  color: $maker-dark;
+}
+.match-big-blue:hover {
+  background: darken($maker-light, 6%);
+}
+// Pas pour moi button: soft orange (pastel Dreamer color)
+.match-big-orange {
+  background: $dreamer-light;
+  color: $dreamer-dark;
+}
+.match-big-orange:hover {
+  background: darken($dreamer-light, 6%);
+}
+
+// --- Full-screen color flash shown when the maker clicks a button ---
+.flash-overlay {
+  position: fixed;                 // cover the whole screen
+  inset: 0;                        // top/right/bottom/left all at 0
+  z-index: 9999;                   // above every other element
+  opacity: 0;                      // hidden at first
+  transition: opacity .45s ease;   // smooth fade-in
+}
+.flash-overlay.is-visible {
+  opacity: 1;                      // fully shown after the fade-in
+}
+// Blue flash for "Matcher", orange flash for "Pas pour moi"
+.flash-blue {
+  background: $maker;
+}
+.flash-orange {
+  background: $dreamer;
+}
+
 // --- Header: title on the left, status badge on the right ---
 .project-header {
   display: flex;

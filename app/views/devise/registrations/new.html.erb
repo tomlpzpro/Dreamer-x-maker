@@ -15,7 +15,7 @@
 
         <%# Show a different sub-heading and extra fields depending on the role %>
         <% if @role == "maker" %>
-          <h2>en tant que Maker</h2>
+          <h2>Maker</h2>
           <%= f.input :skills, as: :select,
             collection: [
               "Menuiserie", "Ébénisterie", "Tournage sur bois", "Sculpture sur bois",
@@ -28,7 +28,7 @@
             ],
             label: "Mes compétences" %>
         <% else %>
-          <h2>en tant que Dreamer</h2>
+          <h2>Dreamer</h2>
         <% end %>
 
         <%= f.input :username, required: true, label: "Nom d'utilisateur" %>

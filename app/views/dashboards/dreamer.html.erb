@@ -65,11 +65,12 @@
               <% end %>
               <%# Action buttons placed over the card, outside the link to avoid nested links %>
               <div class="project-card-actions">
-                <% if project.matched? %>
-                  <%# The project is matched: find the accepted maker and his chat %>
-                  <% accepted_maker_project = project.maker_projects.find_by(status: "accepted") %>
+                <%# Find the accepted maker and his chat if the project is matched %>
+                <% accepted_maker_project = project.maker_projects.find_by(status: "accepted") %>
+                <% chat = accepted_maker_project&.match_chat %>
+                <% if chat %>
                   <%# Button leading to the chat with the maker to warn him of a change %>
-                  <%= link_to "💬 Informer mon maker d'un changement", match_chat_path(accepted_maker_project.match_chat), class: "card-action-btn card-action-inform" %>
+                  <%= link_to "💬 Informer mon maker d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
                 <% else %>
                   <%# Not matched yet: the dreamer can still edit or delete the project %>
                   <%# Go to the edit form of this project %>
