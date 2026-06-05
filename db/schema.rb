@@ -78,7 +78,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_104521) do
     t.string "content"
     t.datetime "created_at", null: false
     t.bigint "match_chat_id", null: false
-    t.boolean "read"
+    t.boolean "read", default: false, null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["match_chat_id"], name: "index_match_messages_on_match_chat_id"
