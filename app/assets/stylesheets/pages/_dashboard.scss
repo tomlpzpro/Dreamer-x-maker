@@ -98,6 +98,73 @@
   color: $gray-text;
 }
 
+// Wrapper around a project card, relative so the edit button can sit over it
+.project-card-wrapper {
+  position: relative;    // anchor for the absolutely-placed edit button
+  height: 100%;          // keep the same height as the card inside it
+}
+
+// Reserve room at the bottom of the card text so the overlay buttons
+// never sit on top of the project title
+.project-card-wrapper .card-trip-infos {
+  padding-bottom: 64px;  // empty space kept free for the action buttons
+}
+
+// Action buttons (edit + delete) shown over the bottom-right corner of the card
+.project-card-actions {
+  position: absolute;    // place them on top of the card
+  bottom: 10px;          // small gap from the bottom edge
+  right: 10px;           // small gap from the right edge
+  z-index: 1;            // keep them above the card content
+  display: flex;         // lay the two buttons in a row
+  gap: 12px;             // space between the edit and delete buttons
+}
+
+// Shared soft "pill" style for both card action buttons (on-brand, gentle)
+.card-action-btn {
+  display: inline-flex;                      // center the label inside the button
+  align-items: center;                       // vertical centering of the text
+  padding: 5px 12px;                         // compact but comfortable size
+  border: none;                              // no hard border, softer look
+  border-radius: 999px;                      // fully rounded "pill" shape
+  font-size: 13px;                           // small label, fits on the card
+  font-weight: 600;                          // readable as a button
+  text-decoration: none;                     // remove the default link underline
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .12);  // very light shadow, soft lift
+  transition: background-color .15s ease;    // smooth color change on hover
+}
+
+// Edit button: soft warm orange from the Dreamer palette
+.card-action-edit {
+  background: $dreamer-light;   // pastel orange background
+  color: $dreamer-dark;         // darker orange text for good contrast
+}
+.card-action-edit:hover {
+  background: darken($dreamer-light, 6%); // slightly deeper on hover
+  color: $dreamer-dark;                   // keep the same text color
+}
+
+// Delete button: neutral and calm, only turns red on hover (charter keeps red for alerts)
+.card-action-delete {
+  background: $cream;        // soft neutral background
+  color: $gray-text;         // muted gray text, not alarming
+}
+.card-action-delete:hover {
+  background: lighten($red, 38%); // very soft red wash on hover
+  color: $red;                    // red text to signal the danger only on hover
+}
+
+// Inform button: soft turquoise from the Maker palette (it leads to the maker chat)
+.card-action-inform {
+  background: $maker-light;   // pastel turquoise background
+  color: $maker-dark;         // darker turquoise text for good contrast
+  white-space: nowrap;        // keep the whole label on a single line
+}
+.card-action-inform:hover {
+  background: darken($maker-light, 6%); // slightly deeper on hover
+  color: $maker-dark;                   // keep the same text color
+}
+
 // ===========================================================================
 // MATCH / APPLICATION ROW (a project title + a status badge)
 // ===========================================================================
