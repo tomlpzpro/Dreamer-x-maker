@@ -49,6 +49,11 @@ end
                                    .includes(:project, :match_chat)
                                    .order(updated_at: :desc)
 
+    # --- Mes projets en cours (les projets où ce maker a été accepté) ---
+    @current_projects = Project
+                          .joins(:maker_projects)
+                          .where(maker_projects: { maker_id: current_user.id, status: "accepted" })
+                          .order(created_at: :desc)
     # --- Projets disponibles (postés par les dreamers, pas encore acceptés) ---
     # Get the ids of all projects that a maker has already accepted
     accepted_project_ids = MakerProject.where(status: "accepted").pluck(:project_id)
