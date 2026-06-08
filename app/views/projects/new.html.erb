@@ -17,6 +17,7 @@
         <%# A native calendar date picker (input type="date") to choose the wanted delivery date %>
         <%= f.input :deadline, as: :string, input_html: { type: "date" }, label: "Date de livraison voulue" %>
         <%= f.input :budget, label: "Budget", placeholder: "En euros" %>
+        <%= f.input :category, collection: User::SKILLS, label: "Catégorie du projet", prompt: "Choisir une catégorie" %>
       </div>
 
       <%# Visual: the user must EITHER upload an image OR generate one with the AI.
