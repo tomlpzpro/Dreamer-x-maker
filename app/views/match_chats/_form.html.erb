@@ -1,6 +1,10 @@
 <%# Form to write and send a new message. It has an id so we can reset it
-    (replace it with a fresh empty one) after a message is sent. %>
-<%= form_with model: match_message, url: messages_match_chat_path(match_chat), id: "new_message_form" do |form| %>
+    (replace it with a fresh empty one) after a message is sent.
+    turbo_frame: "_top" makes it escape the "conversation" frame: the Turbo
+    Stream answer is then applied to the whole page (no "Content missing"),
+    and the message itself appears live through the model broadcast. %>
+<%= form_with model: match_message, url: messages_match_chat_path(match_chat),
+              id: "new_message_form", data: { turbo_frame: "_top" } do |form| %>
   <div class="d-flex gap-2">
     <%= form.text_field :content, class: "form-control", placeholder: "Écrivez votre message...", autocomplete: "off" %>
     <%= form.submit "Envoyer", class: "btn btn-primary" %>

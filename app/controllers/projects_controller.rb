@@ -32,6 +32,10 @@ class ProjectsController < ApplicationController
 
     if @project.save
       @chat = LlmChat.create(project: @project)
+      @chat.llm_messages.create(
+        role: "assistant",
+        content: "Bonjour #{current_user.username}, je suis votre chatBot. Je vais vous aider, en vous guidant par étape, à concevoir et réaliser un visuel de votre idée. Commencez par me dire l'objet que vous souhaitez créer."
+      )
       redirect_to @project, notice: "Projet créé ! Générez maintenant son visuel."
     else
       render :new, status: :unprocessable_entity
@@ -60,7 +64,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :description, :deadline, :budget, :image)
+    params.require(:project).permit(:title, :description, :deadline, :budget, :image, :category)
   end
 
   # def validated_matched_projects
