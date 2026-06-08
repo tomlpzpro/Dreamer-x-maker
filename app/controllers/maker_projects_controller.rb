@@ -38,15 +38,22 @@ class MakerProjectsController < ApplicationController
     maker_project = MakerProject.find(params[:maker_project_id])
     # un message auto généré dans le chat, envoyé par le dreamer au maker :
     match_chat = maker_project.match_chat
-    MatchMessage.create(content:
-    "Bonjour, Votre demande été acceptée ! Nous pouvons échanger plus en détail sur les détails de ce projet.",
-    match_chat: match_chat, user: current_user)
+    MatchMessage.create(
+      content: "Bonjour, Votre demande été acceptée ! Nous pouvons échanger plus en détail sur les détails de ce projet.",
+      match_chat: match_chat,
+      user: current_user
+    )
 
-    # Sécurité : seul le dreamer qui a créé le projet peut accepter
-    # if project.dreamer != current_user
-    #   redirect_to project_path(project), alert: "Vous n'êtes pas autorisé."
-    #   return  # On arrête tout si ce n'est pas le bon utilisateur
-    # end
+    maker_projects = project.maker_projects.where.not(id: maker_project.id)
+    maker_projects.each do |mp|
+      # mp représente un maker_project que je souhaite refuser
+      mp.update!(status: "rejected")
+      MatchMessage.create(
+        content: "Bonjour, Malheureusement votre demande sur ce projet n'a pas été acceptée, mais peut-être pour une prochaine fois !",
+        match_chat: mp.match_chat,
+        user: current_user
+      )
+    end
 
     # On change le statut de "pending" à "accepted"
     maker_project.update!(status: "accepted")
@@ -80,9 +87,11 @@ class MakerProjectsController < ApplicationController
     maker_project = MakerProject.find(params[:maker_project_id])
     # un message auto généré dans le chat, envoyé par le dreamer au maker :
     match_chat = maker_project.match_chat
-    MatchMessage.create(content:
-    "Bonjour, Malheureusement votre demande sur ce projet n'a pas été acceptée, mais peut-être pour une prochaine fois !",
-    match_chat: match_chat, user: current_user)
+    MatchMessage.create(
+      content: "Bonjour, Malheureusement votre demande sur ce projet n'a pas été acceptée, mais peut-être pour une prochaine fois !",
+      match_chat: match_chat,
+      user: current_user
+    )
 
     # Sécurité : seul le dreamer propriétaire du projet peut refuser
     # if project.dreamer != current_user
