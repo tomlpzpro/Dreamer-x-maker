@@ -140,7 +140,7 @@
 
       <%# The makers who applied to this project %>
       <div class="candidatures-card">
-        <h2>Candidatures</h2>
+        <h2>Demandes de match</h2>
 
         <% if @maker_projects.empty? %>
           <p class="text-muted">Aucun maker n'a encore postulé.</p>
@@ -161,12 +161,35 @@
                   <%= link_to mp.maker.username, maker_path(mp.maker), class: "match-title maker-link" %>
                 </div>
 
+                <%# Si la demande de match dy maker (candidature) est acceptée, on affiche juste le badge vert %>
                 <% if mp.status == "accepted" %>
                   <span class="status-badge status-accepted">Accepté</span>
+
+                  <%# Si elle est refusée, on affiche juste le badge rouge %>
                 <% elsif mp.status == "rejected" %>
                   <span class="status-badge status-rejected">Refusé</span>
+
+                  <%# Si elle est en attente ET que c'est le dreamer qui regarde la page %>
+                  <%# (un maker ne doit pas voir ces boutons sur la page d'un autre projet) %>
+                <% elsif current_user == @project.dreamer %>
+
+                  <%# Bouton Accepter : envoie un PATCH à approve_project_path %>
+                  <%# params: passe l'id de la candidature au contrôleur %>
+                  <%= button_to "Accepter",
+                    approve_project_path(@project),
+                    method: :patch,
+                    params: { maker_project_id: mp.id },
+                    class: "btn btn-success btn-sm" %>
+                  <%# Bouton Refuser : envoie un PATCH à reject_project_path %>
+                  <%= button_to "Refuser",
+                    reject_project_path(@project),
+                    method: :patch,
+                    params: { maker_project_id: mp.id },
+                    class: "btn btn-outline-danger btn-sm" %>
+                  <%# Si c'est le maker lui-même qui regarde, on lui montre juste "En attente" %>
                 <% else %>
                   <span class="status-badge status-pending">En attente</span>
+
                 <% end %>
               </div>
 

@@ -14,6 +14,12 @@ Rails.application.routes.draw do
     member do
       post :match, to: "maker_projects#create"
       post :dismiss, to: "maker_projects#dismiss"
+
+      # Le dreamer accepte une candidature d'un maker
+      # patch (et non post) --> on modifie un enregistrement existant
+      patch :approve, to: "maker_projects#approve"
+      # Le dreamer refuse une candidature d'un maker
+      patch :reject, to: "maker_projects#reject"
     end
   end
   resource :profile, only: [:show, :edit, :update]

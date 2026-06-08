@@ -14,6 +14,8 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     # The makers who applied to this project (with their status and their chat)
+    # NB: possibilité de ne plus voir les projets refusé, cf. code ci-dessous:
+    # @maker_projects = @project.maker_projects..where.not(status: "rejected")includes(:maker, :match_chat)
     @maker_projects = @project.maker_projects.includes(:maker, :match_chat)
     # The AI chat only exists on projects created through the app (not seed ones)
     @llm_chat = @project.llm_chat
