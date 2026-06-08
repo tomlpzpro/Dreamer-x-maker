@@ -207,10 +207,15 @@
 
       </div>
 
-      <div id="generate-visual-button">
+      <div id="generate-visual-button" data-controller="visual-loading">
         <% if @llm_messages.count { |m| m.role == "user" } >= 3 %>
-          <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+          <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat),
+              method: :post,
+              class: "btn btn-dark mb-3",
+              form: { data: { controller: "visual-loading" } },
+              data: { action: "click->visual-loading#showLoading" } %>
         <% end %>
+      </div>
       </div>
       <%# Form to write and send a new message (submits over Turbo, no reload) %>
       <%= render "llm_messages/form", llm_chat: @llm_chat, llm_message: @llm_message %>
