@@ -1,3 +1,4 @@
+<%= turbo_stream_from @llm_chat %>
 <div class="container project-show my-5">
 
   <%# Back link: go back to the page the visitor came from.
@@ -52,7 +53,7 @@
         <% if @project.image.attached? %>
           <%= image_tag @project.image %>
         <% else %>
-          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Pas encore de visuel" />
+          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Pas encore de visuel">
         <% end %>
       </div>
 
@@ -193,9 +194,8 @@
       <%# Page title %>
       <h1 class="mb-4">AI chat</h1>
 
-      <%# Listen for new messages broadcast by the model (user + AI reply),
-          so they appear live without reloading the page. %>
-      <%= turbo_stream_from @llm_chat %>
+      <%# Listen for new messages broadcast by the model (user + AI reply),so they appear live without reloading the page. %>
+
 
       <%# The box that holds all the messages %>
       <div class="chat-box mb-4">
