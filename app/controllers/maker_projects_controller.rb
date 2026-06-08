@@ -6,9 +6,16 @@ class MakerProjectsController < ApplicationController
     # Find the project the maker wants to match with
     project = Project.find(params[:id])
 
-    # Do nothing if this maker already has a link with this project
-    if current_user.maker_projects.exists?(project: project)
-      redirect_to project_path(project) and return
+    # Only one discussion is allowed per project + maker + dreamer.
+    # If this maker already has a link with this project, reuse it: open the
+    # existing discussion if there is one, otherwise go back to the project.
+    existing = current_user.maker_projects.find_by(project: project)
+    if existing
+      if existing.match_chat
+        redirect_to match_chat_path(existing.match_chat) and return
+      else
+        redirect_to project_path(project) and return
+      end
     end
 
     # Create the accepted match between this maker and the project

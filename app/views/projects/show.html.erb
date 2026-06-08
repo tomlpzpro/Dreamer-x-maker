@@ -1,7 +1,15 @@
+<%= turbo_stream_from @llm_chat %>
+<%= turbo_stream_from @project %>
+
 <div class="container project-show my-5">
 
-  <%# Link to go back to the projects list %>
-  <%= link_to "← Retour aux projets", projects_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
+  <%# Back link: go back to the page the visitor came from.
+      "dashboard" when opened from the dashboard, the projects list otherwise. %>
+  <% if params[:from] == "dashboard" %>
+    <%= link_to "← Retour au dashboard", dashboard_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
+  <% else %>
+    <%= link_to "← Retour aux projets", projects_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
+  <% end %>
 
   <%# Maker actions at the top of the page: match this project or pass on it %>
   <% if current_user.maker? && @project.open_for?(current_user) %>
@@ -43,14 +51,9 @@
     <div class="col-md-7">
 
       <%# The project visual (image), or a placeholder if there is none %>
-      <div class="project-image">
-        <% if @project.image.attached? %>
-          <%= image_tag @project.image %>
-        <% else %>
-          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" alt="Pas encore de visuel" />
-        <% end %>
-      </div>
-
+    <div id="generate-project-image" class="project-image">
+      <%= render "projects/project_image", project: @project %>
+    </div>
       <%# Description in its own card %>
       <div class="project-description">
         <h2>Description</h2>
@@ -211,34 +214,29 @@
       <%# Page title %>
       <h1 class="mb-4">AI chat</h1>
 
+      <%# Listen for new messages broadcast by the model (user + AI reply),so they appear live without reloading the page. %>
+
+
       <%# The box that holds all the messages %>
       <div class="chat-box mb-4">
 
-        <%# Show a small text when there is no message yet %>
-        <% if @llm_messages.empty? %>
-          <p class="text-center text-muted my-5">No message yet. Start the conversation below!</p>
-        <% end %>
-
-        <%# Loop over every message of this chat %>
-        <% @llm_messages.each do |message| %>
-          <%# "user" messages go on the right, the others (AI) go on the left %>
-          <div class="chat-message <%= message.role == "user" ? "from-user" : "from-ai" %>">
-            <div class="chat-bubble">
-              <%= message.content %>
-            </div>
-          </div>
-        <% end %>
+        <%# Every message; new ones are appended here by Turbo Stream %>
+        <div id="messages">
+          <%# Placeholder shown only while the chat is empty (hidden in CSS once
+              a message exists, so it disappears as soon as one is appended) %>
+          <p class="chat-empty text-center text-muted my-5">Demarrez la conversation avec le ChatBot</p>
+          <%= render @llm_messages %>
+        </div>
 
       </div>
 
-      <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
-      <%# Form to write and send a new message %>
-      <%= form_with model: @llm_message, url: llm_chat_llm_messages_path(@llm_chat) do |form| %>
-        <div class="d-flex gap-2">
-          <%= form.text_field :content, class: "form-control", placeholder: "Write your message..." %>
-          <%= form.submit "Send", class: "btn btn-primary" %>
-        </div>
-      <% end %>
+      <div id="generate-visual-button">
+        <% if @llm_messages.count { |m| m.role == "user" } >= 3 %>
+          <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+        <% end %>
+      </div>
+      <%# Form to write and send a new message (submits over Turbo, no reload) %>
+      <%= render "llm_messages/form", llm_chat: @llm_chat, llm_message: @llm_message %>
 
     </div>
   <% end %>

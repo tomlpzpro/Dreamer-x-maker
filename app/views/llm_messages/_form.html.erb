@@ -1,0 +1,9 @@
+<%# Form to write and send a new AI-chat message.
+    It submits over Turbo, so the page never reloads. %>
+<%= form_with model: llm_message, url: llm_chat_llm_messages_path(llm_chat),
+              id: "new_message_form" do |form| %>
+  <div class="d-flex gap-2">
+    <%= form.text_field :content, class: "form-control", placeholder: "Ecrivez votre message..." %>
+    <%= form.submit "Envoyez", class: "btn btn-primary" %>
+  </div>
+<% end %>

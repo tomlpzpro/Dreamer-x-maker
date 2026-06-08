@@ -2,19 +2,19 @@ class MatchChatsController < ApplicationController
   def index
     if current_user.dreamer?
       # A dreamer sees the chats about the projects he created
-      @match_chats = MatchChat
-                       .joins(maker_project: :project)
-                       .where(projects: { dreamer_id: current_user.id })
-                       .includes(maker_project: [:maker, :project])
-                       .order(updated_at: :desc)
+      chats = MatchChat
+                .joins(maker_project: :project)
+                .where(projects: { dreamer_id: current_user.id })
+                .includes(maker_project: [:maker, :project])
     else
       # A maker sees the chats about the projects he applied to
-      @match_chats = MatchChat
-                       .joins(:maker_project)
-                       .where(maker_projects: { maker_id: current_user.id })
-                       .includes(maker_project: { project: :dreamer })
-                       .order(updated_at: :desc)
+      chats = MatchChat
+                .joins(:maker_project)
+                .where(maker_projects: { maker_id: current_user.id })
+                .includes(maker_project: { project: :dreamer })
     end
+    # Unread discussions first, then the most recently active ones
+    @match_chats = chats.ordered_for(current_user)
   end
 
   def show

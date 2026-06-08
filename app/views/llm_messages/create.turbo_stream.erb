@@ -1,0 +1,15 @@
+<%# Replace the form with a fresh empty one to clear the input after sending. The new message itself is appended live by the model broadcast. %>
+
+<%= turbo_stream.append("messages") do %>
+  <%= render partial: "llm_messages/llm_message", locals: { llm_message: @llm_message } %>
+<% end %>
+
+<% if @llm_messages.count { |m| m.role == "user" } >= 3 %>
+  <%= turbo_stream.update("generate-visual-button") do %>
+    <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "new_message_form" do %>
+  <%= render "llm_messages/form", llm_chat: @llm_chat, llm_message: LlmMessage.new %>
+<% end %>

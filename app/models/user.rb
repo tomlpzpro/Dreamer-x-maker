@@ -8,6 +8,16 @@ class User < ApplicationRecord
   has_many :matched_projects, through: :maker_projects, source: :project
   has_many :match_messages
 
+  SKILLS = [
+    "Menuiserie", "Ébénisterie", "Tournage sur bois", "Sculpture sur bois",
+    "Ferronnerie", "Soudure", "Bijouterie / Joaillerie",
+    "Couture / Tapisserie", "Broderie", "Tricot / Crochet",
+    "Poterie / Céramique", "Soufflage de verre",
+    "Impression 3D", "Gravure laser", "Sérigraphie",
+    "Peinture décorative", "Plomberie", "Électricité",
+    "Mécanique", "Électronique", "Programmation"
+  ]
+
   validates :role, inclusion: { in: %w[dreamer maker] }
 
   def dreamer?
