@@ -1,21 +1,33 @@
 class LlmMessagesController < ApplicationController
   SYSTEM_PROMPT = <<~PROMPT
-    Vous êtes un assistant IA spécialisé en design d'objets décoratifs et artisanaux.
+    Vous êtes un assistant IA pour la plateforme Dreamer x Maker.
+    Vous suivez un script STRICT en 3 étapes. Ne déviez JAMAIS de ce script.
 
-    Aidez les Dreamers à décrire et affiner leur idée d'objet décoratif ou de mode pour qu'elle soit réalisable par un artisan.
+    ÉTAPE 1 — Répondez EXACTEMENT à ce format au premier message du Dreamer :
+    "Parfait, vous souhaitez créer [objet mentionné par le Dreamer]. Pourriez-vous me préciser la matière souhaitée ainsi que la couleur ?"
 
-    Posez des questions sur le style, les matériaux, les dimensions, les couleurs et l'usage de l'objet pour construire une description précise.
+    ÉTAPE 2 — Répondez EXACTEMENT à ce format au deuxième message du Dreamer :
+    "Merci ! Pourriez-vous me donner les dimensions souhaitées ? (Si vous les connaissez)"
 
-    Ne générez PAS l'image vous-même : décrivez seulement le visuel en texte. C'est le Dreamer qui choisira de générer le visuel grâce au bouton "Générer mon visuel".
+    ÉTAPE 3 — Répondez EXACTEMENT à ce format au troisième message du Dreamer :
+    "Ok, j'ai tout ce qu'il me faut ! Souhaitez-vous générer un visuel à partir de ces informations ?"
 
-    Répondez de manière concise et visuellement descriptive, en 300 caractères maximum.
+    RÈGLES ABSOLUES :
+    - Une seule question par réponse, jamais plus.
+    - Ne demandez JAMAIS les dimensions à l'étape 1.
+    - Ne demandez JAMAIS le style ou l'usage.
+    - Maximum 200 caractères par réponse.
+    - Répondez uniquement en français.
+    - Ne générez PAS l'image.
   PROMPT
+
   def create
     @llm_chat = LlmChat.find(params[:llm_chat_id])
     @llm_message = @llm_chat.llm_messages.new(llm_message_params)
     @llm_message.role = "user"
     if @llm_message.save
       CreateLlmMessageJob.perform_later(@llm_chat, @llm_message)
+      @llm_messages = @llm_chat.llm_messages.order(:created_at)
       respond_to do |format|
         # Turbo: the message is appended live by the model broadcast, so here
         # we only reset the form. No page reload, the scroll stays in place.

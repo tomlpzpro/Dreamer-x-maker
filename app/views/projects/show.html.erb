@@ -204,13 +204,17 @@
         <div id="messages">
           <%# Placeholder shown only while the chat is empty (hidden in CSS once
               a message exists, so it disappears as soon as one is appended) %>
-          <p class="chat-empty text-center text-muted my-5">No message yet. Start the conversation below!</p>
+          <p class="chat-empty text-center text-muted my-5">Demarrez la conversation avec le ChatBot</p>
           <%= render @llm_messages %>
         </div>
 
       </div>
 
-      <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+      <div id="generate-visual-button">
+        <% if @llm_messages.count { |m| m.role == "user" } >= 3 %>
+          <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+        <% end %>
+      </div>
       <%# Form to write and send a new message (submits over Turbo, no reload) %>
       <%= render "llm_messages/form", llm_chat: @llm_chat, llm_message: @llm_message %>
 
