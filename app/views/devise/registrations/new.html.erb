@@ -31,15 +31,7 @@
         <%# Maker-only fields, shown by the controller only when "maker" is chosen %>
         <div class="role-maker-fields" data-role-selector-target="makerFields" <%= "hidden" unless @role == "maker" %>>
           <%= f.input :skills, as: :select,
-            collection: [
-              "Menuiserie", "Ébénisterie", "Tournage sur bois", "Sculpture sur bois",
-              "Ferronnerie", "Soudure", "Bijouterie / Joaillerie",
-              "Couture / Tapisserie", "Broderie", "Tricot / Crochet",
-              "Poterie / Céramique", "Soufflage de verre",
-              "Impression 3D", "Gravure laser", "Sérigraphie",
-              "Peinture décorative", "Plomberie", "Électricité",
-              "Mécanique", "Électronique", "Programmation"
-            ],
+            collection: User::SKILLS,
             label: "Mes compétences",
             input_html: { data: { "role-selector-target": "skills" } } %>
         </div>

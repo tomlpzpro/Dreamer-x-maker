@@ -64,7 +64,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :description, :deadline, :budget, :image)
+    params.require(:project).permit(:title, :description, :deadline, :budget, :image, :category)
   end
 
   # def validated_matched_projects
