@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[home published_projects]
+  skip_before_action :authenticate_user!, only: %i[home published_projects a_propos mentions_legales contact]
 
   def home
     # Projects already taken by a maker (accepted, made or delivered)
@@ -10,6 +10,15 @@ class PagesController < ApplicationController
 
     # Published projects
     @projects = Project.all
+  end
+
+  def a_propos
+  end
+
+  def mentions_legales
+  end
+
+  def contact
   end
 
   # Full page listing every published project
