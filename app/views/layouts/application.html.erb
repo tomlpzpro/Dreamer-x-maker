@@ -28,7 +28,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body id="body">
+  <%# Turbo prefetches links on hover by default. We turn it off because some
+      links (opening a chat) run side effects (mark messages as read) that must
+      happen on a real click, not on hover. %>
+  <body id="body" data-turbo-prefetch="false">
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
 

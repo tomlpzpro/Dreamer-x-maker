@@ -20,6 +20,17 @@
       <p class="maker-hero-label">Maker · La main</p>
       <h1><%= @maker.username %></h1>
 
+      <%# Average rating from dreamers (stars + score), only if already rated %>
+      <% if @maker.average_rating %>
+        <% average = @maker.average_rating.round(1) %>
+        <p class="maker-hero-rating">
+          <span class="maker-hero-stars">
+            <%= "★" * average.round %><%= "☆" * (5 - average.round) %>
+          </span>
+          <span class="maker-hero-score"><%= average %>/5 · <%= @maker.ratings_count %> avis</span>
+        </p>
+      <% end %>
+
       <%# Skills shown as small chips (the skills string is split on commas) %>
       <% if @maker.skills.present? %>
         <div class="maker-skills">

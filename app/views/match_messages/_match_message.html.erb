@@ -9,9 +9,10 @@
       <% else %>
         <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "chat-author-avatar", alt: message.user.username %>
       <% end %>
-      <%# Maker names link to their public profile; others show plain text %>
+      <%# Maker names link to their public profile; others show plain text.
+          turbo_frame "_top" opens the page in full, not inside the chat frame. %>
       <% if message.user.maker? %>
-        <%= link_to message.user.username, maker_path(message.user), class: "maker-link" %>
+        <%= link_to message.user.username, maker_path(message.user), data: { turbo_frame: "_top" }, class: "maker-link" %>
       <% else %>
         <%= message.user.username %>
       <% end %>

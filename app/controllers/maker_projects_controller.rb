@@ -22,6 +22,12 @@ class MakerProjectsController < ApplicationController
     maker_project = MakerProject.create!(project: project, maker: current_user, status: "pending")
     # Open the discussion (chat) between the maker and the dreamer
     chat = MatchChat.create!(maker_project: maker_project)
+    # First message, auto-sent by the maker to introduce his interest
+    MatchMessage.create(
+      content: "#{current_user.username} aimerait vous aider à créer #{project.title}.",
+      match_chat: chat,
+      user: current_user
+    )
 
     # Open the chat with the dreamer, with a confirmation message
     redirect_to match_chat_path(chat), notice: "C'est un match ! Vous pouvez maintenant discuter avec le dreamer."

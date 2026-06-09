@@ -35,6 +35,24 @@
   margin: 6px 0 14px;
 }
 
+// Average rating shown under the name (orange stars + score)
+.maker-hero-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+.maker-hero-stars {
+  color: $dreamer;        // filled stars in the Dreamer orange
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+.maker-hero-score {
+  color: $maker-dark;     // readable score on the light turquoise hero
+  font-size: 14px;
+  font-weight: 600;
+}
+
 // --- Skills shown as small chips ---
 .maker-skills {
   display: flex;

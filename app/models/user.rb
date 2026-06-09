@@ -28,6 +28,16 @@ class User < ApplicationRecord
     role == "maker"
   end
 
+  # Average rating this maker received from dreamers (nil if not rated yet)
+  def average_rating
+    maker_projects.where.not(rating: nil).average(:rating)
+  end
+
+  # How many ratings this maker received
+  def ratings_count
+    maker_projects.where.not(rating: nil).count
+  end
+
   # Ids of the chats this user takes part in (as a maker or as a dreamer)
   def participating_chat_ids
     if dreamer?

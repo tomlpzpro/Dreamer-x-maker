@@ -157,6 +157,25 @@
             </div>
           </li>
 
+          <%# The status of the engaged maker on this project (nil if none yet) %>
+          <% engaged_status = @project.engaged_maker_project&.status %>
+
+          <%# Step 5: the project was realised by the maker (made, then delivered) %>
+          <li class="timeline-step <%= %w[made delivered].include?(engaged_status) ? 'is-done' : 'is-todo' %>">
+            <div class="timeline-title">Projet réalisé</div>
+            <div class="timeline-date">
+              <%= %w[made delivered].include?(engaged_status) ? "Le maker a terminé la réalisation" : "À venir : réalisation par le maker" %>
+            </div>
+          </li>
+
+          <%# Step 6: the project was delivered and received by the dreamer %>
+          <li class="timeline-step <%= engaged_status == 'delivered' ? 'is-done' : 'is-todo' %>">
+            <div class="timeline-title">Projet livré</div>
+            <div class="timeline-date">
+              <%= engaged_status == "delivered" ? "Le projet a été reçu par le dreamer" : "À venir : réception par le dreamer" %>
+            </div>
+          </li>
+
         </ul>
       </div>
 

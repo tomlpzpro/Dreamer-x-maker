@@ -1,0 +1,22 @@
+// Fun, soft backdrops for project visuals. Images keep their original ratio
+// (object-fit: contain), and the empty space around them shows one of these
+// colors instead of a dull grey.
+//
+// The number of colors must match ApplicationHelper::FUN_BG_COUNT.
+$fun-bgs: #FFADAD, #FFD6A5, #FDFFB6, #CAFFBF, #9BF6FF, #A0C4FF, #BDB2FF, #FFC6FF;
+
+// Named classes, picked per project in the view (see the fun_bg_class helper),
+// so a given project always keeps the same color.
+@for $i from 1 through length($fun-bgs) {
+  .fun-bg-#{$i - 1} {
+    background: nth($fun-bgs, $i);
+  }
+}
+
+// Card thumbnails in a grid: cycle the palette by position, so a row of cards
+// looks colorful without having to touch any markup.
+@for $i from 1 through length($fun-bgs) {
+  .row > *:nth-child(#{length($fun-bgs)}n + #{$i}) .card-trip > img {
+    background: nth($fun-bgs, $i);
+  }
+}

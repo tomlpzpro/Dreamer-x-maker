@@ -1,0 +1,45 @@
+// Action buttons for the last two project steps:
+//  - the maker tells the project is realised  (turquoise = the maker side)
+//  - the dreamer confirms he received it       (orange = the dreamer side)
+// Shown in the project header and in the chat header. Pill shaped, on brand.
+
+.step-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;                     // fully rounded pill
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;                    // remove the link underline
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .12); // soft lift
+  transition: background-color .15s ease;
+}
+
+// Maker action: "the project is realised"
+.step-btn-maker {
+  background: $maker;
+  color: $cream;
+}
+.step-btn-maker:hover {
+  background: $maker-dark;
+  color: $cream;
+}
+
+// Dreamer action: "project received"
+.step-btn-dreamer {
+  background: $dreamer;
+  color: $cream;
+}
+.step-btn-dreamer:hover {
+  background: $dreamer-dark;
+  color: $cream;
+}
+
+// button_to wraps the button in a form: keep it tight and inline
+.step-btn-form {
+  display: inline;
+  margin: 0;
+}

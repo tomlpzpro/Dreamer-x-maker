@@ -8,6 +8,59 @@
 }
 
 // ===========================================================================
+// "À FAIRE" PANEL: what changed and what to do next, at the top of the page
+// ===========================================================================
+.todo-panel {
+  background: $cream;
+  border: 1px solid $gray-light;
+  border-left: 4px solid $maker;     // colored accent (set per role below)
+  border-radius: .5rem;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.todo-panel.is-dreamer { border-left-color: $dreamer; }   // orange for a dreamer
+.todo-panel.is-maker { border-left-color: $maker; }       // turquoise for a maker
+.todo-title {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+.todo-empty {
+  margin: 0;
+  color: $gray-text;
+}
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+// One actionable line, the whole row is a link
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: .5rem;
+  text-decoration: none;
+  color: $ink;
+  transition: background-color .15s ease;
+}
+.todo-item:hover {
+  background: $gray-light;
+  color: $ink;
+}
+// Small red dot signalling the line needs attention
+.todo-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $red;
+}
+
+// ===========================================================================
 // WELCOME HEADER (a soft colored banner at the top)
 // ===========================================================================
 .dashboard-header {

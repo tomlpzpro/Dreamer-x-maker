@@ -111,10 +111,11 @@
 }
 
 // --- The project visual (image) ---
+// The fun background color comes from a .fun-bg-* class added in the view.
 .project-image img {
   width: 100%;
   height: 320px;
-  object-fit: cover;          // crop the image nicely
+  object-fit: contain;        // keep the original ratio (no crop, no stretch)
   border-radius: .5rem;       // 8px rounded corners
   border: 1px solid $gray-light;
 }
