@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   # Page listing every published project (those still looking for a maker)
   get "published_projects", to: "pages#published_projects", as: :published_projects
 
+  get "a_propos", to: "pages#a_propos"
+  get "mentions_legales", to: "pages#mentions_legales"
+  get "contact", to: "pages#contact"
+
   resources :projects do
     # A maker matches a project (creates the match) or says it is not for him
     member do
