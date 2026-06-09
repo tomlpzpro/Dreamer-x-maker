@@ -1,5 +1,6 @@
-# Dreamer — données de démo
-# Lancer avec : bin/rails db:seed (ou db:reset pour repartir de zéro)
+# db/seeds.rb
+# Seed Dreamer x Maker
+# Ordre de destruction inverse des dépendances FK
 
 puts "Nettoyage de la base..."
 LlmMessage.destroy_all
@@ -10,204 +11,171 @@ MakerProject.destroy_all
 Project.destroy_all
 User.destroy_all
 
-PASSWORD = "password"
+PASSWORD = "password123"
 
-# ----------------------------------------------------------------------------
-# DREAMERS (ceux qui rêvent d'un objet sur mesure)
-# ----------------------------------------------------------------------------
-puts "Création des dreamers..."
+# ---------------------------------------------------------------------------
+# USERS
+# role: "dreamer" (porteur de projet) ou "maker" (artisan)
+# ---------------------------------------------------------------------------
+puts "Création des utilisateurs..."
 
-dreamers = [
-  {
-    email: "camille.durand@example.com",
-    username: "Camille Durand",
-    adresse: "12 rue de Bretagne, 75003 Paris",
-    phone_number: "0612345678",
-    profile_picture_url: "https://i.pravatar.cc/150?img=5"
-  },
-  {
-    email: "thomas.leroy@example.com",
-    username: "Thomas Leroy",
-    adresse: "8 quai des Chartrons, 33000 Bordeaux",
-    phone_number: "0623456789",
-    profile_picture_url: "https://i.pravatar.cc/150?img=12"
-  },
-  {
-    email: "lea.martin@example.com",
-    username: "Léa Martin",
-    adresse: "45 cours Lafayette, 69003 Lyon",
-    phone_number: "0634567890",
-    profile_picture_url: "https://i.pravatar.cc/150?img=20"
-  }
-].map do |attrs|
-  User.create!(attrs.merge(password: PASSWORD, role: "dreamer", skills: nil))
+dreamers_data = [
+  { username: "claire_n",   email: "claire@example.com",   adresse: "Neuilly-sur-Seine", phone_number: "0601020304" },
+  { username: "thomas_b",   email: "thomas@example.com",   adresse: "Paris 11e",         phone_number: "0602030405" },
+  { username: "sophie_m",   email: "sophie@example.com",   adresse: "Lyon 6e",           phone_number: "0603040506" },
+  { username: "antoine_r",  email: "antoine@example.com",  adresse: "Bordeaux",          phone_number: "0604050607" }
+]
+
+makers_data = [
+  { username: "atelier_chene",  email: "chene@example.com",   adresse: "Saint-Ouen",  phone_number: "0611121314", skills: "Menuiserie, ébénisterie, bois massif" },
+  { username: "ceramique_lou",  email: "lou@example.com",     adresse: "Vallauris",   phone_number: "0612131415", skills: "Céramique, grès, émaillage" },
+  { username: "metal_forge",    email: "forge@example.com",   adresse: "Montreuil",   phone_number: "0613141516", skills: "Ferronnerie, métal, soudure" },
+  { username: "textile_inde",   email: "textile@example.com", adresse: "Roubaix",     phone_number: "0614151617", skills: "Tissage, couture, tapisserie" },
+  { username: "bijoux_sarah",   email: "sarah@example.com",   adresse: "Paris 3e",    phone_number: "0615161718", skills: "Bijouterie, fonte, sertissage" }
+]
+
+dreamers = dreamers_data.map do |d|
+  User.create!(
+    username: d[:username],
+    email: d[:email],
+    password: PASSWORD,
+    password_confirmation: PASSWORD,
+    adresse: d[:adresse],
+    phone_number: d[:phone_number],
+    role: "dreamer",
+    profile_picture_url: "https://i.pravatar.cc/150?u=#{d[:email]}"
+  )
 end
 
-# ----------------------------------------------------------------------------
-# MAKERS (les artisans)
-# ----------------------------------------------------------------------------
-puts "Création des makers..."
-
-makers = [
-  {
-    email: "atelier.bois@example.com",
-    username: "Atelier du Bois",
-    adresse: "3 rue des Artisans, 35000 Rennes",
-    phone_number: "0645678901",
-    skills: "Menuiserie, ébénisterie, chêne massif",
-    profile_picture_url: "https://i.pravatar.cc/150?img=33"
-  },
-  {
-    email: "ceramique.claire@example.com",
-    username: "Claire Céramique",
-    adresse: "27 avenue Jean Jaurès, 31000 Toulouse",
-    phone_number: "0656789012",
-    skills: "Céramique, grès émaillé, tournage",
-    profile_picture_url: "https://i.pravatar.cc/150?img=45"
-  },
-  {
-    email: "ferronnerie.dupont@example.com",
-    username: "Ferronnerie Dupont",
-    adresse: "14 rue du Faubourg, 67000 Strasbourg",
-    phone_number: "0667890123",
-    skills: "Ferronnerie d'art, laiton, métal",
-    profile_picture_url: "https://i.pravatar.cc/150?img=51"
-  }
-].map do |attrs|
-  User.create!(attrs.merge(password: PASSWORD, role: "maker"))
+makers = makers_data.map do |m|
+  User.create!(
+    username: m[:username],
+    email: m[:email],
+    password: PASSWORD,
+    password_confirmation: PASSWORD,
+    adresse: m[:adresse],
+    phone_number: m[:phone_number],
+    role: "maker",
+    skills: m[:skills],
+    profile_picture_url: "https://i.pravatar.cc/150?u=#{m[:email]}"
+  )
 end
 
-# ----------------------------------------------------------------------------
-# PROJECTS (les rêves postés par les dreamers)
-# ----------------------------------------------------------------------------
+puts "#{dreamers.count} dreamers et #{makers.count} makers créés."
+
+# ---------------------------------------------------------------------------
+# PROJECTS (créés par des dreamers)
+# ---------------------------------------------------------------------------
 puts "Création des projets..."
 
-projects = [
-  {
-    title: "Table basse en chêne sur mesure",
-    description: "Je cherche une table basse en chêne massif, 110x60cm, " \
-                 "finition huilée, avec un piètement métallique noir.",
-    budget: 800,
-    deadline: "2026-09-15",
-    dreamer: dreamers[0]
-  },
-  {
-    title: "Service à thé en grès",
-    description: "Un service à thé pour 4 personnes en grès émaillé, " \
-                 "tons terracotta, théière + 4 tasses + plateau.",
-    budget: 250,
-    deadline: "2026-08-01",
-    dreamer: dreamers[1]
-  },
-  {
-    title: "Luminaire suspendu en laiton",
-    description: "Suspension en laiton brossé pour une salle à manger, " \
-                 "style Art déco, diamètre ~50cm.",
-    budget: 600,
-    deadline: "2026-10-30",
-    dreamer: dreamers[2]
-  },
-  {
-    title: "Étagère murale modulable",
-    description: "Étagère murale en bois et métal, modulable, " \
-                 "3 niveaux, pour un salon de 20m².",
-    budget: 400,
-    deadline: "2026-09-01",
-    dreamer: dreamers[0]
-  }
-].map do |attrs|
-  dreamer = attrs.delete(:dreamer)
-  project = Project.create!(attrs.merge(dreamer_id: dreamer.id))
-  LlmChat.create!(project: project)
+projects_data = [
+  { title: "Table basse en chêne sur mesure", category: "Mobilier",   budget: 1200, deadline: "2026-09-15",
+    description: "Table basse rectangulaire en chêne massif, finition huilée, pieds métal noir. Dimensions 120x60x40 cm." },
+  { title: "Service de table en grès émaillé", category: "Céramique", budget: 600, deadline: "2026-08-30",
+    description: "Service complet pour 6 personnes en grès, tons terre et bleu profond, fait main." },
+  { title: "Luminaire suspendu en laiton", category: "Métal",         budget: 850, deadline: "2026-10-01",
+    description: "Suspension design en laiton brossé pour salle à manger, structure géométrique." },
+  { title: "Tête de lit en tissu capitonné", category: "Textile",     budget: 950, deadline: "2026-09-20",
+    description: "Tête de lit 160 cm capitonnée en velours côtelé vert sauge, finition soignée." },
+  { title: "Bague de fiançailles personnalisée", category: "Bijoux",  budget: 2200, deadline: "2026-07-25",
+    description: "Bague or jaune 18 carats avec saphir central, design épuré et intemporel." },
+  { title: "Étagère murale modulable",          category: "Mobilier", budget: 700, deadline: "2026-11-10",
+    description: "Système d'étagères modulables en bois clair et métal, fixation murale invisible." }
+]
 
-  project
+projects = projects_data.each_with_index.map do |p, i|
+  Project.create!(
+    title: p[:title],
+    category: p[:category],
+    budget: p[:budget],
+    deadline: p[:deadline],
+    description: p[:description],
+    dreamer_id: dreamers[i % dreamers.size].id
+  )
 end
 
-# ----------------------------------------------------------------------------
-# MAKER_PROJECTS (candidatures des makers sur les projets)
-# ----------------------------------------------------------------------------
-puts "Création des candidatures..."
+puts "#{projects.count} projets créés."
 
+# ---------------------------------------------------------------------------
+# MAKER_PROJECTS (candidatures / matchs makers <-> projets)
+# status: "pending", "accepted", "in_progress", "completed", "declined"
+# ---------------------------------------------------------------------------
+puts "Création des maker_projects..."
+
+statuses = ["pending", "accepted", "in_progress", "completed"]
 maker_projects = []
 
-# Projet 0 (table chêne) : l'Atelier du Bois est accepté
-maker_projects << MakerProject.create!(
-  project_id: projects[0].id, maker_id: makers[0].id, status: "accepted"
-)
-# Projet 0 : la Ferronnerie a aussi postulé mais refusée
-MakerProject.create!(
-  project_id: projects[0].id, maker_id: makers[2].id, status: "rejected"
-)
-# Projet 1 (service à thé) : Claire Céramique en attente
-maker_projects << MakerProject.create!(
-  project_id: projects[1].id, maker_id: makers[1].id, status: "pending"
-)
-# Projet 2 (luminaire laiton) : Ferronnerie acceptée
-maker_projects << MakerProject.create!(
-  project_id: projects[2].id, maker_id: makers[2].id, status: "accepted"
-)
-# Projet 3 (étagère) : Atelier du Bois en attente
-MakerProject.create!(
-  project_id: projects[3].id, maker_id: makers[0].id, status: "pending"
-)
-
-
-# ----------------------------------------------------------------------------
-# MATCH_CHATS + MATCH_MESSAGES (discussion dreamer <-> maker sur un match)
-# ----------------------------------------------------------------------------
-puts "Création des chats de match..."
-
-# Chat sur le projet table chêne (dreamer Camille <-> Atelier du Bois)
-chat1 = MatchChat.create!(maker_project_id: maker_projects[0].id)
-[
-  { user: dreamers[0], content: "Bonjour ! Vous pensez pouvoir livrer avant mi-septembre ?" },
-  { user: makers[0],   content: "Bonjour Camille, oui sans problème. Vous avez une essence précise en tête ?" },
-  { user: dreamers[0], content: "Du chêne français si possible, finition huilée mate." },
-  { user: makers[0],   content: "Parfait, je vous prépare un devis détaillé aujourd'hui." }
-].each do |msg|
-  MatchMessage.create!(match_chat_id: chat1.id, user_id: msg[:user].id, content: msg[:content])
-end
-
-# Chat sur le projet luminaire (dreamer Léa <-> Ferronnerie)
-chat2 = MatchChat.create!(maker_project_id: maker_projects[2].id)
-[
-  { user: dreamers[2], content: "Le laiton peut-il être patiné plutôt que brossé ?" },
-  { user: makers[2],   content: "Tout à fait, je peux vous proposer plusieurs finitions de patine." }
-].each do |msg|
-  MatchMessage.create!(match_chat_id: chat2.id, user_id: msg[:user].id, content: msg[:content])
-end
-
-# ----------------------------------------------------------------------------
-# LLM_CHATS + LLM_MESSAGES (assistant IA attaché à un projet)
-# ----------------------------------------------------------------------------
-puts "Création des chats LLM..."
-
-llm_conversations = {
-  projects[0] => [
-    { role: "user",      content: "Aide-moi à décrire ma table basse en chêne." },
-    { role: "assistant", content: "Bien sûr ! Quelles dimensions et quelle finition souhaitez-vous ?" },
-    { role: "user",      content: "110x60, finition huilée, pieds métal noir." },
-    { role: "assistant", content: "Voici une description claire à publier pour les artisans..." }
-  ],
-  projects[2] => [
-    { role: "user",      content: "Quel budget réaliste pour une suspension laiton Art déco ?" },
-    { role: "assistant", content: "Pour du laiton travaillé sur mesure, comptez entre 500 et 800€." }
-  ]
-}
-
-llm_conversations.each do |project, messages|
-  chat = LlmChat.create!(project_id: project.id)
-  messages.each do |msg|
-    LlmMessage.create!(llm_chat_id: chat.id, role: msg[:role], content: msg[:content])
+projects.each_with_index do |project, idx|
+  # 1 à 2 makers candidatent sur chaque projet
+  candidate_makers = makers.sample(rand(1..2))
+  candidate_makers.each do |maker|
+    maker_projects << MakerProject.create!(
+      maker_id: maker.id,
+      project_id: project.id,
+      status: statuses[idx % statuses.size],
+      rating: rand(3..5)
+    )
   end
 end
 
-# ----------------------------------------------------------------------------
-puts "----------------------------------------"
-puts "Seed terminé :"
-puts "#{User.count} users (#{User.where(role: 'dreamer').count} dreamers, #{User.where(role: 'maker').count} makers)"
-puts "#{Project.count} projets"
-puts "#{MakerProject.count} candidatures"
-puts "#{MatchChat.count} match chats / #{MatchMessage.count} messages"
-puts "#{LlmChat.count} llm chats / #{LlmMessage.count} messages"
-puts "----------------------------------------"
+puts "#{maker_projects.count} maker_projects créés."
+
+# ---------------------------------------------------------------------------
+# MATCH_CHATS + MATCH_MESSAGES (conversation dreamer <-> maker)
+# ---------------------------------------------------------------------------
+puts "Création des conversations de match..."
+
+maker_projects.each do |mp|
+  chat = MatchChat.create!(maker_project: mp)
+
+  project = mp.project
+  dreamer = User.find(project.dreamer_id)
+  maker   = User.find(mp.maker_id)
+
+  exchange = [
+    { user: dreamer, content: "Bonjour, j'ai vu que vous étiez intéressé(e) par mon projet « #{project.title} ». Quelles seraient vos disponibilités ?" },
+    { user: maker,   content: "Bonjour, oui le projet me plaît beaucoup. Je peux démarrer dès la semaine prochaine. Avez-vous des références visuelles ?" },
+    { user: dreamer, content: "Parfait. Je vous envoie quelques images d'inspiration et les dimensions exactes." },
+    { user: maker,   content: "Très bien, je vous prépare un premier devis détaillé d'ici demain." }
+  ]
+
+  exchange.each_with_index do |msg, i|
+    MatchMessage.create!(
+      match_chat: chat,
+      user_id: msg[:user].id,
+      content: msg[:content],
+      read: i < 2 # les premiers messages sont lus, les derniers non
+    )
+  end
+end
+
+puts "#{MatchChat.count} conversations et #{MatchMessage.count} messages créés."
+
+# ---------------------------------------------------------------------------
+# LLM_CHATS + LLM_MESSAGES (assistant IA lié à un projet)
+# role: "user" / "assistant"
+# ---------------------------------------------------------------------------
+puts "Création des chats IA..."
+
+projects.first(3).each do |project|
+  llm_chat = LlmChat.create!(project: project)
+
+  conversation = [
+    { role: "user",      content: "Peux-tu m'aider à affiner la description de mon projet « #{project.title} » ?" },
+    { role: "assistant", content: "Bien sûr. Précisons d'abord les matériaux, les dimensions et le style recherché pour attirer les bons artisans." },
+    { role: "user",      content: "Je vise un style épuré, matériaux nobles, budget autour de #{project.budget} €." },
+    { role: "assistant", content: "Parfait. Je suggère de mettre en avant la finition et la durabilité dans le titre pour valoriser le sur-mesure." }
+  ]
+
+  conversation.each do |m|
+    LlmMessage.create!(llm_chat: llm_chat, role: m[:role], content: m[:content])
+  end
+end
+
+puts "#{LlmChat.count} chats IA et #{LlmMessage.count} messages IA créés."
+
+puts ""
+puts "Seed terminé."
+puts "Comptes de test (mot de passe : #{PASSWORD})"
+puts "  Dreamer : claire@example.com"
+puts "  Maker   : chene@example.com"
