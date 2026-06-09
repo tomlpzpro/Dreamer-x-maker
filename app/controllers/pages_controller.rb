@@ -2,10 +2,10 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[home published_projects]
 
   def home
-    # Projects already done: a maker has been accepted on them
+    # Projects already taken by a maker (accepted, made or delivered)
     @completed_projects = Project
                             .joins(:maker_projects)
-                            .where(maker_projects: { status: "accepted" })
+                            .where(maker_projects: { status: MakerProject::ENGAGED_STATUSES })
                             .order(created_at: :desc)
 
     # Published projects

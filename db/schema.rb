@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_124107) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_09_103729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -62,6 +62,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_124107) do
     t.datetime "created_at", null: false
     t.integer "maker_id"
     t.bigint "project_id", null: false
+    t.integer "rating"
     t.string "status"
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_maker_projects_on_project_id"
@@ -78,7 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_124107) do
     t.string "content"
     t.datetime "created_at", null: false
     t.bigint "match_chat_id", null: false
-    t.boolean "read", default: false, null: false
+    t.boolean "read"
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["match_chat_id"], name: "index_match_messages_on_match_chat_id"

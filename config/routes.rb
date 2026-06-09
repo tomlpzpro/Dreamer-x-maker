@@ -20,6 +20,12 @@ Rails.application.routes.draw do
       patch :approve, to: "maker_projects#approve"
       # Le dreamer refuse une candidature d'un maker
       patch :reject, to: "maker_projects#reject"
+
+      # Le maker indique que le projet est réalisé
+      patch :mark_made, to: "maker_projects#mark_made"
+      # Le dreamer confirme la réception : formulaire (photo + note) puis livraison
+      get :delivery, to: "maker_projects#delivery"
+      patch :mark_delivered, to: "maker_projects#mark_delivered"
     end
   end
   resource :profile, only: [:show, :edit, :update]

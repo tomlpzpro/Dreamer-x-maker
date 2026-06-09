@@ -1,0 +1,50 @@
+// Delivery form: the dreamer confirms reception, adds a photo and a rating.
+
+.delivery-card {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 32px;
+  background: $cream;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;
+}
+.delivery-intro {
+  color: $gray-text;
+  margin-bottom: 24px;
+}
+// One field block (label on top, input below)
+.delivery-field {
+  margin-bottom: 24px;
+}
+.delivery-field label,
+.delivery-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+// Star rating: real radio inputs hidden, the star labels are clickable.
+// We lay the stars right-to-left so that hovering/checking a star also
+// highlights the stars before it (classic star-rating trick).
+.delivery-stars {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.delivery-star-input {
+  display: none;          // hide the real radio button
+}
+.delivery-star {
+  font-size: 32px;
+  color: $gray-light;     // empty star color
+  cursor: pointer;
+  padding: 0 2px;
+  margin: 0;
+}
+// Highlight the chosen star and all the stars after it (before it on screen,
+// because the row is reversed) in the Dreamer orange.
+.delivery-star-input:checked ~ .delivery-star,
+.delivery-star:hover,
+.delivery-star:hover ~ .delivery-star {
+  color: $dreamer;
+}

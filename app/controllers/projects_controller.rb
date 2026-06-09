@@ -3,10 +3,10 @@ class ProjectsController < ApplicationController
     if current_user.role == "dreamer"
       @projects = current_user.projects.order(created_at: :desc)
     else
-      # A maker only sees the projects he was accepted on (his real matches),
-      # not the ones he dismissed with "Pas pour moi"
+      # A maker only sees the projects he is engaged on (his real matches:
+      # accepted, made or delivered), not the ones he dismissed with "Pas pour moi"
       @projects = current_user.matched_projects
-                              .where(maker_projects: { status: "accepted" })
+                              .where(maker_projects: { status: MakerProject::ENGAGED_STATUSES })
                               .order(created_at: :desc)
     end
   end

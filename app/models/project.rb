@@ -4,9 +4,15 @@ class Project < ApplicationRecord
   has_many :maker_projects, dependent: :destroy
   has_one_attached :image
 
-  # True when at least one maker has been accepted on this project
+  # The maker application engaged on this project (accepted, made or
+  # delivered), if there is one. There can only be one at a time.
+  def engaged_maker_project
+    maker_projects.find { |mp| MakerProject::ENGAGED_STATUSES.include?(mp.status) }
+  end
+
+  # True when a maker is engaged on this project (accepted, made or delivered)
   def matched?
-    maker_projects.any? { |mp| mp.status == "accepted" }
+    engaged_maker_project.present?
   end
 
   # True when this maker can still match or dismiss this project.
@@ -18,12 +24,12 @@ class Project < ApplicationRecord
 
   # A simple status label, based on the makers' applications
   def status_label
-    if matched?
-      "Match trouvé"
-    elsif maker_projects.any?
-      "Candidatures reçues"
+    case engaged_maker_project&.status
+    when "delivered" then "Livré"
+    when "made"      then "Réalisé"
+    when "accepted"  then "Match trouvé"
     else
-      "En attente de maker"
+      maker_projects.any? ? "Candidatures reçues" : "En attente de maker"
     end
   end
 end

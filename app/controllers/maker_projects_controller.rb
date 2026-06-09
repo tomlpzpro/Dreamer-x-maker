@@ -105,4 +105,71 @@ class MakerProjectsController < ApplicationController
     # Retour sur la page du projet
     redirect_to project_path(project), notice: "Candidature refusée."
   end
+
+  # Le maker indique que le projet est réalisé (accepted -> made)
+  def mark_made
+    advance_maker_project(
+      from: "accepted",
+      to: "made",
+      message: lambda { |project|
+        "#{current_user.username} a terminé de réaliser votre #{project.title}. " \
+          "Echangez pour convenir d'un mode de réception !"
+      },
+      notice: "Projet marqué comme réalisé !"
+    )
+  end
+
+  # Le dreamer ouvre le formulaire de réception (photo + note du maker).
+  # Possible seulement par le dreamer du projet, quand le projet est "made".
+  def delivery
+    @project = Project.find(params[:id])
+    @maker_project = @project.engaged_maker_project
+    return if current_user == @project.dreamer && @maker_project&.status == "made"
+
+    redirect_to project_path(@project), alert: "Action impossible."
+  end
+
+  # Le dreamer confirme la réception (made -> delivered) : il enregistre sa
+  # note et la photo du projet fini, qui apparaîtront sur la page du maker.
+  def mark_delivered
+    project = Project.find(params[:id])
+    maker_project = project.engaged_maker_project
+
+    unless current_user == project.dreamer && maker_project&.status == "made"
+      redirect_to project_path(project), alert: "Action impossible." and return
+    end
+
+    maker_project.update!(status: "delivered", rating: params[:rating])
+    maker_project.delivery_photo.attach(params[:delivery_photo]) if params[:delivery_photo].present?
+    notify_delivery(project, maker_project)
+    redirect_to maker_path(maker_project.maker), notice: "Réception confirmée, merci pour votre note !"
+  end
+
+  private
+
+  # Message auto envoyé dans le chat quand le dreamer a bien reçu le projet
+  def notify_delivery(project, maker_project)
+    MatchMessage.create(
+      content: "#{project.dreamer.username} a bien reçu « #{project.title} ». " \
+               "Merci #{maker_project.maker.username} pour cette réalisation !",
+      match_chat: maker_project.match_chat,
+      user: current_user
+    )
+  end
+
+  # Le maker connecté fait avancer SA candidature d'un statut au suivant,
+  # et prévient le dreamer dans le chat. On vérifie le statut de départ.
+  # `message` est une petite fonction qui reçoit le projet et renvoie le texte.
+  def advance_maker_project(from:, to:, message:, notice:)
+    project = Project.find(params[:id])
+    maker_project = current_user.maker_projects.find_by!(project: project)
+
+    if maker_project.status == from
+      maker_project.update!(status: to)
+      MatchMessage.create(content: message.call(project), match_chat: maker_project.match_chat, user: current_user)
+      redirect_back fallback_location: project_path(project), notice: notice
+    else
+      redirect_back fallback_location: project_path(project), alert: "Action impossible."
+    end
+  end
 end

@@ -1,0 +1,15 @@
+<%# Button for the maker to mark his project as realised (accepted -> made).
+    Only the maker who owns this application sees it. After that, it is the
+    dreamer who confirms reception (see "receive_button").
+    Optional locals:
+      - made_label:   text of the button
+      - button_class: CSS class of the button %>
+<% made_label = local_assigns.fetch(:made_label, "Marquer comme réalisé") %>
+<% button_class = local_assigns.fetch(:button_class, "btn btn-success btn-sm") %>
+
+<% if current_user == maker_project.maker && maker_project.status == "accepted" %>
+  <%= button_to made_label,
+                mark_made_project_path(maker_project.project),
+                method: :patch,
+                class: button_class %>
+<% end %>

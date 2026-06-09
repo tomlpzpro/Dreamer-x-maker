@@ -69,8 +69,8 @@
               <% end %>
               <%# Action button placed over the card, outside the link to avoid nested links %>
               <div class="project-card-actions">
-                <%# Find the accepted maker_project and its chat for this project %>
-                <% accepted_maker_project = project.maker_projects.find_by(status: "accepted") %>
+                <%# Find this project's engaged maker_project and its chat %>
+                <% accepted_maker_project = project.maker_projects.find_by(status: MakerProject::ENGAGED_STATUSES) %>
                 <% chat = accepted_maker_project&.match_chat %>
                 <%# Button leading to the chat with the dreamer to warn him of a change %>
                 <% if chat %>
@@ -113,7 +113,11 @@
           </div>
 
           <%# Colored badge depending on the status of the application %>
-          <% if mp.status == "accepted" %>
+          <% if mp.status == "delivered" %>
+            <span class="status-badge status-delivered">Livré</span>
+          <% elsif mp.status == "made" %>
+            <span class="status-badge status-made">Réalisé</span>
+          <% elsif mp.status == "accepted" %>
             <span class="status-badge status-accepted">Match !</span>
           <% elsif mp.status == "rejected" %>
             <span class="status-badge status-rejected">Refusé</span>

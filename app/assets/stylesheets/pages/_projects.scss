@@ -98,6 +98,17 @@
 .project-header h1 {
   margin: 0;
 }
+// Right side of the header: maker action button stacked above the status badge
+.project-header-status {
+  display: flex;
+  flex-direction: column;   // button on top, badge below
+  align-items: flex-end;    // keep both aligned to the right
+  gap: 8px;
+}
+// button_to wraps the button in a form: remove its default spacing
+.project-header-status form {
+  margin: 0;
+}
 
 // --- The project visual (image) ---
 .project-image img {
