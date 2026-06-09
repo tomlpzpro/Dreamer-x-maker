@@ -9,7 +9,7 @@
     <p>Toutes les idées sur mesure qui cherchent leur artisan.</p>
   </div>
 
-  <%= form_with url: published_projects_path, method: :get, local: true do %>
+  <%= form_with url: published_projects_path, method: :get, data: { turbo_stream: true } do %>
     <div class="mb-4 d-flex align-items-center gap-2">
 
       <%= select_tag :category,
@@ -18,54 +18,56 @@
           params[:category]
         ),
         class: "form-select",
-        onchange: "this.form.submit();"
+        onchange: "this.form.requestSubmit();"
       %>
 
     </div>
   <% end %>
 
   <%# Small text when there is no published project yet %>
-  <% if @projects.empty? %>
-    <p class="dashboard-empty">Aucun projet publié pour le moment.</p>
-  <% else %>
-    <div class="row">
-      <%# One card per published project %>
-      <% @projects.each do |project| %>
-        <div class="col-md-4 mb-4">
-          <%# Wrapper kept relative so the maker action buttons can sit over the card %>
-          <div class="project-card-wrapper">
-            <%= link_to project_path(project), class: "home-project-link" do %>
-              <div class="card-trip">
-                <%# Status badge shown over the image %>
-                <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
-                <%# Project image, or a placeholder if there is none %>
-                <% if project.image.attached? %>
-                  <%= image_tag project.image %>
-                <% else %>
-                  <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-                <% end %>
-                <div class="card-trip-infos">
-                  <div>
-                    <h2><%= project.title %></h2>
+  <div id="published-projects-list">
+    <% if @projects.empty? %>
+      <p class="dashboard-empty">Aucun projet publié pour le moment.</p>
+    <% else %>
+      <div class="row">
+        <%# One card per published project %>
+        <% @projects.each do |project| %>
+          <div class="col-md-4 mb-4">
+            <%# Wrapper kept relative so the maker action buttons can sit over the card %>
+            <div class="project-card-wrapper">
+              <%= link_to project_path(project), class: "home-project-link" do %>
+                <div class="card-trip">
+                  <%# Status badge shown over the image %>
+                  <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
+                  <%# Project image, or a placeholder if there is none %>
+                  <% if project.image.attached? %>
+                    <%= image_tag project.image %>
+                  <% else %>
+                    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+                  <% end %>
+                  <div class="card-trip-infos">
+                    <div>
+                      <h2><%= project.title %></h2>
+                    </div>
                   </div>
                 </div>
-              </div>
-            <% end %>
+              <% end %>
 
-            <%# A logged-in maker can match or dismiss a project he can still act on %>
-            <% if user_signed_in? && current_user.maker? && project.open_for?(current_user) %>
-              <%# Action buttons placed over the card, outside the link to avoid nested links %>
-              <div class="project-card-actions">
-                <%# Match this project: creates the match and opens the discussion %>
-                <%= link_to "🤝 Matcher", match_project_path(project), data: { turbo_method: :post }, class: "card-action-btn card-action-match" %>
-                <%# Dismiss this project: it will no longer appear in my available projects %>
-                <%= link_to "✕ Pas pour moi", dismiss_project_path(project), data: { turbo_method: :post }, class: "card-action-btn card-action-dismiss" %>
-              </div>
-            <% end %>
+              <%# A logged-in maker can match or dismiss a project he can still act on %>
+              <% if user_signed_in? && current_user.maker? && project.open_for?(current_user) %>
+                <%# Action buttons placed over the card, outside the link to avoid nested links %>
+                <div class="project-card-actions">
+                  <%# Match this project: creates the match and opens the discussion %>
+                  <%= link_to "🤝 Matcher", match_project_path(project), data: { turbo_method: :post }, class: "card-action-btn card-action-match" %>
+                  <%# Dismiss this project: it will no longer appear in my available projects %>
+                  <%= link_to "✕ Pas pour moi", dismiss_project_path(project), data: { turbo_method: :post }, class: "card-action-btn card-action-dismiss" %>
+                </div>
+              <% end %>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
 </div>
