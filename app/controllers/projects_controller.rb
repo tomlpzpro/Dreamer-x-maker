@@ -1,4 +1,7 @@
 class ProjectsController < ApplicationController
+  # Only a dreamer can create or manage a project (a maker never owns one)
+  before_action :require_dreamer, only: %i[new create edit update destroy]
+
   def index
     if current_user.role == "dreamer"
       @projects = current_user.projects.order(created_at: :desc)
@@ -64,6 +67,13 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  # Block makers from the create/manage actions, server-side
+  def require_dreamer
+    return if current_user.dreamer?
+
+    redirect_to projects_path, alert: "Seuls les dreamers peuvent créer ou gérer un projet."
+  end
 
   def project_params
     params.require(:project).permit(:title, :description, :deadline, :budget, :image, :category)
