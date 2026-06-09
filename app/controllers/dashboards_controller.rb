@@ -64,6 +64,10 @@ end
     # Keep only the projects that are NOT hidden, newest first
     @open_projects = Project.where.not(id: hidden_project_ids).order(created_at: :desc)
 
+    if params[:category].present?
+      @open_projects = @open_projects.where(category: params[:category])
+    end
+
     # --- Mes Discussions (non lues en premier, puis les plus récentes) ---
     @match_chats = MatchChat
                      .joins(:maker_project)
