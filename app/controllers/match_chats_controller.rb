@@ -20,8 +20,13 @@ class MatchChatsController < ApplicationController
   def show
     # Find the chat we want to display
     @match_chat = MatchChat.find(params[:id])
-    # Opening the chat marks the messages from the other person as read
+    # Opening the chat marks the messages from the other person as read.
+    # (Link prefetching is disabled in the layout, so this only runs on a real
+    # click, never on hover.)
     @match_chat.match_messages.where.not(user: current_user).update_all(read: true)
+    # Make this discussion's red badge disappear in real time (only this one;
+    # the navbar envelope badge is handled on its own click, see the navbar).
+    clear_conversation_badge(@match_chat)
     # All the messages of this chat, oldest first (with their author loaded)
     @match_messages = @match_chat.match_messages.includes(:user).order(:created_at)
     # Empty message used by the form at the bottom of the page
@@ -56,6 +61,16 @@ class MatchChatsController < ApplicationController
   end
 
   private
+
+  # Empty this discussion's red badge in real time (only the one we opened).
+  # The discussions list is subscribed to the current_user stream via the navbar.
+  def clear_conversation_badge(chat)
+    Turbo::StreamsChannel.broadcast_update_to(
+      current_user,
+      target: "chat_unread_#{chat.id}",
+      html: ""
+    )
+  end
 
   def match_message_params
     params.require(:match_message).permit(:content)

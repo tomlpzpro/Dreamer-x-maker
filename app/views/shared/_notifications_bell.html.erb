@@ -1,0 +1,25 @@
+<%# Notifications bell: a dropdown listing the actions to take (applications to
+    handle, match accepted, project realised to receive...). Built from the
+    current state, so it is up to date every time a page loads. %>
+<% notifs = action_notifications(current_user) %>
+
+<div class="dropdown navbar-notif">
+  <%# The bell itself, with a red count badge when there is something %>
+  <a href="#" class="navbar-notif-link" data-bs-toggle="dropdown" aria-expanded="false" title="Notifications">
+    <i class="fas fa-bell navbar-notif-icon <%= current_user.dreamer? ? 'is-dreamer' : 'is-maker' %>"></i>
+    <% if notifs.any? %>
+      <span class="notif-badge"><%= notifs.size %></span>
+    <% end %>
+  </a>
+
+  <%# The list of notifications (or a friendly empty state) %>
+  <ul class="dropdown-menu dropdown-menu-end notif-menu">
+    <% if notifs.empty? %>
+      <li class="notif-empty">Rien de nouveau pour le moment 🎉</li>
+    <% else %>
+      <% notifs.each do |notif| %>
+        <li><%= link_to notif.text, notif.path, class: "dropdown-item notif-item" %></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

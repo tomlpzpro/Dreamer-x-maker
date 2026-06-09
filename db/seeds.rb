@@ -102,7 +102,7 @@ puts "#{projects.count} projets créés."
 # ---------------------------------------------------------------------------
 puts "Création des maker_projects..."
 
-statuses = ["pending", "accepted", "in_progress", "completed"]
+statuses = ["rejected", "accepted", "pending", "made", "delivered"]
 maker_projects = []
 
 projects.each_with_index do |project, idx|

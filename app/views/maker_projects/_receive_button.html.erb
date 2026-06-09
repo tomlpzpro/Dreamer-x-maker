@@ -4,7 +4,7 @@
     turbo_frame "_top" makes it navigate the whole page (so it also works when
     the button is shown inside the chat turbo-frame).
     Optional local: button_class. %>
-<% button_class = local_assigns.fetch(:button_class, "btn btn-success btn-sm") %>
+<% button_class = local_assigns.fetch(:button_class, "step-btn step-btn-dreamer") %>
 
 <% if current_user == maker_project.project.dreamer && maker_project.status == "made" %>
   <%= link_to "Projet reçu !",

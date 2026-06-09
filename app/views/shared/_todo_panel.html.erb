@@ -1,0 +1,23 @@
+<%# "À faire" panel shown at the top of the dashboard. It lists, in one place,
+    what changed and what the user should do next: applications to handle, a
+    match accepted, a project realised to receive, and unread messages. %>
+<% notifs = notifications_for(current_user) %>
+
+<div class="todo-panel <%= current_user.dreamer? ? 'is-dreamer' : 'is-maker' %>">
+  <h2 class="todo-title">À faire</h2>
+
+  <% if notifs.empty? %>
+    <p class="todo-empty">Vous êtes à jour, rien ne vous attend pour le moment 🎉</p>
+  <% else %>
+    <ul class="todo-list">
+      <% notifs.each do |notif| %>
+        <li>
+          <%= link_to notif.path, class: "todo-item" do %>
+            <span class="todo-dot"></span>
+            <span><%= notif.text %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

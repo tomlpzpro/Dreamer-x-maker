@@ -43,8 +43,15 @@
         <%= link_to match_chats_path, class: "navbar-notif", title: "Mes discussions" do %>
           <%# Envelope colored by role: orange for a dreamer, blue for a maker %>
           <i class="fas fa-envelope navbar-notif-icon <%= current_user.dreamer? ? 'is-dreamer' : 'is-maker' %>"></i>
-          <%= render "shared/notif_badge", user: current_user %>
+          <%# The badge disappears once on the discussions page (i.e. once the
+              user clicked the envelope); elsewhere it shows the unread count. %>
+          <% unless current_page?(match_chats_path) %>
+            <%= render "shared/notif_badge", user: current_user %>
+          <% end %>
         <% end %>
+
+        <%# Notifications bell: the actions to take (applications, matches...) %>
+        <%= render "shared/notifications_bell" %>
 
         <%# Logged in: avatar + first name that open a dropdown menu %>
         <div class="dropdown">

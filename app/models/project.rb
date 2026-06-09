@@ -26,10 +26,11 @@ class Project < ApplicationRecord
   def status_label
     case engaged_maker_project&.status
     when "delivered" then "Livré"
-    when "made"      then "Réalisé"
-    when "accepted"  then "Match trouvé"
+    when "made"      then "Projet réalisé"
+    when "accepted"  then "Match!"
     else
-      maker_projects.any? ? "Candidatures reçues" : "En attente de maker"
+      # maker_projects.any? ? "En attente de match" : "En attente de match"
+      "En attente de match"
     end
   end
 end

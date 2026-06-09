@@ -104,6 +104,36 @@
   text-align: center;
 }
 
+// Notifications bell: clickable, anchors the same red count badge
+.navbar-notif-link {
+  position: relative;     // anchor for the count badge
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+}
+// The dropdown panel listing the notifications
+.notif-menu {
+  width: 320px;
+  max-height: 360px;
+  overflow-y: auto;       // scroll if there are many notifications
+  padding: 6px;
+}
+// One notification line: let long texts wrap instead of being cut
+.notif-item {
+  white-space: normal;
+  border-radius: .5rem;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+// Shown when there is no notification
+.notif-empty {
+  padding: 12px 10px;
+  color: $gray-text;
+  font-size: 14px;
+}
+
 // The clickable avatar + name that open the account dropdown
 .navbar-avatar-link {
   display: flex;

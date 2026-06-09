@@ -7,23 +7,40 @@
     <%# Subscribe this frame to the chat stream, so new messages appear live %>
     <%= turbo_stream_from @match_chat %>
 
-    <%# Title on the left, "see the project" button on the far right, same line %>
+    <%# Title + interlocutor on the left, action buttons on the far right %>
     <div class="chat-header mb-4">
-      <%# Title with the project name %>
-      <h1>Chat — <%= @match_chat.maker_project.project.title %></h1>
 
-      <%# Button to open the project this chat is about.
-          turbo_frame: "_top" navigates the whole page (the project page has no
-          "conversation" frame), instead of loading it inside the chat frame. %>
-      <%= link_to "Voir le projet", project_path(@match_chat.maker_project.project),
-                  data: { turbo_frame: "_top" },
-                  class: "btn btn-outline-secondary btn-sm" %>
+      <%# Project name and the person you are talking to %>
+      <div class="chat-header-info">
+        <h1>Chat — <%= @match_chat.maker_project.project.title %></h1>
 
-      <%# Maker action: mark the project realised %>
-      <%= render "maker_projects/progress_buttons", maker_project: @match_chat.maker_project %>
+        <%# The other participant, seen from the logged-in user.
+            A maker name links to his public page (full page via turbo_frame
+            "_top", so it does not load inside the chat frame). %>
+        <% other = @match_chat.other_user(current_user) %>
+        <p class="chat-with">
+          avec
+          <% if other.maker? %>
+            <%= link_to other.username, maker_path(other), data: { turbo_frame: "_top" }, class: "maker-link" %>
+          <% else %>
+            <%= other.username %>
+          <% end %>
+        </p>
+      </div>
 
-      <%# Dreamer action: confirm reception (photo + rating) %>
-      <%= render "maker_projects/receive_button", maker_project: @match_chat.maker_project %>
+      <%# Action buttons on the right %>
+      <div class="chat-header-actions">
+        <%# Button to open the project this chat is about. %>
+        <%= link_to "Voir le projet", project_path(@match_chat.maker_project.project),
+                    data: { turbo_frame: "_top" },
+                    class: "btn btn-outline-secondary btn-sm" %>
+
+        <%# Maker action: mark the project realised %>
+        <%= render "maker_projects/progress_buttons", maker_project: @match_chat.maker_project %>
+
+        <%# Dreamer action: confirm reception (photo + rating) %>
+        <%= render "maker_projects/receive_button", maker_project: @match_chat.maker_project %>
+      </div>
     </div>
 
     <%# The box that holds all the messages (fixed height, scrolls inside) %>

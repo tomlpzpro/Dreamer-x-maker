@@ -13,6 +13,18 @@
 .chat-header h1 {
   margin: 0;
 }
+// The "avec [name]" line under the chat title
+.chat-with {
+  margin: 4px 0 0;
+  color: $gray-text;
+  font-size: 14px;
+}
+// Action buttons kept together on the right of the header
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 // The box that holds all the messages.
 // Fixed height so the box never grows: extra messages scroll inside it.
