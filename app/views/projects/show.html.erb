@@ -51,9 +51,13 @@
     <div class="col-md-7">
 
       <%# The project visual (image), or a placeholder if there is none %>
-    <div id="generate-project-image" class="project-image">
-      <%= render "projects/project_image", project: @project %>
-    </div>
+      <div id="generate-project-image" class="project-image">
+        <div id="loader-container" style="display: none;">
+           <!-- style="display: none;" -->
+          <%= render "shared/loader_modal" %>
+        </div>
+        <%= render "projects/project_image", project: @project %>
+      </div>
       <%# Description in its own card %>
       <div class="project-description">
         <h2>Description</h2>
@@ -230,24 +234,24 @@
 
       </div>
 
-      <div id="generate-visual-button">
+
+      <div id="generate-visual-button" data-controller="visual-loading">
         <% if @llm_messages.count { |m| m.role == "user" } >= 3 %>
-          <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat), method: :post, class: "btn btn-dark mb-3" %>
+          <%= button_to "Générer mon visuel", generate_visual_llm_chat_path(@llm_chat),
+              method: :post,
+              class: "btn btn-dark mb-3",
+              form: { data: { action: "submit->visual-loading#showLoading" } } %>
         <% end %>
       </div>
-      <%# Form to write and send a new message (submits over Turbo, no reload) %>
+
       <%= render "llm_messages/form", llm_chat: @llm_chat, llm_message: @llm_message %>
 
     </div>
   <% end %>
 
-
-  <%# Only the owner (dreamer) can edit or delete his project, at the bottom %>
   <% if current_user == @project.dreamer %>
     <div class="project-actions">
-      <%# Go to the edit form of this project %>
       <%= link_to "✏️ Modifier le projet", edit_project_path(@project), class: "btn btn-primary btn-sm" %>
-      <%# Delete the project after a confirmation popup %>
       <%= link_to "Supprimer le projet", project_path(@project),
             data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
             class: "btn btn-outline-danger btn-sm" %>
