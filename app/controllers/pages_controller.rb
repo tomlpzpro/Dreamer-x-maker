@@ -19,6 +19,11 @@ class PagesController < ApplicationController
     if params[:category].present?
       @projects = @projects.where(category: params[:category])
     end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # private
