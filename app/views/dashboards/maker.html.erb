@@ -132,7 +132,7 @@
   <div>
     <h2>Projets disponibles</h2>
 
-      <%= form_with url: dashboard_path, method: :get, local: true do %>
+      <%= form_with url: dashboard_path, method: :get, data: { turbo_stream: true } do %>
         <div class="mb-4 d-flex align-items-center gap-2">
 
       <%= select_tag :category,
@@ -141,13 +141,13 @@
           params[:category]
         ),
         class: "form-select",
-        onchange: "this.form.submit();"
+        onchange: "this.form.requestSubmit();"
       %>
 
         </div>
       <% end %>
 
-    <div class="row">
+    <div class="row" id="unmatched-projects">
       <%# Loop over every open project not yet accepted by a maker %>
       <% @open_projects.each do |project| %>
         <div class="col-md-3 mb-4">

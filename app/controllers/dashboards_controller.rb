@@ -10,13 +10,15 @@ class DashboardsController < ApplicationController
     end
 
     #2/ Conditions d'affichage du dashboard en fonction du role du user
-    if current_user.role == "dreamer"
-      render "dashboards/dreamer"
-    else
-      render "dashboards/maker"
+    respond_to do |format|
+      if current_user.role == "dreamer"
+        format.html { render "dashboards/dreamer" }
+      else
+        format.html { render "dashboards/maker" }
+        format.turbo_stream { render "dashboards/maker" }
+      end
     end
   end
-end
 
   private
 
@@ -75,3 +77,4 @@ end
                      .includes(maker_project: { project: :dreamer })
                      .ordered_for(current_user)
   end
+end
