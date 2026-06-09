@@ -6,6 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Dreamer X Maker">
     <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%# Logged-in user id, used by the chat to place messages left or right %>
@@ -27,7 +28,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body id="body">
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
 

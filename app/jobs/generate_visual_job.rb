@@ -14,5 +14,7 @@ class GenerateVisualJob < ApplicationJob
     Turbo::StreamsChannel.broadcast_update_to(
       llm_chat.project, target: "generate-project-image", partial: "projects/project_image", locals: { project: llm_chat.project }
     )
+
+    
   end
 end
