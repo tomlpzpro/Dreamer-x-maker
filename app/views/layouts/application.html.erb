@@ -7,8 +7,6 @@
     <meta name="application-name" content="Dreamer X Maker">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%# Logged-in user id, used by the chat to place messages left or right %>
@@ -30,7 +28,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body id="body">
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
 

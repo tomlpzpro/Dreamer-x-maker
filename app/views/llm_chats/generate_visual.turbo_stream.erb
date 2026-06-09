@@ -1,0 +1,9 @@
+<%= turbo_stream.replace("loader-container") do %>
+  <%= render partial: "shared/loader_modal" %>
+<% end %>
+
+<%= turbo_stream.append "body" do %>
+  <script nonce="<%= content_security_policy_nonce %>">
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  </script>
+<% end %>
