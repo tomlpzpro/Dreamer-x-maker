@@ -52,11 +52,11 @@ end
     # --- Mes projets en cours (les projets où ce maker a été accepté) ---
     @current_projects = Project
                           .joins(:maker_projects)
-                          .where(maker_projects: { maker_id: current_user.id, status: "accepted" })
+                          .where(maker_projects: { maker_id: current_user.id, status: MakerProject::ENGAGED_STATUSES })
                           .order(created_at: :desc)
     # --- Projets disponibles (postés par les dreamers, pas encore acceptés) ---
-    # Get the ids of all projects that a maker has already accepted
-    accepted_project_ids = MakerProject.where(status: "accepted").pluck(:project_id)
+    # Get the ids of all projects already taken by a maker (engaged)
+    accepted_project_ids = MakerProject.where(status: MakerProject::ENGAGED_STATUSES).pluck(:project_id)
     # Get the ids of the projects this maker already matched or dismissed
     my_project_ids = current_user.maker_projects.pluck(:project_id)
     # Hide both the accepted projects and the ones this maker already acted on

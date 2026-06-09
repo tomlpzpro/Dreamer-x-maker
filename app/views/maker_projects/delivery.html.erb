@@ -1,0 +1,38 @@
+<div class="container my-5">
+
+  <%# Back to the project page %>
+  <%= link_to "← Retour au projet", project_path(@project), class: "btn btn-outline-secondary btn-sm mb-3" %>
+
+  <div class="delivery-card">
+    <h1>Réception du projet</h1>
+    <p class="delivery-intro">
+      Confirmez la réception de « <%= @project.title %> » réalisé par
+      <strong><%= @maker_project.maker.username %></strong>.
+      Ajoutez une photo du résultat et notez le maker : tout cela apparaîtra sur sa page publique.
+    </p>
+
+    <%# The form sends the photo and the rating, then marks the project delivered %>
+    <%= form_with url: mark_delivered_project_path(@project), method: :patch do |f| %>
+
+      <%# Photo of the finished project %>
+      <div class="delivery-field">
+        <%= f.label :delivery_photo, "Photo du projet fini" %>
+        <%= f.file_field :delivery_photo, accept: "image/*" %>
+      </div>
+
+      <%# Rating from 1 to 5 stars %>
+      <div class="delivery-field">
+        <span class="delivery-label">Votre note</span>
+        <div class="delivery-stars">
+          <% (1..5).each do |n| %>
+            <%= f.radio_button :rating, n, required: true, id: "rating_#{n}", class: "delivery-star-input" %>
+            <%= f.label "rating_#{n}", "★", class: "delivery-star" %>
+          <% end %>
+        </div>
+      </div>
+
+      <%= f.submit "Confirmer la réception", class: "btn btn-success" %>
+    <% end %>
+  </div>
+
+</div>

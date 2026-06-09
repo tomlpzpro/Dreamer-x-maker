@@ -44,7 +44,11 @@
           <% end %>
 
           <%# Status of the application linked to this discussion %>
-          <% if chat.maker_project.status == "accepted" %>
+          <% if chat.maker_project.status == "delivered" %>
+            <span class="status-badge status-delivered">Livré</span>
+          <% elsif chat.maker_project.status == "made" %>
+            <span class="status-badge status-made">Réalisé</span>
+          <% elsif chat.maker_project.status == "accepted" %>
             <span class="status-badge status-accepted">Match</span>
           <% elsif chat.maker_project.status == "rejected" %>
             <span class="status-badge status-rejected">Refusé</span>

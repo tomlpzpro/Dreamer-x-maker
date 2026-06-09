@@ -40,8 +40,8 @@
 
             <%# Action buttons placed over the card, outside the link to avoid nested links %>
             <div class="project-card-actions">
-              <%# Find the accepted maker_project and its chat if the project is matched %>
-              <% accepted_maker_project = project.maker_projects.find_by(status: "accepted") %>
+              <%# Find the engaged maker_project and its chat if the project is matched %>
+              <% accepted_maker_project = project.maker_projects.find_by(status: MakerProject::ENGAGED_STATUSES) %>
               <% chat = accepted_maker_project&.match_chat %>
 
               <% if current_user.role == "maker" %>

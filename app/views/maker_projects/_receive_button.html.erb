@@ -1,0 +1,14 @@
+<%# Button for the dreamer to confirm he received the project (status "made").
+    It leads to the delivery form (photo of the result + rating of the maker).
+    Only the dreamer of the project sees it.
+    turbo_frame "_top" makes it navigate the whole page (so it also works when
+    the button is shown inside the chat turbo-frame).
+    Optional local: button_class. %>
+<% button_class = local_assigns.fetch(:button_class, "btn btn-success btn-sm") %>
+
+<% if current_user == maker_project.project.dreamer && maker_project.status == "made" %>
+  <%= link_to "Projet reçu !",
+              delivery_project_path(maker_project.project),
+              data: { turbo_frame: "_top" },
+              class: button_class %>
+<% end %>

@@ -18,6 +18,12 @@
       <%= link_to "Voir le projet", project_path(@match_chat.maker_project.project),
                   data: { turbo_frame: "_top" },
                   class: "btn btn-outline-secondary btn-sm" %>
+
+      <%# Maker action: mark the project realised %>
+      <%= render "maker_projects/progress_buttons", maker_project: @match_chat.maker_project %>
+
+      <%# Dreamer action: confirm reception (photo + rating) %>
+      <%= render "maker_projects/receive_button", maker_project: @match_chat.maker_project %>
     </div>
 
     <%# The box that holds all the messages (fixed height, scrolls inside) %>

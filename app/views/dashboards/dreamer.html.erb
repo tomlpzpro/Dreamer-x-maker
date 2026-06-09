@@ -65,8 +65,8 @@
               <% end %>
               <%# Action buttons placed over the card, outside the link to avoid nested links %>
               <div class="project-card-actions">
-                <%# Find the accepted maker and his chat if the project is matched %>
-                <% accepted_maker_project = project.maker_projects.find_by(status: "accepted") %>
+                <%# Find the engaged maker and his chat if the project is matched %>
+                <% accepted_maker_project = project.maker_projects.find_by(status: MakerProject::ENGAGED_STATUSES) %>
                 <% chat = accepted_maker_project&.match_chat %>
                 <% if chat %>
                   <%# Button leading to the chat with the maker to warn him of a change %>
@@ -114,7 +114,11 @@
           </div>
 
           <%# Colored badge depending on the status of the application %>
-          <% if mp.status == "accepted" %>
+          <% if mp.status == "delivered" %>
+            <span class="status-badge status-delivered">Livré</span>
+          <% elsif mp.status == "made" %>
+            <span class="status-badge status-made">Réalisé</span>
+          <% elsif mp.status == "accepted" %>
             <span class="status-badge status-accepted">Match !</span>
           <% elsif mp.status == "rejected" %>
             <span class="status-badge status-rejected">Refusé</span>

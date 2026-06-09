@@ -255,6 +255,16 @@
   background: $gray-light;
   color: $gray-text;
 }
+// Made = full turquoise (the project is realised, one step before delivery)
+.status-badge.status-made {
+  background: $maker;
+  color: $cream;
+}
+// Delivered = green (the project is delivered, the final step)
+.status-badge.status-delivered {
+  background: $green;
+  color: $ink;
+}
 
 // ===========================================================================
 // RESPONSIVE: stack the stat cards on small screens

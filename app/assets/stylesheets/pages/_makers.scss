@@ -64,6 +64,13 @@
   color: $gray-text;
   font-size: 14px;
 }
+// Rating stars shown under a creation title (filled stars in Dreamer orange)
+.maker-rating {
+  margin: 4px 0 0;
+  color: $dreamer;
+  font-size: 16px;
+  letter-spacing: 2px;
+}
 
 // --- Responsive: stack the hero on small screens ---
 @media (max-width: 576px) {
