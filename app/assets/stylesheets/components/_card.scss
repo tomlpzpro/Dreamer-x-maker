@@ -27,7 +27,7 @@
   height: 200px;          // fixed height so every card looks the same
   width: 100%;            // image takes the full card width
   object-fit: contain;    // keep the original ratio (no crop, no stretch)
-  background: $gray-light; // soft backdrop filling the empty space around it
+  background: $photo-bg;   // very light orange backdrop around the photo
   // Round the top corners of the image so they match the card corners.
   // We round the image itself (not just rely on the card's overflow) because
   // the hover effect on the card link can stop overflow from clipping cleanly.

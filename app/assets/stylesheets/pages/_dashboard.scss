@@ -82,10 +82,10 @@
   margin: 0 0 4px;
   font-size: 32px;
 }
-// The small subtitle under the title
+// The small subtitle under the title (dark for contrast on the vivid banner)
 .dashboard-header .dashboard-subtitle {
   margin: 0;
-  color: $gray-text;
+  color: $ink;
 }
 
 // ===========================================================================
@@ -196,14 +196,14 @@
   transition: background-color .15s ease;    // smooth color change on hover
 }
 
-// Edit button: soft warm orange from the Dreamer palette
+// Edit button: vivid orange, near-black text for maximum contrast
 .card-action-edit {
-  background: $dreamer-light;   // pastel orange background
-  color: $dreamer-dark;         // darker orange text for good contrast
+  background: $dreamer-light;
+  color: $ink;
 }
 .card-action-edit:hover {
-  background: darken($dreamer-light, 6%); // slightly deeper on hover
-  color: $dreamer-dark;                   // keep the same text color
+  background: darken($dreamer-light, 8%); // slightly deeper on hover
+  color: $ink;
 }
 
 // Delete button: neutral and calm, only turns red on hover (charter keeps red for alerts)
@@ -216,25 +216,25 @@
   color: $red;                    // red text to signal the danger only on hover
 }
 
-// Inform button: soft turquoise from the Maker palette (it leads to the maker chat)
+// Inform button: vivid turquoise, near-black text for maximum contrast
 .card-action-inform {
-  background: $maker-light;   // pastel turquoise background
-  color: $maker-dark;         // darker turquoise text for good contrast
+  background: $maker-light;
+  color: $ink;
   white-space: nowrap;        // keep the whole label on a single line
 }
 .card-action-inform:hover {
-  background: darken($maker-light, 6%); // slightly deeper on hover
-  color: $maker-dark;                   // keep the same text color
+  background: darken($maker-light, 8%); // slightly deeper on hover
+  color: $ink;
 }
 
-// Match button: the maker's main action, in the solid Maker turquoise
+// Match button: the maker's main action, vivid turquoise with near-black text
 .card-action-match {
-  background: $maker;   // solid turquoise to stand out as the main action
-  color: $cream;        // light text on the turquoise background
+  background: $maker;
+  color: $ink;
 }
 .card-action-match:hover {
-  background: $maker-dark; // deeper turquoise on hover
-  color: $cream;           // keep the light text
+  background: darken($maker, 10%); // a little deeper, still readable
+  color: $ink;
 }
 
 // Dismiss button: neutral and calm ("not for me"), nothing alarming
@@ -293,15 +293,15 @@
   font-size: 12px;
   font-weight: 600;
 }
-// Accepted = turquoise (a confirmed match)
+// Accepted = turquoise (a confirmed match). Near-black text for max contrast.
 .status-badge.status-accepted {
   background: $maker-light;
-  color: $maker-dark;
+  color: $ink;
 }
 // Pending = orange (still waiting)
 .status-badge.status-pending {
   background: $dreamer-light;
-  color: $dreamer-dark;
+  color: $ink;
 }
 // Rejected = neutral gray
 .status-badge.status-rejected {
@@ -311,7 +311,7 @@
 // Made = full turquoise (the project is realised, one step before delivery)
 .status-badge.status-made {
   background: $maker;
-  color: $cream;
+  color: $ink;
 }
 // Delivered = green (the project is delivered, the final step)
 .status-badge.status-delivered {

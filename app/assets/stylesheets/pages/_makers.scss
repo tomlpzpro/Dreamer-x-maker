@@ -5,7 +5,8 @@
   display: flex;
   align-items: center;
   gap: 28px;
-  background: $maker-light;        // soft turquoise (the maker side)
+  background: $maker-light;        // vivid turquoise (the maker side)
+  color: $ink;                     // near-black text = max contrast on the banner
   border-radius: .75rem;          // 12px rounded corners
   padding: 32px;
   margin-bottom: 48px;
@@ -27,7 +28,7 @@
   font-size: 12px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: $maker-dark;             // dark turquoise
+  color: $ink;                    // dark text = max contrast on the banner
 }
 
 // The maker name
@@ -43,12 +44,12 @@
   margin: 0 0 14px;
 }
 .maker-hero-stars {
-  color: $dreamer;        // filled stars in the Dreamer orange
+  color: $ink;            // dark filled stars = max contrast on the blue banner
   font-size: 18px;
   letter-spacing: 2px;
 }
 .maker-hero-score {
-  color: $maker-dark;     // readable score on the light turquoise hero
+  color: $ink;            // dark score = max contrast on the blue banner
   font-size: 14px;
   font-weight: 600;
 }

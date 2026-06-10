@@ -20,7 +20,8 @@
 // --- Brand + tagline ---
 .footer-logo {
   font-family: $script-font;
-  font-size: 28px;
+  font-size: 40px;
+  letter-spacing: 2px;   // space the letters a bit (the font is quite tight)
   margin: 0;
 }
 .footer-logo .word-dreamer { color: $dreamer; }    // "Dreamer" in orange

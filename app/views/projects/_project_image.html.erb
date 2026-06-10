@@ -1,8 +1,8 @@
-<%# The big project visual. fun_bg_class gives it a fun, per-project backdrop
-    color, shown around the image (kept at its original ratio). %>
+<%# The big project visual, kept at its original ratio on a very light orange
+    backdrop (set in CSS on .project-image img). %>
 <% if project.image.attached? %>
-  <%= image_tag project.image, class: fun_bg_class(project) %>
+  <%= image_tag project.image %>
 <% else %>
   <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg",
-                alt: "Pas encore de visuel", class: fun_bg_class(project) %>
+                alt: "Pas encore de visuel" %>
 <% end %>

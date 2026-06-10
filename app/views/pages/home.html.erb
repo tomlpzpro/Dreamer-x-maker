@@ -30,7 +30,7 @@
       <% if user_signed_in? %>
         <%= link_to "Aller à mon dashboard", dashboard_path, class: "btn btn-primary mx-2" %>
       <% else %>
-        <%= link_to "Créer mon objet", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-2" %>
+        <%= link_to "Devenir dreamer", new_user_registration_path(role: "dreamer"), class: "btn btn-primary mx-2" %>
         <%= link_to "Devenir maker", new_user_registration_path(role: "maker"), class: "btn btn-outline-secondary mx-2" %>
       <% end %>
 
@@ -211,14 +211,13 @@
     <h2>Votre idée mérite le bon savoir faire.</h2>
     <p>Publiez votre projet et entrez en contact avec des makers passionnés.</p>
 
-    <%# Different button depending on the visitor: a dreamer creates a project,
-        a maker browses the projects, a logged-out visitor signs up. %>
+    <%# Light buttons so they stand out on the orange CTA band (not orange on orange) %>
     <% if user_signed_in? && current_user.dreamer? %>
-      <%= link_to "Créer un projet", new_project_path, class: "btn btn-primary" %>
+      <%= link_to "Créer un projet", new_project_path, class: "btn btn-light" %>
     <% elsif user_signed_in? %>
-      <%= link_to "Voir les projets", published_projects_path, class: "btn btn-primary" %>
+      <%= link_to "Voir les projets", published_projects_path, class: "btn btn-light" %>
     <% else %>
-      <%= link_to "Commencer maintenant", new_user_registration_path(role: "dreamer"), class: "btn btn-primary" %>
+      <%= link_to "Commencer maintenant", new_user_registration_path(role: "dreamer"), class: "btn btn-light" %>
     <% end %>
   </div>
 

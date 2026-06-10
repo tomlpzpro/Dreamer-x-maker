@@ -1,36 +1,29 @@
 <%# Main navbar. "sticky-top" keeps it visible at the top while scrolling.
-    Three parts: hamburger menu (left), brand (center), account (right). %>
+    Two parts: logo + section links (left), account area (right). %>
 <nav class="navbar navbar-lewagon sticky-top">
   <div class="container-fluid navbar-grid">
 
-    <%# === Left: hamburger menu with the different parts of the site === %>
-    <div class="dropdown">
-      <%# The hamburger button (☰) that opens the menu %>
-      <button class="navbar-toggler" type="button" data-bs-toggle="dropdown"
-              aria-expanded="false" aria-label="Ouvrir le menu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <%# The list of site sections %>
-      <ul class="dropdown-menu">
-        <li><%= link_to "Accueil", root_path, class: "dropdown-item" %></li>
-        <%# Dashboard is shown above Projets, only when the user is logged in %>
-        <% if user_signed_in? %>
-          <li><%= link_to "Dashboard", dashboard_path, class: "dropdown-item" %></li>
-        <% end %>
-        <li><%= link_to "Projets", projects_path, class: "dropdown-item" %></li>
-        <%# Discussions also needs the user to be logged in %>
-        <% if user_signed_in? %>
-          <li><%= link_to "Discussions", match_chats_path, class: "dropdown-item" %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%# === Left: logo + the site sections next to it === %>
+    <div class="navbar-left">
+      <%# The logo links back to the homepage %>
+      <%= link_to root_path, class: "navbar-brand" do %>
+        <%= image_tag "LOGO-V2.png", class: "navbar-logo", alt: "Dreamer x Maker" %>
+      <% end %>
 
-    <%# === Center: brand name "Dreamer x Maker" === %>
-    <%= link_to root_path, class: "navbar-brand navbar-brand-text" do %>
-      <span class="word-dreamer">Dreamer</span>
-      <span class="word-x">x</span>
-      <span class="word-maker">Maker</span>
-    <% end %>
+      <%# The site sections, shown as links right next to the logo.
+          The link of the current page gets "is-active" to highlight it. %>
+      <div class="navbar-links">
+        <%= link_to "Accueil", root_path,
+                    class: "navbar-link #{'is-active' if current_page?(root_path)}" %>
+        <%# Dashboard only when the user is logged in %>
+        <% if user_signed_in? %>
+          <%= link_to "Dashboard", dashboard_path,
+                      class: "navbar-link #{'is-active' if current_page?(dashboard_path)}" %>
+        <% end %>
+        <%= link_to "Projets", projects_path,
+                    class: "navbar-link #{'is-active' if current_page?(projects_path)}" %>
+      </div>
+    </div>
 
     <%# === Right: account area === %>
     <div class="navbar-account">
@@ -68,7 +61,6 @@
           <%# Menu aligned to the right edge %>
           <ul class="dropdown-menu dropdown-menu-end">
             <li><%= link_to "Profil", profile_path, class: "dropdown-item" %></li>
-            <li><%= link_to "Mon dashboard", dashboard_path, class: "dropdown-item" %></li>
             <li><hr class="dropdown-divider"></li>
             <li><%= link_to "Déconnexion", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
           </ul>

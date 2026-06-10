@@ -3,14 +3,21 @@
 // turquoise = the Maker (the hand, cold). Everything else is neutral.
 
 // --- Dreamer side (orange, warm) ---
-$dreamer: #FD8E49;        // main Dreamer color: primary buttons, warm accents
-$dreamer-light: #FFE4D0;  // soft Dreamer backgrounds, badges
-$dreamer-dark: #D26A26;   // text on light orange, hovers, "Dreamer" in the logo
+// $dreamer / -light stay the vivid orange (backgrounds + buttons).
+// -dark is a deep orange used as an accent text color ON CREAM only.
+// Text placed ON the vivid orange uses $ink (near-black) for maximum contrast.
+$dreamer: #ff9250;             // vivid orange: buttons, accents
+$dreamer-light: #ff9250;       // backgrounds keep the vivid orange
+$dreamer-dark: darken($dreamer, 30%); // deep orange accent text on cream
 
 // --- Maker side (turquoise, cold) ---
-$maker: #71BDCB;          // main Maker color: structure, cold illustrations
-$maker-light: #E3F2F4;    // soft Maker backgrounds, cards
-$maker-dark: #2E6B77;     // text on light turquoise, "Maker" in the logo
+$maker: #73bfcd;             // vivid blue: buttons, accents
+$maker-light: #73bfcd;       // backgrounds keep the vivid blue
+$maker-dark: darken($maker, 34%); // deep blue accent text on cream
+
+// Very very light orange, used as the backdrop behind project photos
+// (so images keep their ratio on a soft, on-brand background)
+$photo-bg: mix($dreamer, white, 10%);
 
 // --- Neutrals (we never use pure black or pure white) ---
 $cream: #FBFAF7;          // general background, replaces pure white

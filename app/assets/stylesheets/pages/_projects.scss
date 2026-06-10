@@ -50,21 +50,21 @@
   line-height: 1;
 }
 
-// Matcher button: soft blue (pastel Maker turquoise)
+// Matcher button: vivid blue, near-black text for maximum contrast
 .match-big-blue {
   background: $maker-light;
-  color: $maker-dark;
+  color: $ink;
 }
 .match-big-blue:hover {
-  background: darken($maker-light, 6%);
+  background: darken($maker-light, 8%);
 }
-// Pas pour moi button: soft orange (pastel Dreamer color)
+// Pas pour moi button: vivid orange, near-black text for maximum contrast
 .match-big-orange {
   background: $dreamer-light;
-  color: $dreamer-dark;
+  color: $ink;
 }
 .match-big-orange:hover {
-  background: darken($dreamer-light, 6%);
+  background: darken($dreamer-light, 8%);
 }
 
 // --- Full-screen color flash shown when the maker clicks a button ---
@@ -111,11 +111,11 @@
 }
 
 // --- The project visual (image) ---
-// The fun background color comes from a .fun-bg-* class added in the view.
 .project-image img {
   width: 100%;
   height: 320px;
   object-fit: contain;        // keep the original ratio (no crop, no stretch)
+  background: $photo-bg;      // very light orange backdrop around the photo
   border-radius: .5rem;       // 8px rounded corners
   border: 1px solid $gray-light;
 }
@@ -150,7 +150,7 @@
   border-radius: .5rem;
   padding: 14px 16px;
 }
-// The icon inside the box (orange, in a soft orange circle)
+// The icon inside the box (dark glyph in a vivid orange circle)
 .info-box i {
   display: flex;
   align-items: center;
@@ -159,7 +159,7 @@
   height: 38px;
   border-radius: 50%;
   background: $dreamer-light;
-  color: $dreamer-dark;
+  color: $ink;
   font-size: 16px;
 }
 // The small label above the value
@@ -235,9 +235,9 @@
   align-items: center;
   justify-content: center;
   font-size: 11px;
-  color: $cream;
+  color: $ink;             // dark check mark = max contrast on the orange dot
 }
-// Done (past) step: orange dot with a white check mark
+// Done (past) step: orange dot with a dark check mark
 .timeline-step.is-done::after {
   content: "✓";
   background: $dreamer;
