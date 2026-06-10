@@ -4,17 +4,17 @@
 .footer {
   background: $ink;          // dark ink background (the charter's "on dark" use)
   color: $cream;             // cream text on the dark background
-  margin-top: 64px;          // space above the footer
+  margin-top: 40px;          // space above the footer
 }
 
 // Top part: brand (left), links (middle), social icons (right)
 .footer-inner {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;           // wrap on small screens
   gap: 24px;
-  padding: 40px 0;
+  padding: 30px;
 }
 
 // --- Brand + tagline ---
@@ -36,8 +36,9 @@
 // --- Site links (stacked vertically) ---
 .footer-nav {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
 }
 .footer-nav a {
   color: rgba($cream, .8);
@@ -67,5 +68,5 @@
   padding: 16px 0;
   font-size: 13px;
   color: rgba($cream, .6);
-  text-align: center;
+  text-align: end;
 }
