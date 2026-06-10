@@ -31,7 +31,7 @@
                 <% if project.image.attached? %>
                   <%= image_tag project.image %>
                 <% else %>
-                  <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+                  <%= image_tag "LOG0-V3.png", alt: "Pas encore de visuel" %>
                 <% end %>
                 <div class="card-trip-infos">
                   <div>
@@ -50,19 +50,19 @@
               <% if current_user.role == "maker" %>
                 <%# The maker can only inform the dreamer through the chat (if it exists) %>
                 <% if chat %>
-                  <%= link_to "💬 Informer mon dreamer d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
+                  <%= link_to "Informer mon dreamer d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
                 <% end %>
 
               <% elsif chat %>
                 <%# The dreamer's project is matched: inform the maker through the chat %>
-                <%= link_to "💬 Informer mon maker d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
+                <%= link_to "Informer mon maker d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
 
               <% else %>
                 <%# The dreamer's project is not matched yet: he can edit or delete it %>
                 <%# Go to the edit form of this project %>
-                <%= link_to "✏️ Modifier", edit_project_path(project), class: "card-action-btn card-action-edit" %>
+                <%= link_to "Modifier", edit_project_path(project), class: "card-action-btn card-action-edit" %>
                 <%# Delete this project after a confirmation popup %>
-                <%= link_to "🗑️ Supprimer", project_path(project),
+                <%= link_to "Supprimer", project_path(project),
                       data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
                       class: "card-action-btn card-action-delete" %>
               <% end %>

@@ -15,9 +15,9 @@ $maker: #73bfcd;             // vivid blue: buttons, accents
 $maker-light: #73bfcd;       // backgrounds keep the vivid blue
 $maker-dark: darken($maker, 34%); // deep blue accent text on cream
 
-// Very very light orange, used as the backdrop behind project photos
-// (so images keep their ratio on a soft, on-brand background)
-$photo-bg: mix($dreamer, white, 10%);
+// Very light gray, used as the backdrop behind project photos
+// (so images keep their ratio on a soft, neutral background)
+$photo-bg: #f2f2f2;
 
 // --- Neutrals (we never use pure black or pure white) ---
 $cream: #FBFAF7;          // general background, replaces pure white

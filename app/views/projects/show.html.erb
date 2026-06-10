@@ -22,7 +22,6 @@
               class: "match-big-btn match-big-blue",
               form: { data: { controller: "flash-navigate", flash_navigate_color_value: "blue" } },
               data: { action: "click->flash-navigate#go" } do %>
-          <span class="match-big-icon">🤝</span>
           <span>Matcher</span>
         <% end %>
         <%# Pas pour moi: orange full-screen flash, then go back to the previous page %>
@@ -30,7 +29,6 @@
               class: "match-big-btn match-big-orange",
               form: { data: { controller: "flash-navigate", flash_navigate_color_value: "orange" } },
               data: { action: "click->flash-navigate#go" } do %>
-          <span class="match-big-icon">✕</span>
           <span>Pas pour moi</span>
         <% end %>
       </div>
@@ -297,7 +295,7 @@
 
   <% if current_user == @project.dreamer %>
     <div class="project-actions">
-      <%= link_to "✏️ Modifier le projet", edit_project_path(@project), class: "btn btn-primary btn-sm" %>
+      <%= link_to "Modifier le projet", edit_project_path(@project), class: "btn btn-primary btn-sm" %>
       <%= link_to "Supprimer le projet", project_path(@project),
             data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
             class: "btn btn-outline-danger btn-sm" %>

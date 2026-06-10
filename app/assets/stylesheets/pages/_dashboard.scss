@@ -262,10 +262,10 @@
   text-decoration: none;           // it is a link: remove the underline
   color: $ink;                     // keep the text in the normal ink color
 }
-// Highlight the row on hover with an orange border (it is clickable)
+// Highlight the row on hover with a light orange wash (it is clickable)
 .match-row:hover {
   border-color: $dreamer;
-  background: $dreamer-light;
+  background: rgba($dreamer, .15);   // light orange, not the flashy full color
 }
 .match-row .match-title {
   font-weight: 500;
@@ -293,15 +293,11 @@
   font-size: 12px;
   font-weight: 600;
 }
-// Accepted = turquoise (a confirmed match). Near-black text for max contrast.
-.status-badge.status-accepted {
-  background: $maker-light;
-  color: $ink;
-}
-// Pending = orange (still waiting)
+// "Match !" and "En attente de match": white tag (90% opacity), black text
+.status-badge.status-accepted,
 .status-badge.status-pending {
-  background: $dreamer-light;
-  color: $ink;
+  background: rgba(255, 255, 255, .9);
+  color: #000;
 }
 // Rejected = neutral gray
 .status-badge.status-rejected {

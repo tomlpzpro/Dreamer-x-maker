@@ -41,8 +41,9 @@
   font-size: 18px;
   color: $ink;            // main text color
   margin: 0 0 4px;
+  line-height: 1.6;       // tall enough so the font is not clipped at the bottom
   white-space: nowrap;    // never wrap the title to a second line
-  overflow: hidden;       // hide the part that does not fit
+  overflow: hidden;       // hide the part that does not fit (right side, "...")
   text-overflow: ellipsis;// show "..." when the title is too long
 }
 
