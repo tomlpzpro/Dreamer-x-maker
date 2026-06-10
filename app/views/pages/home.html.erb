@@ -211,9 +211,12 @@
     <h2>Votre idée mérite le bon savoir faire.</h2>
     <p>Publiez votre projet et entrez en contact avec des makers passionnés.</p>
 
-    <%# Different button depending on whether the visitor is logged in %>
-    <% if user_signed_in? %>
+    <%# Different button depending on the visitor: a dreamer creates a project,
+        a maker browses the projects, a logged-out visitor signs up. %>
+    <% if user_signed_in? && current_user.dreamer? %>
       <%= link_to "Créer un projet", new_project_path, class: "btn btn-primary" %>
+    <% elsif user_signed_in? %>
+      <%= link_to "Voir les projets", published_projects_path, class: "btn btn-primary" %>
     <% else %>
       <%= link_to "Commencer maintenant", new_user_registration_path(role: "dreamer"), class: "btn btn-primary" %>
     <% end %>

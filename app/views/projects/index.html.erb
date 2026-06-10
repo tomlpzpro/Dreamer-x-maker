@@ -6,7 +6,10 @@
   <%# Page header: title on the left, create button on the right %>
   <div class="dashboard-section-head">
     <h1>Mes projets</h1>
-    <%= link_to "＋ Créer un projet", new_project_path, class: "btn btn-primary" %>
+    <%# Only a dreamer can create a project %>
+    <% if current_user.dreamer? %>
+      <%= link_to "＋ Créer un projet", new_project_path, class: "btn btn-primary" %>
+    <% end %>
   </div>
 
   <%# Show a small text when the dreamer has no project yet %>
