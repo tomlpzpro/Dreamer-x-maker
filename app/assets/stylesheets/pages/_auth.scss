@@ -134,7 +134,7 @@
 }
 .role-btn-dreamer.is-active {
   background: $dreamer;
-  color: #fff;
+  color: $ink;             // near-black text = max contrast on the orange
 }
 
 // Maker button: blue (turquoise) outline, fully blue when active
@@ -144,7 +144,7 @@
 }
 .role-btn-maker.is-active {
   background: $maker;
-  color: #fff;
+  color: $ink;             // near-black text = max contrast on the blue
 }
 
 // Submit button: full width, Dreamer orange
@@ -157,13 +157,13 @@
   border: none;
   border-radius: .5rem;
   background: $dreamer;
-  color: #fff;
+  color: $ink;             // near-black text = max contrast on the orange
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;
 }
 .auth-card .form-actions button:hover {
-  background: $dreamer-dark;                        // darker orange on hover
+  background: darken($dreamer, 10%);   // a little deeper, text stays readable
 }
 
 // Links under the form (sign up, forgot password ...)

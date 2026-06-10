@@ -41,8 +41,9 @@
 // The brand name in the script font: "Dreamer" orange, "x" ink, "Maker" turquoise
 .home-hero-card .home-brand {
   font-family: $script-font;
-  font-size: 56px;
+  font-size: 80px;
   line-height: 1;
+  letter-spacing: 3px;   // space the letters a bit (the font is quite tight)
   margin-bottom: 16px;
 }
 .home-hero-card .home-brand .word-dreamer { color: $dreamer; }
@@ -124,8 +125,8 @@
   height: 56px;
   margin: 0 auto 16px;       // centered, space below before the title
   border-radius: 50%;        // perfect circle
-  background: $dreamer-light; // soft orange circle
-  color: $dreamer-dark;
+  background: $dreamer-light; // vivid orange circle
+  color: $ink;                // dark glyph = max contrast on the orange circle
   font-size: 22px;
 }
 
@@ -157,8 +158,10 @@
   padding: 32px;
   border-radius: .5rem;      // 8px rounded corners
 }
-.home-universe.is-dreamer { background: $dreamer-light; }  // soft orange
-.home-universe.is-maker   { background: $maker-light; }    // soft turquoise
+.home-universe.is-dreamer { background: $dreamer-light; }  // vivid orange
+.home-universe.is-maker   { background: $maker-light; }    // vivid turquoise
+// All text inside a universe card is near-black for maximum contrast
+.home-universe { color: $ink; }
 
 // Small label at the top of each universe card
 .home-universe .universe-label {
@@ -167,8 +170,6 @@
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-.home-universe.is-dreamer .universe-label { color: $dreamer-dark; }
-.home-universe.is-maker   .universe-label { color: $maker-dark; }
 
 // The universe name ("Dreamer" / "Maker") in the script font
 .home-universe .universe-name {
@@ -176,12 +177,9 @@
   font-size: 36px;
   margin: 4px 0 12px;
 }
-.home-universe.is-dreamer .universe-name { color: $dreamer; }
-.home-universe.is-maker   .universe-name { color: $maker-dark; }
 
 // Universe description text
 .home-universe p:last-child {
-  color: $gray-text;
   margin: 0;
 }
 
@@ -220,16 +218,18 @@
 // ===========================================================================
 .home-cta {
   text-align: center;
-  background: $dreamer-light;   // soft orange band
-  border-radius: .75rem;        // 12px rounded corners
+  background: rgba($dreamer, .4);   // soft, low-opacity orange band
+  border-radius: .75rem;            // 12px rounded corners
   padding: 56px 24px;
   margin: 56px 0;
+}
+.home-cta {        // dark text stays readable on the soft orange band
+  color: $ink;
 }
 .home-cta h2 {
   margin-bottom: 8px;
 }
 .home-cta p {
-  color: $gray-text;
   margin: 0 auto 24px;
   max-width: 480px;
 }
@@ -250,6 +250,6 @@
     padding: 40px 24px;        // less padding inside the card on phones
   }
   .home-hero-card .home-brand {
-    font-size: 42px;           // smaller brand name on phones
+    font-size: 56px;           // smaller brand name on phones
   }
 }

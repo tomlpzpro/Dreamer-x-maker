@@ -8,7 +8,8 @@
       <h1>Bonjour <%= current_user.username %> 👋</h1>
       <p class="dashboard-subtitle">Voici un aperçu de vos projets et de vos échanges.</p>
     </div>
-    <%= link_to "＋ Créer un projet", new_project_path, class: "btn btn-primary" %>
+    <%# Light button so it stands out on the orange banner (not orange on orange) %>
+    <%= link_to "＋ Créer un projet", new_project_path, class: "btn btn-light" %>
   </div>
 
   <%# ===================================================================== %>

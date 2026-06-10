@@ -67,10 +67,10 @@
   border-radius: 16px;
 }
 
-// Orange bubble for my messages (the Dreamer action color)
+// Orange bubble for my messages: near-black text for maximum contrast
 .from-user .chat-bubble {
   background: $dreamer;
-  color: $cream;       // light text on orange
+  color: $ink;
 }
 
 // Soft turquoise bubble for the other person / the AI

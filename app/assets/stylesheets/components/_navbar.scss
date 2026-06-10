@@ -1,11 +1,12 @@
 // Top navigation bar styling, following the charter (cream background,
-// thin bottom border, brand name in the script font).
-// Three parts: hamburger menu (left), brand (center), account (right).
+// thin bottom border).
+// Two parts: logo + section links (left), account area (right).
 
 .navbar-lewagon {
   background: $cream;                    // cream background instead of white
   border-bottom: 1px solid $gray-light;  // thin separator under the navbar
-  padding: 10px 24px;                    // comfortable height and side spacing
+  padding: 6px 24px;                     // equal space above/below the logo + sides
+  margin: 0;                             // no margin around the bar (no green gap)
 }
 
 // Keep the navbar visible at the top of the screen while scrolling.
@@ -13,51 +14,74 @@
   box-shadow: 0 1px 6px rgba(28, 43, 46, .05); // very soft shadow under the bar
 }
 
-// A 3-column grid so the brand stays perfectly centered, whatever the size
-// of the hamburger (left) and the account area (right).
+// Logo + links on the left, account area on the right.
 .navbar-grid {
-  display: grid;
-  // "minmax(0, 1fr)" forces the left and right columns to the exact same width,
-  // so the middle column (the brand) stays perfectly centered on the page,
-  // even if the account area on the right is wider than the hamburger.
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  display: flex;
   align-items: center;
-}
-.navbar-grid > .dropdown      { justify-self: start; }  // hamburger on the left
-.navbar-grid > .navbar-brand  { justify-self: center; } // brand in the middle
-.navbar-grid > .navbar-account{ justify-self: end; }    // account on the right
-
-// --- Hamburger button (left) ---
-.navbar-toggler {
-  border: 1px solid $gray-light;   // thin border around the button
-  border-radius: .375rem;          // 6px rounded corners
-  padding: 6px 10px;
-}
-.navbar-toggler:hover {
-  background: $dreamer-light;       // soft orange background on hover
+  justify-content: space-between;
 }
 
-// --- Brand name "Dreamer x Maker" (center) ---
-.navbar-brand-text {
-  font-family: $script-font;
-  font-size: 30px;
-  padding: 0;                       // remove Bootstrap's default brand padding
-  margin: 0;
+// --- Left group: logo and the section links side by side ---
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 28px;                        // space between the logo and the links
 }
-.navbar-brand-text .word-dreamer { color: $dreamer; }    // "Dreamer" in orange
-.navbar-brand-text .word-x       { color: $ink; }        // the "x" in ink
-.navbar-brand-text .word-maker   { color: $maker-dark; } // "Maker" in turquoise
+// The logo image (links to the homepage). Centered in the bar, so it keeps
+// the same amount of space above and below it (set by the navbar padding).
+.navbar-logo {
+  display: block;
+  height: 52px;                     // box height: this is what sets the bar height
+  width: auto;
+  // Make the logo look bigger WITHOUT changing any layout: transform is purely
+  // visual, so the navbar and every other element keep their exact size/place.
+  transform: scale(1.4);            // 40% bigger visually
+  transform-origin: left center;    // grow from the left, vertically centered
+}
+// The row of section links next to the logo
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;                         // small gap; the pill padding does the rest
+}
+// Each section link is a soft pill, matching the rounded look of the site
+.navbar-link {
+  color: $ink;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;            // no underline by default
+  padding: 8px 14px;
+  border-radius: 999px;             // pill shape, like the badges/buttons
+  transition: background-color .15s ease, color .15s ease;
+}
+// On hover, a soft (low-opacity) orange pill with dark text
+.navbar-link:hover {
+  background: rgba($dreamer, .15);
+  color: $ink;
+}
+// The current page keeps a slightly stronger soft-orange pill so the user
+// knows where they are (still low opacity, not the full vivid orange)
+.navbar-link.is-active {
+  background: rgba($dreamer, .28);
+  color: $ink;
+}
 
 // --- Dropdown menu items (used by both the hamburger and the account menu) ---
 .navbar-lewagon .dropdown-item:hover {
-  background: $dreamer-light;        // soft orange highlight on hover
-  color: $dreamer-dark;
+  background: $dreamer-light;        // vivid orange highlight on hover
+  color: $ink;                       // near-black text = max contrast
 }
 
 // --- Account area (right) ---
 .navbar-account {
   display: flex;
   align-items: center;
+  gap: 24px;              // space the envelope, the bell and the name apart
+}
+// The live-update subscriber renders an invisible element: keep it out of the
+// flex layout so it does not add a phantom gap before the envelope.
+.navbar-account turbo-cable-stream-source {
+  display: none;
 }
 
 // Discussions shortcut (envelope) with the unread-messages badge over it
@@ -65,7 +89,6 @@
   position: relative;     // anchor for the red badge
   display: inline-flex;
   align-items: center;
-  margin-right: 16px;     // space before the avatar
   text-decoration: none;
   line-height: 1;
 }
@@ -157,12 +180,16 @@
   font-weight: 500;
 }
 
-// --- Small screens: hide the username next to the avatar to save space ---
+// --- Small screens: tighten the navbar to save space ---
 @media (max-width: 576px) {
   .navbar-avatar-link .navbar-username {
-    display: none;
+    display: none;                   // hide the username next to the avatar
   }
-  .navbar-brand-text {
-    font-size: 24px;                 // smaller brand name on phones
+  .navbar-left {
+    gap: 14px;                       // less space between logo and links
+  }
+  .navbar-links {
+    gap: 12px;                       // tighter links
+    font-size: 14px;
   }
 }

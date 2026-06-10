@@ -47,6 +47,8 @@
 // Orange banner for a dreamer, turquoise banner for a maker
 .profile-hero.is-dreamer { background: $dreamer-light; }
 .profile-hero.is-maker   { background: $maker-light; }
+// Near-black text inside the banner = maximum contrast on the vivid color
+.profile-hero { color: $ink; }
 
 // The round photo on the left, with a cream ring around it
 .profile-hero-photo img {
@@ -70,8 +72,8 @@
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-.profile-hero.is-dreamer .profile-hero-label { color: $dreamer-dark; }
-.profile-hero.is-maker   .profile-hero-label { color: $maker-dark; }
+.profile-hero.is-dreamer .profile-hero-label,
+.profile-hero.is-maker   .profile-hero-label { color: $ink; }
 
 // The user name
 .profile-hero h1 {

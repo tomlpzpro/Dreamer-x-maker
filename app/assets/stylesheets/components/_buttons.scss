@@ -18,24 +18,25 @@
   transition: background-color .15s ease;
 }
 
-// Maker action: "the project is realised"
+// Maker action: "the project is realised". Vivid blue, near-black text (max
+// contrast). On hover it darkens just a little, keeping the dark text readable.
 .step-btn-maker {
   background: $maker;
-  color: $cream;
+  color: $ink;
 }
 .step-btn-maker:hover {
-  background: $maker-dark;
-  color: $cream;
+  background: darken($maker, 10%);
+  color: $ink;
 }
 
 // Dreamer action: "project received"
 .step-btn-dreamer {
   background: $dreamer;
-  color: $cream;
+  color: $ink;
 }
 .step-btn-dreamer:hover {
-  background: $dreamer-dark;
-  color: $cream;
+  background: darken($dreamer, 10%);
+  color: $ink;
 }
 
 // button_to wraps the button in a form: keep it tight and inline

@@ -10,14 +10,14 @@
   font-weight: 600;          // semibold, like the charter surtitle
 }
 
-// Dreamer badge: light orange background, dark orange text
+// Dreamer badge: vivid orange background, near-black text for max contrast
 .badge-dreamer {
   background: $dreamer-light;
-  color: $dreamer-dark;
+  color: $ink;
 }
 
-// Maker badge: light turquoise background, dark turquoise text
+// Maker badge: vivid turquoise background, near-black text for max contrast
 .badge-maker {
   background: $maker-light;
-  color: $maker-dark;
+  color: $ink;
 }
