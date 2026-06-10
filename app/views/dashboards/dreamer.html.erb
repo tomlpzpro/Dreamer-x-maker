@@ -5,7 +5,7 @@
   <%# ===================================================================== %>
   <div class="dashboard-header is-dreamer">
     <div>
-      <h1>Bonjour <%= current_user.username %> 👋</h1>
+      <h1>Bonjour <%= current_user.username %></h1>
       <p class="dashboard-subtitle">Voici un aperçu de vos projets et de vos échanges.</p>
     </div>
     <%# Light button so it stands out on the orange banner (not orange on orange) %>
@@ -60,7 +60,7 @@
                   <% if project.image.attached? %>
                     <%= image_tag project.image %>
                   <% else %>
-                    <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+                    <%= image_tag "LOG0-V3.png", alt: "Pas encore de visuel" %>
                   <% end %>
                   <div class="card-trip-infos">
                     <div>
@@ -76,13 +76,13 @@
                 <% chat = accepted_maker_project&.match_chat %>
                 <% if chat %>
                   <%# Button leading to the chat with the maker to warn him of a change %>
-                  <%= link_to "💬 Informer mon maker d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
+                  <%= link_to "Informer mon maker d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
                 <% else %>
                   <%# Not matched yet: the dreamer can still edit or delete the project %>
                   <%# Go to the edit form of this project %>
-                  <%= link_to "✏️ Modifier", edit_project_path(project), class: "card-action-btn card-action-edit" %>
+                  <%= link_to "Modifier", edit_project_path(project), class: "card-action-btn card-action-edit" %>
                   <%# Delete this project after a confirmation popup %>
-                  <%= link_to "🗑️ Supprimer", project_path(project),
+                  <%= link_to "Supprimer", project_path(project),
                         data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
                         class: "card-action-btn card-action-delete" %>
                 <% end %>

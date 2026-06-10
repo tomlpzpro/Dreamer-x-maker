@@ -1,3 +1,13 @@
+// Solid colored buttons (orange / blue) use white text, in every state.
+// This overrides Bootstrap's automatic dark text on light colors.
+.btn-primary,
+.btn-secondary {
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-color: #fff;
+  --bs-btn-disabled-color: #fff;
+}
+
 // Action buttons for the last two project steps:
 //  - the maker tells the project is realised  (turquoise = the maker side)
 //  - the dreamer confirms he received it       (orange = the dreamer side)

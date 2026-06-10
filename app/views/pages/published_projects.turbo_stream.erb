@@ -16,7 +16,7 @@
                 <% if project.image.attached? %>
                   <%= image_tag project.image %>
                 <% else %>
-                  <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+                  <%= image_tag "LOG0-V3.png", alt: "Pas encore de visuel" %>
                 <% end %>
                 <div class="card-trip-infos">
                   <div>
@@ -31,9 +31,9 @@
               <%# Action buttons placed over the card, outside the link to avoid nested links %>
               <div class="project-card-actions">
                 <%# Match this project: creates the match and opens the discussion %>
-                <%= link_to "🤝 Matcher", match_project_path(project), data: { turbo_method: :post }, class: "card-action-btn card-action-match" %>
+                <%= link_to "Matcher", match_project_path(project), data: { turbo_method: :post }, class: "card-action-btn card-action-match" %>
                 <%# Dismiss this project: it will no longer appear in my available projects %>
-                <%= link_to "✕ Pas pour moi", dismiss_project_path(project), data: { turbo_method: :post }, class: "card-action-btn card-action-dismiss" %>
+                <%= link_to "Pas pour moi", dismiss_project_path(project), data: { turbo_method: :post }, class: "card-action-btn card-action-dismiss" %>
               </div>
             <% end %>
           </div>

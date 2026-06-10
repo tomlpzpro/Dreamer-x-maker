@@ -45,10 +45,15 @@
   line-height: 1;
   letter-spacing: 3px;   // space the letters a bit (the font is quite tight)
   margin-bottom: 16px;
+  // Three equal columns so the "x" sits at the exact center of the page:
+  // "Dreamer" fills the left half (pushed against the x), "Maker" the right.
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
 }
-.home-hero-card .home-brand .word-dreamer { color: $dreamer; }
-.home-hero-card .home-brand .word-x       { color: $ink; }
-.home-hero-card .home-brand .word-maker   { color: $maker-dark; }
+.home-hero-card .home-brand .word-dreamer { color: $dreamer; text-align: right; }
+.home-hero-card .home-brand .word-x       { color: $ink; padding: 0 .12em; }
+.home-hero-card .home-brand .word-maker   { color: $maker-dark; text-align: left; }
 
 // The tagline under the brand name (Fraunces serif, light weight)
 .home-hero-card h1 {
@@ -65,9 +70,13 @@
   margin: 0 auto 32px;       // centered, space below before the buttons
 }
 
-// Make the hero buttons a bit bigger and comfortable to click
-.home-hero-card .btn {
+// All the main buttons on the home page share the exact same size and font
+// as the "Aller à mon dashboard" hero button (same padding + font-size).
+.home-hero-card .btn,
+.home-section-foot .btn,
+.home-cta .btn {
   padding: 12px 24px;
+  font-size: 1.0625rem;   // ~17px, identical on every home button
   font-weight: 500;
 }
 
@@ -126,7 +135,7 @@
   margin: 0 auto 16px;       // centered, space below before the title
   border-radius: 50%;        // perfect circle
   background: $dreamer-light; // vivid orange circle
-  color: $ink;                // dark glyph = max contrast on the orange circle
+  color: #fff;                // white icon inside the orange circle
   font-size: 22px;
 }
 

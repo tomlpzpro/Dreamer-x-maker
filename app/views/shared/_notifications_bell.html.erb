@@ -15,7 +15,7 @@
   <%# The list of notifications (or a friendly empty state) %>
   <ul class="dropdown-menu dropdown-menu-end notif-menu">
     <% if notifs.empty? %>
-      <li class="notif-empty">Rien de nouveau pour le moment 🎉</li>
+      <li class="notif-empty">Rien de nouveau pour le moment </li>
     <% else %>
       <% notifs.each do |notif| %>
         <li><%= link_to notif.text, notif.path, class: "dropdown-item notif-item" %></li>
