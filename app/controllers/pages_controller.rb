@@ -29,6 +29,13 @@ class PagesController < ApplicationController
       @projects = @projects.where(category: params[:category])
     end
 
+    if params[:query].present?
+      @projects = @projects.where(
+        "title ILIKE :q OR description ILIKE :q",
+        q: "%#{params[:query]}%"
+      )
+    end
+
     respond_to do |format|
       format.html
       format.turbo_stream
