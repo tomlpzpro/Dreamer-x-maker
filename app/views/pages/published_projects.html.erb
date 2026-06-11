@@ -10,8 +10,20 @@
   </div>
 
   <%= form_with url: published_projects_path, method: :get, data: { turbo_stream: true } do %>
-    <div class="mb-4 d-flex align-items-center gap-2">
-
+<div class="row mb-4 g-3 align-items-center">
+    <%# Left half: search + button %>
+    <div class="col-md-6">
+      <div class="input-group">
+        <%= text_field_tag :query,
+          params[:query],
+          placeholder: "Rechercher un projet...",
+          class: "form-control"
+        %>
+        <%= button_tag "Rechercher", type: "submit", class: "btn btn-secondary" %>
+      </div>
+    </div>
+    <%# Right half: category %>
+    <div class="col-md-6">
       <%= select_tag :category,
         options_for_select(
           [["Toutes les catégories", ""]] + User::SKILLS,
@@ -20,9 +32,14 @@
         class: "form-select",
         onchange: "this.form.requestSubmit();"
       %>
-
     </div>
+  </div>
   <% end %>
+  <div id="published-projects-reset" class="mb-3">
+    <% if params[:query].present? || params[:category].present? %>
+      <%= link_to "Réinitialiser les filtres", published_projects_path, class: "btn btn-outline-secondary btn-sm" %>
+    <% end %>
+  </div>
 
   <%# Small text when there is no published project yet %>
   <div id="published-projects-list">

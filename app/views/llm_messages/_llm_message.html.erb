@@ -1,5 +1,5 @@
 <%# One AI-chat message. "user" messages go on the right, the AI's on the left. %>
-<div class="chat-message <%= llm_message.role == "user" ? "from-user" : "from-ai" %>">
+<div class="chat-message <%= llm_message.role == "user" ? "from-user" : "from-ai" %>" data-scroll-target="message">
   <div class="chat-bubble">
     <%= llm_message.content %>
   </div>
