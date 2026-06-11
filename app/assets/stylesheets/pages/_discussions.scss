@@ -51,10 +51,10 @@
   text-decoration: none;          // remove the link underline
   color: $ink;
 }
-// Highlight the line on hover with an orange border
+// Highlight the line on hover with the role accent (orange dreamer / blue maker)
 .discussion-row:hover {
-  border-color: $dreamer;
-  background: $dreamer-light;
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 // Round profile picture of the other person

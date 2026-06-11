@@ -219,7 +219,7 @@
 }
 .home-project-link:hover .card-trip {
   box-shadow: 0 8px 20px rgba(28, 43, 46, .12); // soft shadow (ink color)
-  border-color: $dreamer;                        // orange border on hover
+  border-color: var(--accent);                   // role accent border (orange/blue)
 }
 
 // ===========================================================================
@@ -227,12 +227,12 @@
 // ===========================================================================
 .home-cta {
   text-align: center;
-  background: rgba($dreamer, .4);   // soft, low-opacity orange band
+  background: $photo-bg;             // same light gray as behind the photos
   border-radius: .75rem;            // 12px rounded corners
   padding: 56px 24px;
   margin: 56px 0;
 }
-.home-cta {        // dark text stays readable on the soft orange band
+.home-cta {        // dark text stays readable on the light gray band
   color: $ink;
 }
 .home-cta h2 {

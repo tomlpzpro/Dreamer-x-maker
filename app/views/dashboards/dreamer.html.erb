@@ -55,7 +55,7 @@
               <%= link_to project_path(project, from: "dashboard"), class: "home-project-link" do %>
                 <div class="card-trip">
                   <%# Status badge shown over the image %>
-                  <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
+                  <%= project_step_tag(project) %>
                   <%# Project image, or a placeholder if there is none %>
                   <% if project.image.attached? %>
                     <%= image_tag project.image %>
@@ -71,18 +71,15 @@
               <% end %>
               <%# Action buttons placed over the card, outside the link to avoid nested links %>
               <div class="project-card-actions">
-                <%# Find the engaged maker and his chat if the project is matched %>
-                <% accepted_maker_project = project.maker_projects.find_by(status: MakerProject::ENGAGED_STATUSES) %>
-                <% chat = accepted_maker_project&.match_chat %>
-                <% if chat %>
-                  <%# Button leading to the chat with the maker to warn him of a change %>
-                  <%= link_to "Informer mon maker d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
-                <% else %>
-                  <%# Not matched yet: the dreamer can still edit or delete the project %>
-                  <%# Go to the edit form of this project %>
-                  <%= link_to "Modifier", edit_project_path(project), class: "card-action-btn card-action-edit" %>
-                  <%# Delete this project after a confirmation popup %>
-                  <%= link_to "Supprimer", project_path(project),
+                <%# The maker_project engaged on this project, if any %>
+                <% engaged = project.maker_projects.find_by(status: MakerProject::ENGAGED_STATUSES) %>
+                <% if engaged&.status == "accepted" && engaged.match_chat %>
+                  <%# Match accepted, project not realised yet: inform the maker of a change %>
+                  <%= link_to '<i class="fas fa-pencil"></i>'.html_safe, match_chat_path(engaged.match_chat), title: "Un changement ?", class: "card-action-btn card-action-inform" %>
+                <% elsif engaged.nil? %>
+                  <%# Project not taken yet: the dreamer can edit or delete it %>
+                  <%= link_to '<i class="fas fa-pencil"></i>'.html_safe, edit_project_path(project), title: "Modifier", class: "card-action-btn card-action-edit" %>
+                  <%= link_to '<i class="fas fa-xmark"></i>'.html_safe, project_path(project), title: "Supprimer",
                         data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
                         class: "card-action-btn card-action-delete" %>
                 <% end %>

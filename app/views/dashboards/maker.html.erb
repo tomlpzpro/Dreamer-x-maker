@@ -55,7 +55,7 @@
               <%= link_to project_path(project, from: "dashboard"), class: "home-project-link" do %>
                 <div class="card-trip">
                   <%# Status badge shown over the image %>
-                  <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
+                  <%= project_step_tag(project) %>
                   <%# Project image, or a placeholder if there is none %>
                   <% if project.image.attached? %>
                     <%= image_tag project.image %>
@@ -72,12 +72,12 @@
               <% end %>
               <%# Action button placed over the card, outside the link to avoid nested links %>
               <div class="project-card-actions">
-                <%# Find this project's engaged maker_project and its chat %>
-                <% accepted_maker_project = project.maker_projects.find_by(status: MakerProject::ENGAGED_STATUSES) %>
+                <%# "Un changement ?" only while the match is accepted (not yet realised) %>
+                <% accepted_maker_project = project.maker_projects.find_by(status: "accepted") %>
                 <% chat = accepted_maker_project&.match_chat %>
                 <%# Button leading to the chat with the dreamer to warn him of a change %>
                 <% if chat %>
-                  <%= link_to "Informer mon dreamer d'un changement", match_chat_path(chat), class: "card-action-btn card-action-inform" %>
+                  <%= link_to '<i class="fas fa-pencil"></i>'.html_safe, match_chat_path(chat), title: "Un changement ?", class: "card-action-btn card-action-inform" %>
                 <% end %>
               </div>
             </div>
@@ -164,7 +164,7 @@
             <%= link_to project_path(project, from: "dashboard"), class: "home-project-link" do %>
               <div class="card-trip">
                 <%# Status badge shown over the image %>
-                <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
+                <%= project_step_tag(project) %>
                 <%# Project image, or a placeholder if there is none %>
                 <% if project.image.attached? %>
                   <%= image_tag project.image %>

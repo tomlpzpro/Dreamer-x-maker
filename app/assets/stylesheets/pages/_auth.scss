@@ -120,7 +120,7 @@
 .role-btn {
   flex: 1;                                   // the two buttons share the width
   padding: 10px 14px;
-  border-radius: .5rem;                      // 8px rounded corners
+  border-radius: 999px;                      // fully rounded pill
   background: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -155,7 +155,7 @@
   width: 100%;
   padding: 12px 16px;
   border: none;
-  border-radius: .5rem;
+  border-radius: 999px;    // fully rounded pill
   background: $dreamer;
   color: $ink;             // near-black text = max contrast on the orange
   font-weight: 600;

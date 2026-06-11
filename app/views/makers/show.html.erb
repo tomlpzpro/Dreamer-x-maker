@@ -60,7 +60,7 @@
             <%= link_to project_path(project), class: "home-project-link" do %>
               <div class="card-trip">
                 <%# Status badge shown over the image %>
-                <span class="card-status status-badge <%= project.matched? ? 'status-accepted' : 'status-pending' %>"><%= project.status_label %></span>
+                <%= project_step_tag(project) %>
                 <%# The delivery photo if the dreamer added one, else the project
                     image, else a placeholder %>
                 <% if maker_project&.delivery_photo&.attached? %>

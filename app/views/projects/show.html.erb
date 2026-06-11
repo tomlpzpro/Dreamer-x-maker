@@ -41,6 +41,16 @@
 
     <%# Right side: the action button above the current status badge %>
     <div class="project-header-status">
+      <%# Owner actions at the very top, above the status badge %>
+      <% if current_user == @project.dreamer %>
+        <div class="project-header-actions">
+          <%= link_to '<i class="fas fa-pencil"></i>'.html_safe, edit_project_path(@project), title: "Modifier", class: "card-action-btn card-action-edit" %>
+          <%= link_to '<i class="fas fa-xmark"></i>'.html_safe, project_path(@project), title: "Supprimer",
+                data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
+                class: "card-action-btn card-action-delete" %>
+        </div>
+      <% end %>
+
       <%# This maker's application on the project (nil for the dreamer) %>
       <% my_maker_project = @project.maker_projects.find { |mp| mp.maker_id == current_user.id } %>
       <% if my_maker_project %>
@@ -293,13 +303,5 @@
     </div>
   <% end %>
 
-  <% if current_user == @project.dreamer %>
-    <div class="project-actions">
-      <%= link_to "Modifier le projet", edit_project_path(@project), class: "btn btn-primary btn-sm" %>
-      <%= link_to "Supprimer le projet", project_path(@project),
-            data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
-            class: "btn btn-outline-danger btn-sm" %>
-    </div>
-  <% end %>
 
 </div>

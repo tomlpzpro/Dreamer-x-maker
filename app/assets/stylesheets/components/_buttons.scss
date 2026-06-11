@@ -1,11 +1,51 @@
-// Solid colored buttons (orange / blue) use white text, in every state.
-// This overrides Bootstrap's automatic dark text on light colors.
-.btn-primary,
-.btn-secondary {
+// --- Role accent: the whole UI follows the logged-in user's color ---
+// Dreamer = orange (also the default when logged out), Maker = blue.
+// Buttons read these two variables, so they switch color with the role.
+body {
+  --accent: #{$dreamer};
+  --accent-dark: #{$dreamer-dark};
+  --accent-soft: #{rgba($dreamer, .15)};        // light wash for hovers
+  --accent-soft-strong: #{rgba($dreamer, .28)}; // a bit stronger for active
+}
+body.is-maker {
+  --accent: #{$maker};
+  --accent-dark: #{$maker-dark};
+  --accent-soft: #{rgba($maker, .15)};
+  --accent-soft-strong: #{rgba($maker, .28)};
+}
+
+// All buttons are fully rounded (pill), like the Modifier / Supprimer buttons
+.btn {
+  border-radius: 999px;
+}
+
+// Primary buttons: solid accent color, white text, in every state (+ hover)
+.btn-primary {
   --bs-btn-color: #fff;
+  --bs-btn-bg: var(--accent);
+  --bs-btn-border-color: var(--accent);
   --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--accent-dark);
+  --bs-btn-hover-border-color: var(--accent-dark);
   --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--accent-dark);
+  --bs-btn-active-border-color: var(--accent-dark);
   --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--accent);
+  --bs-btn-disabled-border-color: var(--accent);
+}
+
+// Outline "secondary" buttons (Retour, Voir le projet...): accent outline,
+// filling with the accent color on hover
+.btn-outline-secondary {
+  --bs-btn-color: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--accent);
+  --bs-btn-hover-border-color: var(--accent);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--accent);
+  --bs-btn-active-border-color: var(--accent);
 }
 
 // Action buttons for the last two project steps:

@@ -28,3 +28,10 @@ $ink: #1C2B2E;            // main text color, replaces black
 // --- Utility colors, only used for alert messages ---
 $red: #FD1015;            // error / danger alerts
 $green: #1EDD88;          // success alerts
+
+// --- Outline colors for the project card action buttons (white background) ---
+// Fixed codes, the SAME for dreamer and maker.
+$action-green:  #1aa260;  // Match
+$action-blue:   #2f86c5;  // Inform
+$action-yellow: #c79200;  // Edit
+$action-red:    #d92d20;  // Delete
