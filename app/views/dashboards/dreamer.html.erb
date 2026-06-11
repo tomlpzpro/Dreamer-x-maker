@@ -49,7 +49,7 @@
     <% else %>
       <div class="row">
         <% @projects.each do |project| %>
-          <div class="col-md-3 mb-4">
+          <div class="col-md-3 mb-4" id="<%= dom_id(project) %>">
             <%# Wrapper kept relative so the edit button can sit over the card %>
             <div class="project-card-wrapper">
               <%= link_to project_path(project, from: "dashboard"), class: "home-project-link" do %>

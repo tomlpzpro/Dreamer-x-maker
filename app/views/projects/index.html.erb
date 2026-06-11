@@ -19,7 +19,7 @@
     <%# One card per project %>
     <div class="row">
       <% @projects.each do |project| %>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 mb-4" id="<%= dom_id(project) %>">
           <%# Wrapper kept relative so the action buttons can sit over the card %>
           <div class="project-card-wrapper">
             <%# The whole card is a link to the project page %>
