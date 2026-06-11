@@ -15,11 +15,14 @@
       <div class="navbar-links">
         <%# Dashboard only when the user is logged in %>
         <% if user_signed_in? %>
-          <%= link_to "Dashboard", dashboard_path,
+          <%= link_to "Mon dashboard", dashboard_path,
                       class: "navbar-link #{'is-active' if current_page?(dashboard_path)}" %>
         <% end %>
-        <%= link_to "Projets", projects_path,
+        <%= link_to "Mes projets", projects_path,
                     class: "navbar-link #{'is-active' if current_page?(projects_path)}" %>
+        <%# All published projects, for both dreamers and makers %>
+        <%= link_to "Tous les projets", published_projects_path,
+                    class: "navbar-link #{'is-active' if current_page?(published_projects_path)}" %>
       </div>
     </div>
 

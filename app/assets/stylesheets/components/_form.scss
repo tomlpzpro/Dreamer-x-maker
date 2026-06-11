@@ -13,7 +13,7 @@
 
 // Title and subtitle at the top of the form
 .form-card h1 {
-  font-size: 30px;
+  font-size: $text-title;
   margin-bottom: 4px;
 }
 .form-card .form-subtitle {
@@ -47,7 +47,7 @@
   background: white;
   border: 1px solid $gray-light;
   border-radius: .375rem;         // 6px rounded corners
-  font-size: 15px;
+  font-size: $text-body;
   color: $ink;
 }
 // Make the description box a bit taller
@@ -113,7 +113,7 @@
   width: 100%;
   border: none;
   background: transparent;
-  font-size: 14px;
+  font-size: $text-small;
   color: $ink;
 }
 // The generate button just centers its text; its height matches the upload
@@ -130,7 +130,7 @@
 // The little "ou" word between the two options
 .form-card .visual-or {
   color: $gray-text;
-  font-size: 14px;
+  font-size: $text-small;
 }
 // Keep the generate button text on a single line
 .form-card .visual-choice .btn {
@@ -156,6 +156,6 @@
 // Error messages shown by simple_form
 .form-card .error {
   color: $dreamer-dark;
-  font-size: 13px;
+  font-size: $text-small;
   margin-top: 4px;
 }

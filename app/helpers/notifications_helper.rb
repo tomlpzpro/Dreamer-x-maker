@@ -1,6 +1,7 @@
 module NotificationsHelper
-  # One notification: a short text and the page it links to.
-  Notification = Struct.new(:text, :path)
+  # One notification: a short text, the page it links to, and the project it
+  # belongs to (so the "À faire" panel can group them by project).
+  Notification = Struct.new(:text, :path, :project)
 
   # Status-based actions the user should take (no messages here).
   # Used by the navbar bell.
@@ -20,10 +21,10 @@ module NotificationsHelper
     user.projects.includes(:maker_projects).each do |project|
       pending = project.maker_projects.count { |mp| mp.status == "pending" }
       if pending.positive?
-        items << Notification.new("#{pending} maker(s) ont postulé sur « #{project.title} »", project_path(project))
+        items << Notification.new("#{pending} maker(s) ont postulé", project_path(project), project)
       end
       if project.engaged_maker_project&.status == "made"
-        items << Notification.new("« #{project.title} » est réalisé : confirmez la réception", delivery_project_path(project))
+        items << Notification.new("Projet réalisé : confirmez la réception", delivery_project_path(project), project)
       end
     end
     items
@@ -33,7 +34,7 @@ module NotificationsHelper
   def maker_notifications(user)
     accepted = user.maker_projects.includes(:project).select { |mp| mp.status == "accepted" }
     accepted.map do |mp|
-      Notification.new("Vous avez été choisi pour « #{mp.project.title} » : marquez-le terminé une fois réalisé", project_path(mp.project))
+      Notification.new("Vous avez été choisi : marquez-le terminé une fois réalisé", project_path(mp.project), mp.project)
     end
   end
 
@@ -45,7 +46,7 @@ module NotificationsHelper
       count = chat.unread_count_for(user)
       next if count.zero?
 
-      Notification.new("#{count} message(s) non lu(s) — « #{chat.maker_project.project.title} »", match_chat_path(chat))
+      Notification.new("#{count} message(s) non lu(s)", match_chat_path(chat), chat.maker_project.project)
     end
   end
 end

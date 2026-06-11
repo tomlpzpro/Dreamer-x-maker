@@ -11,6 +11,46 @@
     <%= link_to "← Retour aux projets", projects_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
   <% end %>
 
+  <%# A dreamer visiting a project that is NOT theirs only sees a limited view:
+      the title, the description, the "before" visual, the "after" photo and
+      the note given to the maker. %>
+  <% if current_user.dreamer? && current_user != @project.dreamer %>
+    <% engaged = @project.engaged_maker_project %>
+
+    <div class="project-public">
+      <h1 class="project-public-title"><%= @project.title %></h1>
+
+      <%# The note given to the maker, once the project is delivered %>
+      <% if engaged&.rating.present? %>
+        <div class="project-public-rating">
+          <span class="rating-stars"><%= rating_stars(engaged.rating) %></span>
+          <span class="rating-value"><%= engaged.rating %>/5</span>
+          <span class="rating-by">réalisé par
+            <%= link_to engaged.maker.username, maker_path(engaged.maker), class: "rating-by-link" %>
+          </span>
+        </div>
+      <% end %>
+
+      <p class="project-public-desc"><%= @project.description %></p>
+
+      <%# "Before" visual and "After" photo (the latter only if delivered) %>
+      <div class="project-public-photos">
+        <figure class="project-public-photo">
+          <figcaption>Avant</figcaption>
+          <%= render "projects/project_image", project: @project %>
+        </figure>
+
+        <% if engaged&.delivery_photo&.attached? %>
+          <figure class="project-public-photo">
+            <figcaption>Après</figcaption>
+            <%= image_tag engaged.delivery_photo %>
+          </figure>
+        <% end %>
+      </div>
+    </div>
+
+  <% else %>
+
   <%# Maker actions at the top of the page: match this project or pass on it %>
   <% if current_user.maker? && @project.open_for?(current_user) %>
     <div class="project-match">
@@ -19,14 +59,14 @@
       <div class="project-match-bar">
         <%# Matcher: blue full-screen flash, then open the chat with the dreamer %>
         <%= button_to match_project_path(@project),
-              class: "match-big-btn match-big-blue",
+              class: "card-action-btn card-action-match",
               form: { data: { controller: "flash-navigate", flash_navigate_color_value: "blue" } },
               data: { action: "click->flash-navigate#go" } do %>
           <span>Matcher</span>
         <% end %>
         <%# Pas pour moi: orange full-screen flash, then go back to the previous page %>
         <%= button_to dismiss_project_path(@project, back: request.referer),
-              class: "match-big-btn match-big-orange",
+              class: "card-action-btn card-action-dismiss",
               form: { data: { controller: "flash-navigate", flash_navigate_color_value: "orange" } },
               data: { action: "click->flash-navigate#go" } do %>
           <span>Pas pour moi</span>
@@ -35,22 +75,24 @@
     </div>
   <% end %>
 
-  <%# === Header: title on the left, status (and maker action) on the right === %>
+  <%# === Header: title (+ owner buttons) on the left, maker actions on the right === %>
   <div class="project-header">
-    <h1><%= @project.title %></h1>
 
-    <%# Right side: the action button above the current status badge %>
-    <div class="project-header-status">
-      <%# Owner actions at the very top, above the status badge %>
+    <%# Title with the owner's edit/delete buttons right next to it %>
+    <div class="project-header-title">
+      <h1><%= @project.title %></h1>
       <% if current_user == @project.dreamer %>
         <div class="project-header-actions">
           <%= link_to '<i class="fas fa-pencil"></i>'.html_safe, edit_project_path(@project), title: "Modifier", class: "card-action-btn card-action-edit" %>
-          <%= link_to '<i class="fas fa-xmark"></i>'.html_safe, project_path(@project), title: "Supprimer",
+          <%= link_to '<i class="fas fa-trash"></i>'.html_safe, project_path(@project), title: "Supprimer",
                 data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
                 class: "card-action-btn card-action-delete" %>
         </div>
       <% end %>
+    </div>
 
+    <%# Right side: maker actions %>
+    <div class="project-header-status">
       <%# This maker's application on the project (nil for the dreamer) %>
       <% my_maker_project = @project.maker_projects.find { |mp| mp.maker_id == current_user.id } %>
       <% if my_maker_project %>
@@ -64,10 +106,6 @@
       <% if @project.engaged_maker_project %>
         <%= render "maker_projects/receive_button", maker_project: @project.engaged_maker_project %>
       <% end %>
-
-      <span class="status-badge <%= @project.matched? ? 'status-accepted' : 'status-pending' %>">
-        <%= @project.status_label %>
-      </span>
     </div>
   </div>
 
@@ -197,7 +235,7 @@
           <% @maker_projects.each do |mp| %>
             <div class="candidature-row">
 
-              <%# Top line: maker photo + name (left) and status badge (right) %>
+              <%# Top line: maker photo + name (left) and "go to discussion" (right) %>
               <div class="candidature-head">
                 <div class="candidature-person">
                   <%# Profile picture of the maker (or a placeholder) %>
@@ -210,6 +248,16 @@
                   <%= link_to mp.maker.username, maker_path(mp.maker), class: "match-title maker-link" %>
                 </div>
 
+                <%# "Aller à la discussion" aligned with the name, on the right %>
+                <% if mp.match_chat.present? %>
+                  <%= link_to "Aller à la discussion", match_chat_path(mp.match_chat), class: "btn btn-outline-secondary btn-sm" %>
+                <% else %>
+                  <span class="candidature-nochat">Pas encore de discussion</span>
+                <% end %>
+              </div>
+
+              <%# Status badge / accept-reject buttons, below the name %>
+              <div class="candidature-actions">
                 <%# Projet livré par le maker %>
                 <% if mp.status == "delivered" %>
                   <span class="status-badge status-delivered">Livré</span>
@@ -236,26 +284,19 @@
                     approve_project_path(@project),
                     method: :patch,
                     params: { maker_project_id: mp.id },
-                    class: "btn btn-success btn-sm" %>
+                    class: "btn btn-primary btn-sm" %>
                   <%# Bouton Refuser : envoie un PATCH à reject_project_path %>
                   <%= button_to "Refuser",
                     reject_project_path(@project),
                     method: :patch,
                     params: { maker_project_id: mp.id },
-                    class: "btn btn-outline-danger btn-sm" %>
+                    class: "btn btn-reject btn-sm" %>
                   <%# Si c'est le maker lui-même qui regarde, on lui montre juste "En attente" %>
                 <% else %>
                   <span class="status-badge status-pending">En attente</span>
 
                 <% end %>
               </div>
-
-              <%# Button to go to the discussion with this maker (if a chat exists) %>
-              <% if mp.match_chat.present? %>
-                <%= link_to "Aller à la discussion", match_chat_path(mp.match_chat), class: "btn btn-outline-secondary btn-sm" %>
-              <% else %>
-                <span class="candidature-nochat">Pas encore de discussion</span>
-              <% end %>
 
             </div>
           <% end %>
@@ -303,5 +344,6 @@
     </div>
   <% end %>
 
+  <% end %>
 
 </div>

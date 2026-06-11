@@ -1,5 +1,9 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[home published_projects a_propos mentions_legales contact]
+  skip_before_action :authenticate_user!, only: %i[home published_projects a_propos mentions_legales contact styleguide]
+
+  # Shows all the buttons and tags on a single page (design reference)
+  def styleguide
+  end
 
   def home
     # Projects already taken by a maker (accepted, made or delivered)

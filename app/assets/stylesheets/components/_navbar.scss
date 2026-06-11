@@ -48,7 +48,7 @@
 .navbar-link {
   color: $ink;
   font-weight: 600;
-  font-size: 15px;
+  font-size: $text-body;
   text-decoration: none;            // no underline by default
   padding: 8px 14px;
   border-radius: 999px;             // pill shape, like the badges/buttons
@@ -148,13 +148,13 @@
   white-space: normal;
   border-radius: .5rem;
   padding: 8px 10px;
-  font-size: 14px;
+  font-size: $text-small;
 }
 // Shown when there is no notification
 .notif-empty {
   padding: 12px 10px;
   color: $gray-text;
-  font-size: 14px;
+  font-size: $text-small;
 }
 
 // The clickable avatar + name that open the account dropdown
@@ -190,6 +190,6 @@
   }
   .navbar-links {
     gap: 12px;                       // tighter links
-    font-size: 14px;
+    font-size: $text-small;
   }
 }

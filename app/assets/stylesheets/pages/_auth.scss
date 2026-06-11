@@ -35,7 +35,7 @@
 
 // Secondary heading inside the sign up form ("en tant que Maker/Dreamer")
 .auth-card .form-inputs h2 {
-  font-size: 18px;
+  font-size: $text-body;
   color: $maker-dark;
   text-align: center;
   margin: 0 0 20px;
@@ -49,7 +49,7 @@
 // Field labels
 .auth-card label {
   display: block;
-  font-size: 14px;
+  font-size: $text-small;
   font-weight: 600;
   color: $ink;
   margin-bottom: 6px;
@@ -63,7 +63,7 @@
   border: 1px solid $gray-light;
   border-radius: .5rem;                            // 8px rounded corners
   background: #fff;
-  font-size: 15px;
+  font-size: $text-body;
 }
 
 // Highlight the focused field with an orange ring
@@ -101,7 +101,7 @@
 // Hint text under a field (ex: minimum password length)
 .auth-card .hint,
 .auth-card .form-text {
-  font-size: 12px;
+  font-size: $text-small;
   color: $gray-text;
   margin-top: 4px;
 }
@@ -122,7 +122,7 @@
   padding: 10px 14px;
   border-radius: 999px;                      // fully rounded pill
   background: #fff;
-  font-size: 15px;
+  font-size: $text-body;
   font-weight: 600;
   cursor: pointer;
 }
@@ -159,7 +159,7 @@
   background: $dreamer;
   color: $ink;             // near-black text = max contrast on the orange
   font-weight: 600;
-  font-size: 15px;
+  font-size: $text-body;
   cursor: pointer;
 }
 .auth-card .form-actions button:hover {
@@ -177,7 +177,7 @@
 .auth-links a {
   color: $dreamer-dark;
   text-decoration: none;
-  font-size: 14px;
+  font-size: $text-small;
 }
 .auth-links a:hover {
   text-decoration: underline;

@@ -6,9 +6,18 @@
     Optional local: button_class. %>
 <% button_class = local_assigns.fetch(:button_class, "step-btn step-btn-dreamer") %>
 
-<% if current_user == maker_project.project.dreamer && maker_project.status == "made" %>
-  <%= link_to "Projet reçu !",
-              delivery_project_path(maker_project.project),
-              data: { turbo_frame: "_top" },
-              class: button_class %>
+<% if current_user == maker_project.project.dreamer %>
+  <% if maker_project.status == "made" %>
+    <%# First reception: confirm and add the photo + rating %>
+    <%= link_to "Projet reçu !",
+                delivery_project_path(maker_project.project),
+                data: { turbo_frame: "_top" },
+                class: button_class %>
+  <% elsif maker_project.status == "delivered" %>
+    <%# Already received: let the dreamer edit the photo + rating afterwards %>
+    <%= link_to "Modifier la note et la photo",
+                delivery_project_path(maker_project.project),
+                data: { turbo_frame: "_top" },
+                class: button_class %>
+  <% end %>
 <% end %>

@@ -16,7 +16,7 @@
 // Small question shown above the buttons
 .project-match-question {
   margin: 0 0 10px;      // space below the question
-  font-size: 15px;
+  font-size: $text-body;
   font-weight: 600;
   color: $ink;
 }
@@ -28,43 +28,6 @@
 // Each button_to wraps its button in a form: keep them tight together
 .project-match-bar form {
   margin: 0;              // remove default form spacing
-}
-
-// The action buttons: soft and compact (not too big, not too flashy)
-.match-big-btn {
-  display: inline-flex;               // line up the icon and the label...
-  align-items: center;                // ...centered vertically...
-  justify-content: center;            // ...and centered horizontally
-  gap: 8px;                           // space between the icon and the label
-  border: none;                       // no hard border
-  border-radius: 999px;               // soft rounded "pill" shape
-  padding: 10px 20px;                 // compact size
-  font-size: 15px;                    // normal label size
-  font-weight: 600;                   // a bit bold, not heavy
-  cursor: pointer;                    // show it is clickable
-  transition: background-color .15s ease; // smooth color change on hover
-}
-// The emoji icon inside the button
-.match-big-icon {
-  font-size: 16px;
-  line-height: 1;
-}
-
-// Matcher button: vivid blue, near-black text for maximum contrast
-.match-big-blue {
-  background: $maker-light;
-  color: $ink;
-}
-.match-big-blue:hover {
-  background: darken($maker-light, 8%);
-}
-// Pas pour moi button: vivid orange, near-black text for maximum contrast
-.match-big-orange {
-  background: $dreamer-light;
-  color: $ink;
-}
-.match-big-orange:hover {
-  background: darken($dreamer-light, 8%);
 }
 
 // --- Full-screen color flash shown when the maker clicks a button ---
@@ -98,6 +61,12 @@
 .project-header h1 {
   margin: 0;
 }
+// Title group: the edit/delete buttons sit right next to the title
+.project-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 // Right side of the header: maker action button stacked above the status badge
 .project-header-status {
   display: flex;
@@ -130,7 +99,7 @@
   margin-top: 24px;
 }
 .project-description h2 {
-  font-size: 22px;
+  font-size: $text-subtitle;
   margin-bottom: 8px;
 }
 .project-description p {
@@ -165,11 +134,11 @@
   border-radius: 50%;
   background: var(--accent);
   color: #fff;             // white icon on the colored circle
-  font-size: 16px;
+  font-size: $text-body;
 }
 // The small label above the value
 .info-box .info-label {
-  font-size: 12px;
+  font-size: $text-small;
   color: $gray-text;
 }
 // The value itself
@@ -189,7 +158,7 @@
 }
 .timeline-card h2,
 .candidatures-card h2 {
-  font-size: 20px;
+  font-size: $text-subtitle;
   margin-bottom: 20px;
 }
 
@@ -260,7 +229,7 @@
 }
 // The small date/detail under a step title
 .timeline-step .timeline-date {
-  font-size: 13px;
+  font-size: $text-small;
   color: $gray-text;
 }
 
@@ -286,6 +255,19 @@
   align-items: center;
   gap: 10px;
 }
+// The maker name in a candidature: black (overrides the orange maker-link color)
+.candidature-person .maker-link {
+  color: $ink;
+}
+// Status badge / accept-reject buttons, below the name (side by side)
+.candidature-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.candidature-actions form {
+  margin: 0;   // button_to wraps the button in a form: remove default spacing
+}
 // Round profile picture of the maker
 .candidature-row .candidature-avatar {
   width: 40px;
@@ -299,6 +281,83 @@
 }
 // Small text shown when there is no discussion yet
 .candidature-row .candidature-nochat {
-  font-size: 13px;
+  font-size: $text-small;
   color: $gray-text;
+}
+
+// ===========================================================================
+// PUBLIC (read-only) project view: what a dreamer sees on a project that is
+// not theirs — title, note, description, "before" visual and "after" photo.
+// ===========================================================================
+.project-public {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.project-public-title {
+  margin: 0 0 12px;
+}
+
+// The note given to the maker: gold stars + value + author
+.project-public-rating {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.rating-stars {
+  font-size: $text-subtitle;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.rating-stars-filled { color: #eaa400; }    // gold filled stars
+.rating-stars-empty  { color: $gray-light; } // empty stars
+.rating-value {
+  font-weight: 700;
+  color: $ink;
+}
+.rating-by { color: $gray-text; }
+.rating-by-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.rating-by-link:hover { text-decoration: underline; }
+
+// Description
+.project-public-desc {
+  color: $gray-text;
+  margin-bottom: 28px;
+}
+
+// "Before" and "After" photos side by side (a single one fills the width)
+.project-public-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.project-public-photo {
+  margin: 0;
+}
+.project-public-photo figcaption {
+  font-weight: 700;
+  color: $ink;
+  margin-bottom: 8px;
+}
+.project-public-photo img {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;            // keep the ratio, no crop
+  background: $photo-bg;          // light gray backdrop, like the main visual
+  border: 1px solid $gray-light;
+  border-radius: .5rem;
+}
+
+// Preview of the current photo shown in the delivery form when editing
+.delivery-current-photo {
+  display: block;
+  max-width: 220px;
+  margin: 8px 0;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;
 }

@@ -8,9 +8,11 @@
   overflow: hidden;                 // keep the image inside the rounded corners
   background: $cream;               // cream card background (never pure white)
   background-clip: padding-box;     // keep the background inside the border edge
-  border: 1px solid $gray-light;    // thin light-gray border, as in the charter
+  border: 1px solid darken($gray-light, 8%); // a bit more visible than the bg
   border-radius: .5rem;             // 8px rounded corners
   height: 100%;                     // all cards in a row keep the same height
+  // Soft colored shadow following the role: orange for a dreamer, blue for a maker
+  box-shadow: 0 6px 20px var(--accent-shadow);
 }
 
 // The status badge shown over the top-right corner of the card image
@@ -38,7 +40,7 @@
 // The project title inside the card.
 // Kept on a single line so every card has the exact same title height.
 .card-trip h2 {
-  font-size: 18px;
+  font-size: $text-body;
   color: $ink;            // main text color
   margin: 0 0 4px;
   line-height: 1.6;       // tall enough so the font is not clipped at the bottom
@@ -51,7 +53,7 @@
 // It always takes exactly 3 lines of space: short descriptions leave some
 // empty room, long ones are cut with "..." — so every card is the same height.
 .card-trip p {
-  font-size: 14px;
+  font-size: $text-small;
   color: $gray-text;      // secondary text color
   margin: 0;
   line-height: 1.4;              // height of one line of text
