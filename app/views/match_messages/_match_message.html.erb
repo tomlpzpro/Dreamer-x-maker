@@ -1,5 +1,6 @@
-<%# One chat message. Left/right placement is decided in JavaScript by comparing
-    the author id with the logged-in user id (see chat_message_controller). %>
+<%# One chat message. Left/right placement is decided in JavaScript by comparingthe author id with the logged-in user id (see chat_message_controller). %>
+
+<!-- Ajouter la target message dans cette div -->
 <div class="chat-message" data-controller="chat-message" data-chat-message-user-id-value="<%= message.user_id %>">
   <div class="chat-bubble">
     <%# Photo + name of the person who wrote the message %>
