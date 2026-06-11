@@ -22,11 +22,37 @@
 .todo-panel.is-maker { border-left-color: $maker; }       // turquoise for a maker
 .todo-title {
   margin: 0 0 12px;
-  font-size: 18px;
+  font-size: $text-subtitle;
 }
 .todo-empty {
   margin: 0;
   color: $gray-text;
+}
+// The project groups laid out side by side, wrapping to a new line if needed
+.todo-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 40px;
+}
+// One group of notifications for a single project
+.todo-group {
+  flex: 1 1 240px;   // grow to fill, wrap, keep a minimum width
+}
+// The project title above its notifications: a clickable link (one size below
+// "À faire"), with a soft role-accent highlight on hover
+.todo-group-title {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: $text-body;
+  font-weight: 700;
+  color: $ink;
+  text-decoration: none;
+  transition: background-color .15s ease;
+}
+.todo-group-title:hover {
+  background: var(--accent-soft);   // light orange (dreamer) / blue (maker)
 }
 .todo-list {
   list-style: none;
@@ -80,7 +106,7 @@
 // The "Bonjour ..." title inside the header
 .dashboard-header h1 {
   margin: 0 0 4px;
-  font-size: 32px;
+  font-size: $text-title;
 }
 // The small subtitle under the title (dark for contrast on the vivid banner)
 .dashboard-header .dashboard-subtitle {
@@ -115,7 +141,7 @@
 }
 // The label under the number
 .stat-card .stat-label {
-  font-size: 13px;
+  font-size: $text-small;
   color: $gray-text;
   margin-top: 4px;
 }
@@ -138,7 +164,7 @@
   margin: 0;
 }
 .dashboard-section-head a {
-  font-size: 14px;
+  font-size: $text-small;
   color: $dreamer-dark;            // orange link
   text-decoration: none;
 }
@@ -190,7 +216,7 @@
   padding: 5px 12px;                         // compact but comfortable size
   border: none;                              // no hard border, softer look
   border-radius: 999px;                      // fully rounded "pill" shape
-  font-size: 13px;                           // small label, fits on the card
+  font-size: $text-small;                           // small label, fits on the card
   font-weight: 600;                          // readable as a button
   text-decoration: none;                     // remove the default link underline
   box-shadow: 0 1px 3px rgba(0, 0, 0, .12);  // very light shadow, soft lift
@@ -200,49 +226,48 @@
 // The four action buttons share the same look: WHITE background + a colored
 // outline (fixed codes, the SAME for dreamer and maker).
 
-// Match = green outline
+// Match = role accent (orange dreamer / blue maker) with white text
 .card-action-match {
-  background: #fff;
-  border: 2px solid $action-green;
-  color: $action-green;
+  background: var(--accent);
+  color: #fff;
 }
 .card-action-match:hover {
-  background: rgba($action-green, .1);
-  color: $action-green;
+  background: var(--accent-dark);
+  color: #fff;
 }
 
-// Inform = blue outline
+// Inform ("Un changement ?") = role accent outline (orange dreamer / blue maker)
 .card-action-inform {
   background: #fff;
-  border: 2px solid $action-blue;
-  color: $action-blue;
+  border: 2px solid var(--accent);
+  color: var(--accent);
   white-space: nowrap;        // keep the whole label on a single line
 }
 .card-action-inform:hover {
-  background: rgba($action-blue, .1);
-  color: $action-blue;
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
-// Edit = yellow outline
+// Edit ("Modifier") = role accent outline (orange dreamer / blue maker)
 .card-action-edit {
   background: #fff;
-  border: 2px solid $action-yellow;
-  color: $action-yellow;
+  border: 2px solid var(--accent);
+  color: var(--accent);
 }
 .card-action-edit:hover {
-  background: rgba($action-yellow, .12);
-  color: $action-yellow;
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
-// Delete = red outline
+// Delete = gray outline
 .card-action-delete {
   background: #fff;
-  border: 2px solid $action-red;
-  color: $action-red;
+  border: 2px solid $gray-text;
+  color: $gray-text;
 }
 .card-action-delete:hover {
-  background: rgba($action-red, .1);
-  color: $action-red;
+  background: rgba($gray-text, .12);
+  color: $gray-text;
 }
 
 // Dismiss button: neutral and calm ("not for me"), nothing alarming
@@ -298,29 +323,18 @@
   display: inline-block;
   padding: 4px 12px;
   border-radius: 999px;            // fully rounded pill
-  font-size: 12px;
+  font-size: $text-small;
   font-weight: 600;
 }
-// "Match !" and "En attente de match": white tag (90% opacity), black text
+// All status badges follow the role accent: orange for a dreamer, blue for a
+// maker (filled, with white text).
+.status-badge.status-pending,
 .status-badge.status-accepted,
-.status-badge.status-pending {
-  background: rgba(255, 255, 255, .9);
-  color: #000;
-}
-// Rejected = soft red tint with a deep red label
+.status-badge.status-made,
+.status-badge.status-delivered,
 .status-badge.status-rejected {
-  background: rgba($red, .1);
-  color: #b3261e;
-}
-// Made = full turquoise (the project is realised, one step before delivery)
-.status-badge.status-made {
-  background: $maker;
-  color: $ink;
-}
-// Delivered = soft green tint with a deep green label
-.status-badge.status-delivered {
-  background: rgba($green, .2);
-  color: #157a47;
+  background: var(--accent);
+  color: #fff;
 }
 
 // ===========================================================================

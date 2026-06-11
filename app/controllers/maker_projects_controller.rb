@@ -130,7 +130,8 @@ class MakerProjectsController < ApplicationController
   def delivery
     @project = Project.find(params[:id])
     @maker_project = @project.engaged_maker_project
-    return if current_user == @project.dreamer && @maker_project&.status == "made"
+    # "made" = first reception, "delivered" = editing the rating/photo afterwards
+    return if current_user == @project.dreamer && ["made", "delivered"].include?(@maker_project&.status)
 
     redirect_to project_path(@project), alert: "Action impossible."
   end
@@ -141,14 +142,17 @@ class MakerProjectsController < ApplicationController
     project = Project.find(params[:id])
     maker_project = project.engaged_maker_project
 
-    unless current_user == project.dreamer && maker_project&.status == "made"
+    unless current_user == project.dreamer && ["made", "delivered"].include?(maker_project&.status)
       redirect_to project_path(project), alert: "Action impossible." and return
     end
 
+    first_reception = maker_project.status == "made"
     maker_project.update!(status: "delivered", rating: params[:rating])
     maker_project.delivery_photo.attach(params[:delivery_photo]) if params[:delivery_photo].present?
-    notify_delivery(project, maker_project)
-    redirect_to maker_path(maker_project.maker), notice: "Réception confirmée, merci pour votre note !"
+    # Only notify the maker on the first reception, not when the dreamer edits
+    notify_delivery(project, maker_project) if first_reception
+    notice = first_reception ? "Réception confirmée, merci pour votre note !" : "Note et photo mises à jour !"
+    redirect_to maker_path(maker_project.maker), notice: notice
   end
 
   private

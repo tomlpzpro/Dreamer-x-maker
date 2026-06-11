@@ -79,7 +79,7 @@
                 <% elsif engaged.nil? %>
                   <%# Project not taken yet: the dreamer can edit or delete it %>
                   <%= link_to '<i class="fas fa-pencil"></i>'.html_safe, edit_project_path(project), title: "Modifier", class: "card-action-btn card-action-edit" %>
-                  <%= link_to '<i class="fas fa-xmark"></i>'.html_safe, project_path(project), title: "Supprimer",
+                  <%= link_to '<i class="fas fa-trash"></i>'.html_safe, project_path(project), title: "Supprimer",
                         data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce projet ?" },
                         class: "card-action-btn card-action-delete" %>
                 <% end %>

@@ -31,10 +31,10 @@
 .home-hero-card .home-surtitle {
   font-family: $body-font;
   font-weight: 600;          // semibold
-  font-size: 12px;
+  font-size: $text-small;
   letter-spacing: 2px;       // spaced-out capital letters
   text-transform: uppercase;
-  color: $dreamer-dark;      // dark orange
+  color: $ink;               // black
   margin-bottom: 12px;
 }
 
@@ -58,13 +58,13 @@
 // The tagline under the brand name (Fraunces serif, light weight)
 .home-hero-card h1 {
   font-weight: 300;          // Fraunces Light
-  font-size: 30px;
+  font-size: $text-title;
   margin: 0 auto 16px;
 }
 
 // The paragraph under the tagline
 .home-hero-card .home-lead {
-  font-size: 18px;
+  font-size: $text-body;
   color: $gray-text;         // secondary text color
   max-width: 520px;
   margin: 0 auto 32px;       // centered, space below before the buttons
@@ -76,7 +76,7 @@
 .home-section-foot .btn,
 .home-cta .btn {
   padding: 12px 24px;
-  font-size: 1.0625rem;   // ~17px, identical on every home button
+  font-size: $text-body;   // ~17px, identical on every home button
   font-weight: 500;
 }
 
@@ -136,19 +136,19 @@
   border-radius: 50%;        // perfect circle
   background: $dreamer-light; // vivid orange circle
   color: #fff;                // white icon inside the orange circle
-  font-size: 22px;
+  font-size: $text-subtitle;
 }
 
 // Step title
 .home-step h3 {
-  font-size: 20px;
+  font-size: $text-subtitle;
   margin-bottom: 8px;
 }
 
 // Step description
 .home-step p {
   color: $gray-text;
-  font-size: 15px;
+  font-size: $text-body;
   margin: 0;
 }
 
@@ -175,7 +175,7 @@
 // Small label at the top of each universe card
 .home-universe .universe-label {
   font-weight: 600;
-  font-size: 12px;
+  font-size: $text-small;
   letter-spacing: 2px;
   text-transform: uppercase;
 }

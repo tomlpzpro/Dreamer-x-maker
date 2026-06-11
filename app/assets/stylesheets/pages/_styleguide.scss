@@ -1,0 +1,39 @@
+// Layout for the styleguide page (shows every button and tag together).
+
+.styleguide .sg-title {
+  border-bottom: 2px solid $gray-light;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+// One group of related components
+.styleguide .sg-block {
+  margin-bottom: 28px;
+}
+// The little label above each group
+.styleguide .sg-label {
+  font-weight: 600;
+  color: $gray-text;
+  margin-bottom: 10px;
+}
+// The row that lays the components side by side, wrapping if needed
+.styleguide .sg-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+// Typography rows: the text example on the left, its size caption on the right
+.styleguide .sg-type-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid $gray-light;
+}
+.styleguide .sg-type-caption {
+  flex: none;
+  color: $gray-text;
+  font-size: $text-small;
+}

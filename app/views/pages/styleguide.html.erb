@@ -1,0 +1,89 @@
+<div class="container my-5 styleguide">
+
+  <h1 class="mb-2">Styleguide</h1>
+  <p class="text-muted mb-5">
+    Tous les boutons et tags du site. Les éléments « rôle » sont
+    <strong>orange pour un dreamer, bleus pour un maker</strong> — connecte-toi
+    dans l'un ou l'autre rôle pour voir la couleur changer.
+  </p>
+
+  <%# ===================== BUTTONS ===================== %>
+  <h2 class="sg-title">Boutons</h2>
+
+  <div class="sg-block">
+    <p class="sg-label">Boutons principaux (Bootstrap)</p>
+    <div class="sg-row">
+      <%= link_to "Primary (rôle)", "#", class: "btn btn-primary" %>
+      <%= link_to "Outline (rôle)", "#", class: "btn btn-outline-secondary" %>
+      <%= link_to "Light", "#", class: "btn btn-light" %>
+      <%= link_to "Refuser (gris)", "#", class: "btn btn-reject" %>
+    </div>
+  </div>
+
+  <div class="sg-block">
+    <p class="sg-label">Boutons d'étape</p>
+    <div class="sg-row">
+      <%= link_to "Marquer comme réalisé", "#", class: "step-btn step-btn-maker" %>
+      <%= link_to "Projet reçu !", "#", class: "step-btn step-btn-dreamer" %>
+    </div>
+  </div>
+
+  <div class="sg-block">
+    <p class="sg-label">Boutons d'action des cartes</p>
+    <div class="sg-row">
+      <%= link_to "Matcher", "#", class: "card-action-btn card-action-match" %>
+      <%= link_to "Pas pour moi", "#", class: "card-action-btn card-action-dismiss" %>
+      <%= link_to '<i class="fas fa-pencil"></i>'.html_safe, "#", title: "Un changement ?", class: "card-action-btn card-action-inform" %>
+      <%= link_to '<i class="fas fa-pencil"></i>'.html_safe, "#", title: "Modifier", class: "card-action-btn card-action-edit" %>
+      <%= link_to '<i class="fas fa-trash"></i>'.html_safe, "#", title: "Supprimer", class: "card-action-btn card-action-delete" %>
+    </div>
+  </div>
+
+  <div class="sg-block">
+    <p class="sg-label">Boutons de rôle (inscription)</p>
+    <div class="sg-row">
+      <span class="role-btn role-btn-dreamer">Dreamer</span>
+      <span class="role-btn role-btn-maker">Maker</span>
+      <span class="role-btn role-btn-dreamer is-active">Dreamer (actif)</span>
+      <span class="role-btn role-btn-maker is-active">Maker (actif)</span>
+    </div>
+  </div>
+
+  <%# ===================== TAGS ===================== %>
+  <h2 class="sg-title mt-5">Tags / badges</h2>
+
+  <div class="sg-block">
+    <p class="sg-label">Statuts d'un projet / d'une candidature</p>
+    <div class="sg-row">
+      <span class="status-badge status-pending">En attente de match</span>
+      <span class="status-badge status-accepted">Match !</span>
+      <span class="status-badge status-made">Réalisé</span>
+      <span class="status-badge status-delivered">Livré</span>
+      <span class="status-badge status-rejected">Refusé</span>
+    </div>
+  </div>
+
+  <%# ===================== TYPOGRAPHY ===================== %>
+  <h2 class="sg-title mt-5">Tailles de texte</h2>
+  <p class="sg-label">Police : Noto Serif Khojki — seulement 4 tailles sur le site</p>
+
+  <div class="sg-block sg-type">
+    <div class="sg-type-row">
+      <h1 class="m-0">Titre</h1>
+      <span class="sg-type-caption">Titre · h1 · 2rem ≈ 32px</span>
+    </div>
+    <div class="sg-type-row">
+      <h2 class="m-0">Sous-titre</h2>
+      <span class="sg-type-caption">Sous-titre · h2 / h3 · 1.375rem ≈ 22px</span>
+    </div>
+    <div class="sg-type-row">
+      <p class="m-0">Texte courant (paragraphe, description)</p>
+      <span class="sg-type-caption">Texte · p · 1rem ≈ 16px</span>
+    </div>
+    <div class="sg-type-row">
+      <small>Petit texte (légendes, libellés, badges)</small>
+      <span class="sg-type-caption">Petit · 0.875rem ≈ 14px</span>
+    </div>
+  </div>
+
+</div>

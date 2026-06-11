@@ -35,7 +35,7 @@
   display: none;          // hide the real radio button
 }
 .delivery-star {
-  font-size: 32px;
+  font-size: $text-title;
   color: $gray-light;     // empty star color
   cursor: pointer;
   padding: 0 2px;
@@ -47,4 +47,34 @@
 .delivery-star:hover,
 .delivery-star:hover ~ .delivery-star {
   color: $dreamer;
+}
+
+// --- Custom file button (replaces the browser's "Choose File") ---
+.file-input-hidden {
+  display: none;            // hide the native file input
+}
+.file-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+// The label styled as a button (clicking it opens the file dialog)
+.file-input-button {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 2px solid var(--accent);
+  border-radius: 999px;     // pill, like the other buttons
+  background: #fff;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+.file-input-button:hover {
+  background: var(--accent-soft);
+}
+// The chosen file name shown next to the button
+.file-input-name {
+  color: $gray-text;
+  font-size: $text-small;
 }

@@ -6,8 +6,10 @@
 // $dreamer / -light stay the vivid orange (backgrounds + buttons).
 // -dark is a deep orange used as an accent text color ON CREAM only.
 // Text placed ON the vivid orange uses $ink (near-black) for maximum contrast.
-$dreamer: #ff9250;             // vivid orange: buttons, accents
-$dreamer-light: #ff9250;       // backgrounds keep the vivid orange
+// $dreamer: #fe6100;
+$dreamer: #ff9250;          // vivid orange: buttons, accents
+// $dreamer: #f5b994;
+$dreamer-light: $dreamer;       // backgrounds keep the vivid orange
 $dreamer-dark: darken($dreamer, 30%); // deep orange accent text on cream
 
 // --- Maker side (turquoise, cold) ---

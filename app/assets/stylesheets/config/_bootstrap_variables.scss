@@ -2,10 +2,19 @@
 // site (buttons, cards, text...) follows the "Dreamer x Maker" charter.
 
 // --- General style ---
-$font-family-sans-serif: $body-font;     // body and UI use Hanken Grotesk
-$headings-font-family:   $headers-font;  // all titles use Fraunces
+$font-family-sans-serif: $body-font;     // body and UI text
+$headings-font-family:   $headers-font;  // all titles
 $body-bg:                $cream;          // page background is cream, never white
-$font-size-base:         1.0625rem;       // ~17px, the charter body size
+
+// The 4 text sizes: body, then headings (title / subtitle) and the lead text
+$font-size-base: $text-body;
+$h1-font-size:   $text-title;
+$h2-font-size:   $text-subtitle;
+$h3-font-size:   $text-subtitle;
+$h4-font-size:   $text-subtitle;
+$h5-font-size:   $text-body;
+$h6-font-size:   $text-body;
+$lead-font-size: $text-body;
 
 // --- Colors ---
 $body-color: $ink;        // main text uses "ink" instead of black

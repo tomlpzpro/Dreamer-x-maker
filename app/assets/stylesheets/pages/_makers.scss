@@ -25,7 +25,7 @@
 .maker-hero-label {
   margin: 0;
   font-weight: 600;
-  font-size: 12px;
+  font-size: $text-small;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: $ink;                    // dark text = max contrast on the banner
@@ -45,12 +45,12 @@
 }
 .maker-hero-stars {
   color: $ink;            // dark filled stars = max contrast on the blue banner
-  font-size: 18px;
+  font-size: $text-body;
   letter-spacing: 2px;
 }
 .maker-hero-score {
   color: $ink;            // dark score = max contrast on the blue banner
-  font-size: 14px;
+  font-size: $text-small;
   font-weight: 600;
 }
 
@@ -65,7 +65,7 @@
   color: $maker-dark;
   border-radius: 999px;          // fully rounded pill
   padding: 5px 14px;
-  font-size: 13px;
+  font-size: $text-small;
   font-weight: 500;
 }
 
@@ -81,13 +81,13 @@
 }
 .maker-creations-count {
   color: $gray-text;
-  font-size: 14px;
+  font-size: $text-small;
 }
 // Rating stars shown under a creation title (filled stars in Dreamer orange)
 .maker-rating {
   margin: 4px 0 0;
   color: $dreamer;
-  font-size: 16px;
+  font-size: $text-body;
   letter-spacing: 2px;
 }
 

@@ -6,12 +6,14 @@ body {
   --accent-dark: #{$dreamer-dark};
   --accent-soft: #{rgba($dreamer, .15)};        // light wash for hovers
   --accent-soft-strong: #{rgba($dreamer, .28)}; // a bit stronger for active
+  --accent-shadow: #{rgba($dreamer, .35)};      // soft colored card shadow
 }
 body.is-maker {
   --accent: #{$maker};
   --accent-dark: #{$maker-dark};
   --accent-soft: #{rgba($maker, .15)};
   --accent-soft-strong: #{rgba($maker, .28)};
+  --accent-shadow: #{rgba($maker, .35)};
 }
 
 // All buttons are fully rounded (pill), like the Modifier / Supprimer buttons
@@ -48,6 +50,19 @@ body.is-maker {
   --bs-btn-active-border-color: var(--accent);
 }
 
+// "Refuser" button: a neutral gray outline (white fill, gray text/border)
+.btn-reject {
+  --bs-btn-color: #{$gray-text};
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #{$gray-text};
+  --bs-btn-hover-color: #{$ink};
+  --bs-btn-hover-bg: #{$gray-light};
+  --bs-btn-hover-border-color: #{$gray-text};
+  --bs-btn-active-color: #{$ink};
+  --bs-btn-active-bg: #{$gray-light};
+  --bs-btn-active-border-color: #{$gray-text};
+}
+
 // Action buttons for the last two project steps:
 //  - the maker tells the project is realised  (turquoise = the maker side)
 //  - the dreamer confirms he received it       (orange = the dreamer side)
@@ -58,7 +73,7 @@ body.is-maker {
   padding: 8px 16px;
   border: none;
   border-radius: 999px;                     // fully rounded pill
-  font-size: 14px;
+  font-size: $text-small;
   font-weight: 600;
   line-height: 1.2;
   text-decoration: none;                    // remove the link underline
@@ -71,22 +86,22 @@ body.is-maker {
 // Maker action: "the project is realised". Vivid blue, near-black text (max
 // contrast). On hover it darkens just a little, keeping the dark text readable.
 .step-btn-maker {
-  background: $maker;
-  color: $ink;
+  background: var(--accent);
+  color: #fff;
 }
 .step-btn-maker:hover {
-  background: darken($maker, 10%);
-  color: $ink;
+  background: var(--accent-dark);
+  color: #fff;
 }
 
-// Dreamer action: "project received"
+// "Projet reçu !": follows the role accent (orange for a dreamer, blue for a maker)
 .step-btn-dreamer {
-  background: $dreamer;
-  color: $ink;
+  background: var(--accent);
+  color: #fff;
 }
 .step-btn-dreamer:hover {
-  background: darken($dreamer, 10%);
-  color: $ink;
+  background: var(--accent-dark);
+  color: #fff;
 }
 
 // button_to wraps the button in a form: keep it tight and inline

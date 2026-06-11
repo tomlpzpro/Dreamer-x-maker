@@ -30,7 +30,7 @@
 
 .footer-tagline {
   margin: 4px 0 0;
-  font-size: 14px;
+  font-size: $text-small;
   color: rgba($cream, .7);   // slightly faded cream
 }
 
@@ -52,7 +52,7 @@
 // --- Social icons (in a row) ---
 .footer-social a {
   color: rgba($cream, .8);
-  font-size: 20px;
+  font-size: $text-subtitle;
   margin-left: 16px;         // space between the icons
   text-decoration: none;
 }
@@ -67,7 +67,7 @@
 .footer-bottom {
   border-top: 1px solid rgba($cream, .15); // thin separator line
   padding: 16px 0;
-  font-size: 13px;
+  font-size: $text-small;
   color: rgba($cream, .6);
   text-align: end;
 }

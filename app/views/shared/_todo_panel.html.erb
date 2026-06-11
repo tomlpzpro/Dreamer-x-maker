@@ -3,21 +3,29 @@
     match accepted, a project realised to receive, and unread messages. %>
 <% notifs = notifications_for(current_user) %>
 
-<div class="todo-panel <%= current_user.dreamer? ? 'is-dreamer' : 'is-maker' %>">
-  <h2 class="todo-title">À faire</h2>
+<%# The whole panel is shown only when there is something to do %>
+<% if notifs.any? %>
+  <div class="todo-panel <%= current_user.dreamer? ? 'is-dreamer' : 'is-maker' %>">
+    <h2 class="todo-title">À faire</h2>
 
-  <% if notifs.empty? %>
-    <p class="todo-empty">Vous êtes à jour, rien ne vous attend pour le moment </p>
-  <% else %>
-    <ul class="todo-list">
-      <% notifs.each do |notif| %>
-        <li>
-          <%= link_to notif.path, class: "todo-item" do %>
-            <span class="todo-dot"></span>
-            <span><%= notif.text %></span>
-          <% end %>
-        </li>
+    <%# One group per project, laid out side by side (wrapping) %>
+    <div class="todo-groups">
+      <% notifs.group_by(&:project).each do |project, project_notifs| %>
+        <div class="todo-group">
+          <%# The project title links to its page; soft accent highlight on hover %>
+          <%= link_to project.title, project_path(project), class: "todo-group-title" %>
+          <ul class="todo-list">
+            <% project_notifs.each do |notif| %>
+              <li>
+                <%= link_to notif.path, class: "todo-item" do %>
+                  <span class="todo-dot"></span>
+                  <span><%= notif.text %></span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
-    </ul>
-  <% end %>
-</div>
+    </div>
+  </div>
+<% end %>
