@@ -44,7 +44,9 @@
     </div>
 
     <%# The box that holds all the messages (fixed height, scrolls inside) %>
-    <div class="chat-box mb-4">
+
+    <%# Déclaraer mon data-controller pour le scroll dans cette div %>
+    <div class="chat-box mb-4" data-controller="scroll">
 
       <%# Container that receives the live messages (id used by the broadcast) %>
       <div id="<%= dom_id(@match_chat) %>_messages">
