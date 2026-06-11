@@ -36,7 +36,9 @@
   <%# Turbo prefetches links on hover by default. We turn it off because some
       links (opening a chat) run side effects (mark messages as read) that must
       happen on a real click, not on hover. %>
-  <body id="body" data-turbo-prefetch="false">
+  <%# The role class drives the accent color of the whole UI:
+      orange for a dreamer, blue for a maker (see _buttons.scss). %>
+  <body id="body" data-turbo-prefetch="false" class="<%= "is-#{current_user.role}" if user_signed_in? %>">
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
 

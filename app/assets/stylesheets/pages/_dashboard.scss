@@ -124,7 +124,7 @@
 // SECTIONS (each block of the dashboard)
 // ===========================================================================
 .dashboard-section {
-  margin-bottom: 40px;
+  margin-bottom: 72px;   // more breathing room between sections
 }
 
 // The title row of a section: title on the left, optional link on the right
@@ -142,7 +142,8 @@
   color: $dreamer-dark;            // orange link
   text-decoration: none;
 }
-.dashboard-section-head a:hover {
+// Underline the plain text links on hover, but NOT the buttons (.btn)
+.dashboard-section-head a:not(.btn):hover {
   text-decoration: underline;
 }
 
@@ -196,45 +197,52 @@
   transition: background-color .15s ease;    // smooth color change on hover
 }
 
-// Edit button: vivid orange, near-black text for maximum contrast
-.card-action-edit {
-  background: $dreamer-light;
-  color: $ink;
+// The four action buttons share the same look: WHITE background + a colored
+// outline (fixed codes, the SAME for dreamer and maker).
+
+// Match = green outline
+.card-action-match {
+  background: #fff;
+  border: 2px solid $action-green;
+  color: $action-green;
 }
-.card-action-edit:hover {
-  background: darken($dreamer-light, 8%); // slightly deeper on hover
-  color: $ink;
+.card-action-match:hover {
+  background: rgba($action-green, .1);
+  color: $action-green;
 }
 
-// Delete button: neutral and calm, only turns red on hover (charter keeps red for alerts)
-.card-action-delete {
-  background: $cream;        // soft neutral background
-  color: $gray-text;         // muted gray text, not alarming
-}
-.card-action-delete:hover {
-  background: lighten($red, 38%); // very soft red wash on hover
-  color: $red;                    // red text to signal the danger only on hover
-}
-
-// Inform button: vivid turquoise, near-black text for maximum contrast
+// Inform = blue outline
 .card-action-inform {
-  background: $maker-light;
-  color: $ink;
+  background: #fff;
+  border: 2px solid $action-blue;
+  color: $action-blue;
   white-space: nowrap;        // keep the whole label on a single line
 }
 .card-action-inform:hover {
-  background: darken($maker-light, 8%); // slightly deeper on hover
-  color: $ink;
+  background: rgba($action-blue, .1);
+  color: $action-blue;
 }
 
-// Match button: the maker's main action, vivid turquoise with near-black text
-.card-action-match {
-  background: $maker;
-  color: $ink;
+// Edit = yellow outline
+.card-action-edit {
+  background: #fff;
+  border: 2px solid $action-yellow;
+  color: $action-yellow;
 }
-.card-action-match:hover {
-  background: darken($maker, 10%); // a little deeper, still readable
-  color: $ink;
+.card-action-edit:hover {
+  background: rgba($action-yellow, .12);
+  color: $action-yellow;
+}
+
+// Delete = red outline
+.card-action-delete {
+  background: #fff;
+  border: 2px solid $action-red;
+  color: $action-red;
+}
+.card-action-delete:hover {
+  background: rgba($action-red, .1);
+  color: $action-red;
 }
 
 // Dismiss button: neutral and calm ("not for me"), nothing alarming
@@ -262,10 +270,10 @@
   text-decoration: none;           // it is a link: remove the underline
   color: $ink;                     // keep the text in the normal ink color
 }
-// Highlight the row on hover with a light orange wash (it is clickable)
+// Highlight the row on hover with a light role-accent wash (it is clickable)
 .match-row:hover {
-  border-color: $dreamer;
-  background: rgba($dreamer, .15);   // light orange, not the flashy full color
+  border-color: var(--accent);
+  background: var(--accent-soft);   // light orange/blue depending on the role
 }
 .match-row .match-title {
   font-weight: 500;
@@ -299,20 +307,20 @@
   background: rgba(255, 255, 255, .9);
   color: #000;
 }
-// Rejected = neutral gray
+// Rejected = soft red tint with a deep red label
 .status-badge.status-rejected {
-  background: $gray-light;
-  color: $gray-text;
+  background: rgba($red, .1);
+  color: #b3261e;
 }
 // Made = full turquoise (the project is realised, one step before delivery)
 .status-badge.status-made {
   background: $maker;
   color: $ink;
 }
-// Delivered = green (the project is delivered, the final step)
+// Delivered = soft green tint with a deep green label
 .status-badge.status-delivered {
-  background: $green;
-  color: $ink;
+  background: rgba($green, .2);
+  color: #157a47;
 }
 
 // ===========================================================================

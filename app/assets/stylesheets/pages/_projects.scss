@@ -109,6 +109,11 @@
 .project-header-status form {
   margin: 0;
 }
+// Edit + delete buttons side by side, at the top of the header (owner only)
+.project-header-actions {
+  display: flex;
+  gap: 8px;
+}
 
 // --- The project visual (image) ---
 .project-image img {
@@ -150,7 +155,7 @@
   border-radius: .5rem;
   padding: 14px 16px;
 }
-// The icon inside the box (dark glyph in a vivid orange circle)
+// The icon inside the box: circle in the role accent (orange dreamer / blue maker)
 .info-box i {
   display: flex;
   align-items: center;
@@ -158,8 +163,8 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: $dreamer-light;
-  color: $ink;
+  background: var(--accent);
+  color: #fff;             // white icon on the colored circle
   font-size: 16px;
 }
 // The small label above the value
@@ -235,13 +240,13 @@
   align-items: center;
   justify-content: center;
   font-size: 11px;
-  color: $ink;             // dark check mark = max contrast on the orange dot
+  color: #fff;             // white check mark on the colored dot
 }
-// Done (past) step: orange dot with a dark check mark
+// Done (past) step: dot in the role accent (orange dreamer / blue maker) + check
 .timeline-step.is-done::after {
   content: "✓";
-  background: $dreamer;
-  border-color: $dreamer;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 // To-do (future) step: empty gray dot, no check mark (content stays "")
 

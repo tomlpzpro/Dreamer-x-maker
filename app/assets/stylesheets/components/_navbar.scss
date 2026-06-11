@@ -54,22 +54,22 @@
   border-radius: 999px;             // pill shape, like the badges/buttons
   transition: background-color .15s ease, color .15s ease;
 }
-// On hover, a soft (low-opacity) orange pill with dark text
+// On hover, a soft pill in the role accent (orange for a dreamer, blue for a maker)
 .navbar-link:hover {
-  background: rgba($dreamer, .15);
+  background: var(--accent-soft);
   color: $ink;
 }
-// The current page keeps a slightly stronger soft-orange pill so the user
-// knows where they are (still low opacity, not the full vivid orange)
+// The current page keeps a slightly stronger accent pill so the user knows
+// where they are (still soft, not the full vivid color)
 .navbar-link.is-active {
-  background: rgba($dreamer, .28);
+  background: var(--accent-soft-strong);
   color: $ink;
 }
 
-// --- Dropdown menu items (used by both the hamburger and the account menu) ---
+// --- Dropdown menu items (used by the account menu) ---
 .navbar-lewagon .dropdown-item:hover {
-  background: $dreamer-light;        // vivid orange highlight on hover
-  color: $ink;                       // near-black text = max contrast
+  background: var(--accent-soft);   // soft accent highlight (role color)
+  color: $ink;
 }
 
 // --- Account area (right) ---
@@ -174,7 +174,7 @@
   border: 2px solid $gray-light;     // thin ring around the photo
 }
 .navbar-avatar-link:hover .avatar {
-  border-color: $dreamer;            // orange ring on hover
+  border-color: var(--accent);       // ring in the role accent (orange/blue)
 }
 .navbar-avatar-link .navbar-username {
   font-weight: 500;
