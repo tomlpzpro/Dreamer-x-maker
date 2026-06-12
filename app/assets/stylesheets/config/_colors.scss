@@ -13,8 +13,10 @@ $dreamer-light: $dreamer;       // backgrounds keep the vivid orange
 $dreamer-dark: darken($dreamer, 30%); // deep orange accent text on cream
 
 // --- Maker side (turquoise, cold) ---
-$maker: #73bfcd;             // vivid blue: buttons, accents
-$maker-light: #73bfcd;       // backgrounds keep the vivid blue
+$maker: #73bfcd;             // vivid blue: buttons, accents      // backgrounds keep the vivid blue
+$maker-light: #73bfcd;
+     // backgrounds keep the vivid blue
+    // backgrounds keep the vivid blue
 $maker-dark: darken($maker, 34%); // deep blue accent text on cream
 
 // Very light gray, used as the backdrop behind project photos

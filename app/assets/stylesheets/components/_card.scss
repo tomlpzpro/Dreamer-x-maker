@@ -8,11 +8,11 @@
   overflow: hidden;                 // keep the image inside the rounded corners
   background: $cream;               // cream card background (never pure white)
   background-clip: padding-box;     // keep the background inside the border edge
-  border: 1px solid darken($gray-light, 8%); // a bit more visible than the bg
+  border: 3px solid darken($gray-light, 8%); // a bit more visible than the bg
   border-radius: .5rem;             // 8px rounded corners
   height: 100%;                     // all cards in a row keep the same height
   // Soft colored shadow following the role: orange for a dreamer, blue for a maker
-  box-shadow: 0 6px 20px var(--accent-shadow);
+  // box-shadow: 0 6px 20px var(--accent-shadow);
 }
 
 // The status badge shown over the top-right corner of the card image
