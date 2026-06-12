@@ -326,15 +326,15 @@
   font-size: $text-small;
   font-weight: 600;
 }
-// All status badges follow the role accent: orange for a dreamer, blue for a
-// maker (filled, with white text).
+// All status badges: white background with black text (same for both roles)
 .status-badge.status-pending,
 .status-badge.status-accepted,
 .status-badge.status-made,
 .status-badge.status-delivered,
 .status-badge.status-rejected {
-  background: var(--accent);
-  color: #fff;
+  background: #fff;
+  color: #000;
+  border: 1px solid $gray-light;   // thin border so the white badge stays visible
 }
 
 // ===========================================================================

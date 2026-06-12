@@ -1,9 +1,13 @@
-<div class="container my-5">
+<%# Make the main a flex column so the colored band fills the height %>
+<% content_for :main_class, "page-main--full" %>
 
-  <%# Link to go back to the projects list %>
-  <%= link_to "← Retour aux projets", projects_path, class: "btn btn-outline-secondary btn-sm mb-3" %>
+<%# Split orange/blue band (like the home hero) with the form floating on top %>
+<div class="form-hero">
 
-  <%# The form inside a centered card %>
+  <%# Back link, top-left, blue so it stays visible on the orange half %>
+  <%= link_to "← Retour aux projets", projects_path, class: "btn btn-outline-secondary btn-sm form-hero-back" %>
+
+  <%# The form card, centered on the gradient %>
   <div class="form-card">
     <h1>Créer un nouveau projet</h1>
     <p class="form-subtitle">Décrivez l'objet dont vous rêvez : un maker pourra le réaliser.</p>
@@ -12,21 +16,30 @@
       <%= f.error_notification %>
 
       <div class="form-inputs">
-        <%= f.input :title, required: true, label: "Nom du projet", placeholder: "Ex : Table basse en chêne" %>
-        <%= f.input :description, as: :text, required: true, label: "Description du projet", placeholder: "Matière, dimensions, finition..." %>
-        <%# A native calendar date picker (input type="date") to choose the wanted delivery date %>
-        <%= f.input :deadline, as: :string, input_html: { type: "date" }, label: "Date de livraison voulue" %>
-        <%= f.input :budget, label: "Budget", placeholder: "En euros" %>
-        <%= f.input :category, collection: User::SKILLS, label: "Catégorie du projet", prompt: "Choisir une catégorie" %>
+        <%= f.input :title, required: true, label: "Nom du projet", placeholder: "Ex : Table basse en chêne", wrapper_html: { class: "field-full" } %>
+        <%= f.input :description, as: :text, required: true, label: "Description du projet", placeholder: "Matière, dimensions, finition...", wrapper_html: { class: "field-full" } %>
+        <%# Date, budget and category share one row (each a third of the width) %>
+        <%= f.input :deadline, as: :string, input_html: { type: "date" }, label: "Livraison", wrapper_html: { class: "field-third" } %>
+        <%= f.input :budget, label: "Budget", placeholder: "En euros", wrapper_html: { class: "field-third" } %>
+        <%= f.input :category, collection: User::SKILLS, label: "Catégorie", prompt: "Choisir...", wrapper_html: { class: "field-third" } %>
       </div>
 
       <%# Visual: the user must EITHER upload an image OR generate one with the AI.
           The two options are shown on the same line, separated by "ou". %>
       <label class="visual-title">Visuel du projet</label>
       <div class="visual-choice">
-        <%# Option 1: upload an image %>
-        <div class="visual-upload">
-          <%= f.input :image, as: :file, label: false %>
+        <%# Option 1: upload an image. Custom button + thumbnail preview. %>
+        <div class="visual-upload" data-controller="file-input">
+          <div class="file-input-row">
+            <label class="file-input-button">
+              Choisir un fichier
+              <%= f.file_field :image, accept: "image/*", class: "file-input-hidden",
+                    data: { action: "change->file-input#show" } %>
+            </label>
+            <span class="file-input-name" data-file-input-target="name">Aucun fichier choisi</span>
+          </div>
+          <%# Thumbnail of the chosen image (filled in by the Stimulus controller) %>
+          <img data-file-input-target="preview" class="file-input-preview" alt="Aperçu" hidden>
         </div>
         <% if false %>
         <span class="visual-or">ou</span>

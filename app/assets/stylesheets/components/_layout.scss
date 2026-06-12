@@ -22,6 +22,13 @@ body {
   flex: 1 0 auto;
 }
 
+// On pages that have a full-bleed colored band filling the height (e.g. the
+// "create a project" form), make the main a flex column so the band can grow.
+.page-main--full {
+  display: flex;
+  flex-direction: column;
+}
+
 // The footer never shrinks; it stays its natural size at the bottom.
 .footer {
   flex-shrink: 0;
