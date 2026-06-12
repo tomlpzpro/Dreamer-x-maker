@@ -44,7 +44,7 @@
 
     <%# Main content. It grows to fill the space so the footer stays at the
         very bottom of the page, even when the page is short. %>
-    <main class="page-main">
+    <main class="page-main <%= yield(:main_class) %>">
       <%= yield %>
     </main>
 

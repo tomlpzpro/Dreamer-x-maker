@@ -1,14 +1,55 @@
 // Styling for forms shown inside a centered card (e.g. the new project form).
 // It targets the basic fields directly so it works whatever the form helper.
 
-// The centered card that holds the form
+// The split orange/blue gradient is the BACKGROUND of the whole page area
+// (page-main--full fills from the navbar down to the footer), so there is no
+// extra layer and no cream gap can appear under it.
+.page-main--full {
+  background: linear-gradient(to right, $dreamer-light 0 50%, $maker-light 50% 100%);
+}
+// Remove the footer's top margin under this page so the gradient touches the
+// footer directly (no cream band). Only affects the full-bleed page.
+.page-main--full + .footer {
+  margin-top: 0;
+}
+
+// Wrapper that just centers the form card on that background, like an auth page.
+.form-hero {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   // center the card vertically...
+  align-items: center;       // ...and horizontally
+  position: relative;        // anchor for the absolute back link
+  padding: 32px 20px;        // breathing room (and space for the back link)
+}
+
+// The card keeps its max width but fills the available width on small screens
+.form-hero .form-card {
+  width: 100%;
+}
+
+// Back link pinned top-left, in white so it stays visible on the gradient
+.btn.form-hero-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  --bs-btn-color: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: #{$ink};
+  --bs-btn-hover-bg: #fff;
+  --bs-btn-hover-border-color: #fff;
+}
+
+// The centered card that holds the form (wide enough for a 2-column layout)
 .form-card {
-  max-width: 560px;
+  max-width: 720px;
   margin: 0 auto;                 // center the card horizontally
   background: $cream;             // cream background (never white)
   border: 1px solid $gray-light;  // thin light-gray border
   border-radius: .75rem;          // 12px rounded corners
-  padding: 40px;
+  padding: 32px;
+  box-shadow: 0 10px 40px rgba(28, 43, 46, .12); // soft lift, floats on the band
 }
 
 // Title and subtitle at the top of the form
@@ -18,12 +59,28 @@
 }
 .form-card .form-subtitle {
   color: $gray-text;
-  margin-bottom: 28px;
+  margin-bottom: 18px;
 }
 
-// Space between each field (simple_form wraps each field in ".input")
-.form-card .input {
-  margin-bottom: 18px;
+// Fields on a 6-column grid: long fields span the full width, the three short
+// fields (date, budget, category) each take a third so they sit on one row.
+.form-card .form-inputs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px 16px;
+  margin-bottom: 4px;
+}
+.form-card .form-inputs .input {
+  margin-bottom: 0;               // the grid gap handles the spacing
+}
+.form-card .field-full {
+  grid-column: 1 / -1;            // title, description: full width
+}
+.form-card .field-third {
+  grid-column: span 2;            // date, budget, category: a third each
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;      // inputs align at the bottom, even if a label wraps
 }
 
 // Field labels
@@ -49,10 +106,20 @@
   border-radius: .375rem;         // 6px rounded corners
   font-size: $text-body;
   color: $ink;
+  box-sizing: border-box;         // padding counts inside the height
 }
-// Make the description box a bit taller
+// Same fixed height for all single-line fields so date/budget/category align
+.form-card input[type="text"],
+.form-card input[type="number"],
+.form-card input[type="email"],
+.form-card input[type="password"],
+.form-card input[type="date"],
+.form-card select {
+  height: 44px;
+}
+// Keep the description box compact so the form fits without scrolling
 .form-card textarea {
-  min-height: 120px;
+  min-height: 80px;
   resize: vertical;               // let the user resize it up/down only
 }
 
@@ -92,17 +159,9 @@
   gap: 12px;
   margin-bottom: 18px;
 }
-// The upload field takes the remaining space on the left.
-// The border/box is on this DIV (not the native file input, whose height is
-// not reliable across browsers). Its height comes from the padding below.
+// The upload area: plain block so the custom button and the preview stack
 .form-card .visual-upload {
   flex-grow: 1;
-  display: flex;
-  align-items: center;        // center the file control inside the box
-  padding: 8px 12px;
-  background: white;
-  border: 1px solid $gray-light;
-  border-radius: .375rem;     // 6px rounded corners
 }
 .form-card .visual-upload .input {
   margin-bottom: 0;           // no extra spacing inside the row

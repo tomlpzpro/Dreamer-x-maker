@@ -78,3 +78,12 @@
   color: $gray-text;
   font-size: $text-small;
 }
+
+// Thumbnail preview of the chosen image (used on the create-project form)
+.file-input-preview {
+  display: block;
+  max-width: 200px;
+  margin-top: 12px;
+  border: 1px solid $gray-light;
+  border-radius: .5rem;
+}
